@@ -52,13 +52,13 @@ public class Customer {
         return password;
     }
 
-//    public ArrayList<Coupon> getCoupons() {
-//        return coupons;
-//    }
-//
-//    public void setCoupons(ArrayList<Coupon> coupons) {
-//        this.coupons = coupons;
-//    }
+    public ArrayList<Coupon> getCoupons() {
+        return coupons;
+    }
+
+    public void setCoupons(ArrayList<Coupon> coupons) {
+        this.coupons = coupons;
+    }
 
     @Override
     public String toString() {
