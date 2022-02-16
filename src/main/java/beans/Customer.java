@@ -52,12 +52,17 @@ public class Customer {
         return password;
     }
 
+
+    public void setPassword(String password) {
+        this.password = password;
+
     public ArrayList<Coupon> getCoupons() {
         return coupons;
     }
 
     public void setCoupons(ArrayList<Coupon> coupons) {
         this.coupons = coupons;
+
     }
 
     @Override
