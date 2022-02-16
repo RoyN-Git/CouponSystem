@@ -9,12 +9,13 @@ public class Customer {
     //private ArrayList<Coupon> coupons;
 
 
-    public Customer(int id, String firstName, String lastName, String email, String password) {
+    public Customer(int id, String firstName, String lastName, String email, String password /*,ArrayList<Coupon> coupons*/) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
+        //this.coupons = coupons;
     }
 
     public int getId() {
@@ -48,6 +49,14 @@ public class Customer {
     public String getPassword() {
         return password;
     }
+
+//    public ArrayList<Coupon> getCoupons() {
+//        return coupons;
+//    }
+//
+//    public void setCoupons(ArrayList<Coupon> coupons) {
+//        this.coupons = coupons;
+//    }
 
     @Override
     public String toString() {
