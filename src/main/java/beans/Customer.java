@@ -1,12 +1,14 @@
 package beans;
 
+import java.util.ArrayList;
+
 public class Customer {
     private final int id;
     private String firstName;
     private String lastName;
     private String email;
     private String password;
-    //private ArrayList<Coupon> coupons;
+    private ArrayList<Coupon> coupons;
 
 
     public Customer(int id, String firstName, String lastName, String email, String password /*,ArrayList<Coupon> coupons*/) {
