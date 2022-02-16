@@ -1,6 +1,7 @@
 package beans;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Customer {
     private final int id;
@@ -8,16 +9,16 @@ public class Customer {
     private String lastName;
     private String email;
     private String password;
-    private ArrayList<Coupon> coupons;
+    private List<Coupon> coupons;
 
 
-    public Customer(int id, String firstName, String lastName, String email, String password /*,ArrayList<Coupon> coupons*/) {
+    public Customer(int id, String firstName, String lastName, String email, String password, ArrayList<Coupon> coupons) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        //this.coupons = coupons;
+        this.coupons = coupons;
     }
 
     public int getId() {
@@ -45,6 +46,7 @@ public class Customer {
     }
 
     public void setEmail(String email) {
+        //todo:First check if the email doesn't belong to another customer
         this.email = email;
     }
 
@@ -52,15 +54,15 @@ public class Customer {
         return password;
     }
 
-
     public void setPassword(String password) {
         this.password = password;
-
-    public ArrayList<Coupon> getCoupons() {
-        return coupons;
     }
 
-    public void setCoupons(ArrayList<Coupon> coupons) {
+    public List<Coupon> getCoupons() {
+        return this.coupons;
+    }
+
+    public void setCoupons(List<Coupon> coupons) {
         this.coupons = coupons;
 
     }
