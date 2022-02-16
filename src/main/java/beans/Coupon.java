@@ -1,21 +1,21 @@
 package beans;
 
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class Coupon {
-    private int id;
-    private int companyID;
+    private final int id;
+    private final int companyID;
     private Category category;
     private String title;
     private String description;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private Date startDate;
+    private Date endDate;
     private int amount;
     private double price;
     private String image;
 
-    public Coupon(int id, int companyID, Category category, String title, String description, LocalDate startDate, LocalDate endDate, int amount, double price, String image) {
+    public Coupon(int id, int companyID, Category category, String title, String description, Date startDate, Date endDate, int amount, double price, String image) {
         this.id = id;
         this.companyID = companyID;
         this.category = category;
@@ -32,16 +32,8 @@ public class Coupon {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
     public int getCompanyID() {
         return companyID;
-    }
-
-    public void setCompanyID(int companyID) {
-        this.companyID = companyID;
     }
 
     public Category getCategory() {
@@ -68,19 +60,19 @@ public class Coupon {
         this.description = description;
     }
 
-    public LocalDate getStartDate() {
+    public Date getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(Date startDate) {
         this.startDate = startDate;
     }
 
-    public LocalDate getEndDate() {
+    public Date getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(LocalDate endDate) {
+    public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
 
@@ -110,17 +102,17 @@ public class Coupon {
 
     @Override
     public String toString() {
-        DateTimeFormatter myFormatObj = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-        String formattedDate1 = startDate.format(myFormatObj);
-        String formattedDate2 = endDate.format(myFormatObj);
+        SimpleDateFormat myFormatObj=new SimpleDateFormat("dd/MM/yyyy");
+        String formattedStartDate = myFormatObj.format(this.startDate);
+        String formattedEndDate = myFormatObj.format(this.endDate);
         return "Coupon{" +
                 "id=" + id +
                 ", companyID=" + companyID +
                 ", category=" + category +
                 ", title='" + title + '\'' +
                 ", description='" + description + '\'' +
-                ", startDate=" + formattedDate1 +
-                ", endDate=" + formattedDate2 +
+                ", startDate=" + formattedStartDate +
+                ", endDate=" + formattedEndDate +
                 ", amount=" + amount +
                 ", price=" + price +
                 ", image='" + image + '\'' +
