@@ -35,8 +35,5 @@ public class CouponSystemTest {
                 "customers vs coupons table created successfully":
                 "customers vs coupons table creation failed");
 
-
-
-
     }
 }
