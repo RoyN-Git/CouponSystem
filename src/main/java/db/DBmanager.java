@@ -4,8 +4,8 @@ public class DBmanager {
 
     //sql connection
     public static final String URL = "jdbc:mysql://localhost:3306/";
-    public static final String SQL_USER = "admin";//change the user to your root username
-    public static final String SQL_PASSWORD = "Sa12345678!!";//change password to your root password
+    public static final String SQL_USER = "root";//change the user to your root username
+    public static final String SQL_PASSWORD = "12345678";//change password to your root password
 
     //creating database
     public static final String CREATE_DB = "CREATE SCHEMA IF NOT EXISTS `coupon_project`";

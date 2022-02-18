@@ -1,5 +1,11 @@
+import beans.Category;
+import beans.Coupon;
+import java.lang.reflect.*;
 import db.DBUtils;
 import db.DBmanager;
+import dbdao.CouponsDBDAO;
+
+import java.sql.Date;
 
 public class CouponSystemTest {
     public static void main(String[] args) {
@@ -34,6 +40,13 @@ public class CouponSystemTest {
         System.out.println(isSuccess?
                 "customers vs coupons table created successfully":
                 "customers vs coupons table creation failed");
+
+
+
+
+
+
+
 
     }
 }
