@@ -20,11 +20,11 @@ public class CouponsDBDAO implements CouponsDAO {
         values.put(2,coupon.getCategory());
         values.put(3,coupon.getTitle());
         values.put(4,coupon.getDescription());
-        values.put(4,coupon.getStartDate());
-        values.put(5,coupon.getEndDate());
-        values.put(6,coupon.getAmount());
-        values.put(7,coupon.getPrice());
-        values.put(8,coupon.getImage());
+        values.put(5,coupon.getStartDate());
+        values.put(6,coupon.getEndDate());
+        values.put(7,coupon.getAmount());
+        values.put(8,coupon.getPrice());
+        values.put(9,coupon.getImage());
 
         System.out.println("new coupon added ? " + DBUtils.runQuery(DBmanager.ADD_NEW_COUPON,values));
 
@@ -44,8 +44,6 @@ public class CouponsDBDAO implements CouponsDAO {
         values.put(8,coupon.getPrice());
         values.put(9,coupon.getImage());
         values.put(10,coupon.getId());
-        values.put(11,coupon.getCompanyID());
-
         System.out.println("coupon update ? " + DBUtils.runQuery(DBmanager.UPDATE_COUPON_BY_ID,values));
 
     }
@@ -54,7 +52,7 @@ public class CouponsDBDAO implements CouponsDAO {
     public void deleteCoupon(int couponId) {
         Map<Integer, Object> values = new HashMap<>();
         values.put(1,couponId);
-        DBUtils.runQuery(DBmanager.UPDATE_COUPON_BY_ID,values);
+        DBUtils.runQuery(DBmanager.DELETE_COUPON,values);
 
     }
 

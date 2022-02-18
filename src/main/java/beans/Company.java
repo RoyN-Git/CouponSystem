@@ -6,43 +6,25 @@ import java.util.List;
 public class Company {
 
     //todo: Reorganize fields id and name as final and and rebuild c'tors
-    private /*final*/ int id;
-    private /*final*/ String name;
+    private final int id;
+    private final String name;
     private String email;
     private String password;
     private List<Coupon> coupons;
 
-    public Company() {
-    }
-
-    /*Full c'tor
-    public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
-        this.id=id;
-        this.name=name;
-        this.email=email;
-        this.password=password;
-        this.coupons = coupons;
-    }
+    /**
+     * Full constructor
+     * @param id is company's id
+     * @param name is company's name
+     * @param email is company's email
+     * @param password is company's password
+     * @param coupons is list of the company's coupons
      */
-
-    public Company(String name, String email, String password) {
+    public Company(int id, String name, String email, String password, List<Coupon> coupons) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public Company(String name, String email, String password, ArrayList<Coupon> coupons) {
-        this(name, email, password);
-        this.coupons = coupons;
-    }
-
-    public Company(int id, String name, String email, String password) {
-        this(name, email, password);
-        this.id = id;
-    }
-
-    public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
-        this(id, name, email, password);
         this.coupons = coupons;
     }
 
@@ -75,14 +57,23 @@ public class Company {
         return coupons;
     }
 
-    public void setCoupons(ArrayList<Coupon> coupons) {
+    public void setCoupons(List<Coupon> coupons) {
         this.coupons = coupons;
     }
 
     @Override
     public String toString() {
-        return String.format("Company [id=%s, name=%s, email=%s, password=%s, coupons=%s]", id, name, email, password,
-                coupons);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Company name: ").append(this.name).append("\tid: ").append(this.id).append("\n");
+        stringBuilder.append("email: ").append(this.email).append("\n");
+        stringBuilder.append("Coupons: ").append("\n");
+        stringBuilder.append("-----------------");
+        for (Coupon item:this.coupons) {
+            stringBuilder.append("\n");
+            stringBuilder.append(item.toString());
+            stringBuilder.append("-----------------");
+        }
+        return stringBuilder.toString();
     }
 
 }

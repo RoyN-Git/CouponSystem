@@ -15,6 +15,20 @@ public class Coupon {
     private double price;
     private String image;
 
+
+    /**
+     * Full constructor
+     * @param id is coupon's id
+     * @param companyID is the id of the coupon's company
+     * @param category is the category of the coupon
+     * @param title is he title of the coupon
+     * @param description is the description of the coupon
+     * @param startDate is the date in which the coupon was created
+     * @param endDate is the day in which the coupon will be removed
+     * @param amount is the amount of the available coupons to purchase
+     * @param price is the price of a single coupon
+     * @param image is the string of the file
+     */
     public Coupon(int id, int companyID, Category category, String title, String description, Date startDate, Date endDate, int amount, double price, String image) {
         this.id = id;
         this.companyID = companyID;
@@ -105,17 +119,16 @@ public class Coupon {
         SimpleDateFormat myFormatObj=new SimpleDateFormat("dd/MM/yyyy");
         String formattedStartDate = myFormatObj.format(this.startDate);
         String formattedEndDate = myFormatObj.format(this.endDate);
-        return "Coupon{" +
-                "id=" + id +
-                ", companyID=" + companyID +
-                ", category=" + category +
-                ", title='" + title + '\'' +
-                ", description='" + description + '\'' +
-                ", startDate=" + formattedStartDate +
-                ", endDate=" + formattedEndDate +
-                ", amount=" + amount +
-                ", price=" + price +
-                ", image='" + image + '\'' +
-                '}';
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("id: ").append(this.id).append("\t");
+        stringBuilder.append("Company: ").append(this.companyID).append("\t");
+        stringBuilder.append("Category: ").append(this.category.getName()).append("\n");
+        stringBuilder.append(this.title).append("\n").append(this.description).append("\n");
+        stringBuilder.append("start date: ").append(formattedStartDate).append("\t");
+        stringBuilder.append("amount left: ").append(this.amount).append("\n");
+        stringBuilder.append("end date:   ").append(formattedEndDate).append("\t");
+        stringBuilder.append("price: ").append(this.price).append("$\n");
+        return stringBuilder.toString();
+
     }
 }

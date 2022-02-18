@@ -4,9 +4,15 @@ import java.sql.*;
 import java.util.Map;
 
 public class DBUtils {
+    /**
+     * Method is being used to run a query on sql server
+     * Mainly used to run queries that are not returning views and don't use params
+     * @param sql is the query that we want to run
+     * @return true-> if the query ran successfully
+     *         false-> if the query failed
+     */
     public static boolean runQuery(String sql) {
         Connection connection = null;
-
         try {
             connection = ConnectionPool.getInstance().getConnection();
             PreparedStatement statement = connection.prepareStatement(sql);
@@ -20,6 +26,14 @@ public class DBUtils {
         }
     }
 
+    /**
+     * Method is being used to run a query on sql server
+     * Mainly used to run queries that are not returning views and use params
+     * @param sql is the query that we want to run
+     * @param params is a map of params to insert in the query
+     * @return true-> if the query ran successfully
+     *         false-> if the query failed
+     */
     public static boolean runQuery(String sql, Map<Integer, Object> params) {
         Connection connection = null;
         try {
@@ -54,6 +68,13 @@ public class DBUtils {
         return false;
     }
 
+    /**
+     * Method is being used to run a query on sql server
+     * Mainly used to run queries that are returning views and use params
+     * @param sql is the query that we want to run
+     * @param params is a map of params to insert in the query
+     * @return view converted into ResultSet for further use
+     */
     public static ResultSet runQueryForResult(String sql, Map<Integer,Object> params){
         Connection connection=null;
         try {
