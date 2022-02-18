@@ -1,8 +1,11 @@
 import beans.Category;
 import beans.Coupon;
+import java.lang.reflect.*;
 import db.DBUtils;
 import db.DBmanager;
 import dbdao.CouponsDBDAO;
+
+import java.sql.Date;
 
 public class CouponSystemTest {
     public static void main(String[] args) {
@@ -12,7 +15,7 @@ public class CouponSystemTest {
         System.out.println(isSuccess?
                 "delete db successfullk":
                 "delete failed");
-
+        */
         isSuccess= DBUtils.runQuery(DBmanager.CREATE_DB);
         System.out.println(isSuccess?
                 "database created successfully":
@@ -37,8 +40,12 @@ public class CouponSystemTest {
         System.out.println(isSuccess?
                 "customers vs coupons table created successfully":
                 "customers vs coupons table creation failed");
-        */
-        //Coupon c1 = new Coupon(1,12,Category.FOOD,"test","tester",)
+
+
+
+
+
+
 
 
     }
