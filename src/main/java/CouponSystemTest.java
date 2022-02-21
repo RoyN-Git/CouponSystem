@@ -22,7 +22,7 @@ public class CouponSystemTest {
         coupons.add(new Coupon(
                 1,
                 1,
-                Category.ELECTRICITY,
+                Category.getCategoryByValue(1),
                 "hello world",
                 "bla bla bla",
                 new Date(System.currentTimeMillis()),
@@ -34,15 +34,15 @@ public class CouponSystemTest {
                 1,
                 "My Company",
                 "company@company.com",
-                "password",
-                coupons);
+                "password");
+        company.setCoupons(coupons);
         Customer customer=new Customer(
                 1,
                 "first",
                 "last",
                 "customer@customer.com",
-                "password",
-                coupons);
+                "password");
+        customer.setCoupons(coupons);
 
         System.out.println(company.toString());
         System.out.println(customer.toString());

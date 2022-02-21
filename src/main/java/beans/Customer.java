@@ -12,21 +12,22 @@ public class Customer {
     private List<Coupon> coupons;
 
     /**
-     * Full constructor
+     * Constructor without receiving list of coupons.
+     * The list is initialized inside the constructor.
      * @param id is the customer's id
      * @param firstName is the first name of the customer
      * @param lastName is the last name of the customer
      * @param email is the email of the customer
      * @param password is the password of the customer
-     * @param coupons is the list of coupons the customer has purchased
+     *
      */
-    public Customer(int id, String firstName, String lastName, String email, String password, List<Coupon> coupons) {
+    public Customer(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
         this.password = password;
-        this.coupons = coupons;
+        this.coupons = new ArrayList<>();
     }
 
     public int getId() {
