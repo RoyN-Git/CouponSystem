@@ -148,6 +148,10 @@ public class DBmanager {
             " (`company_id`,`category_id`,`title`,`description`,`start_date`,`end_date`,`amount`,`price`,`image`" +
             " VALUES (?,?,?,?,?,?,?,?,?)";
 
+    public static final String GET_ONE_COUPON="SELECT *" +
+            " FROM `coupon_project`.`coupons`" +
+            " WHERE id=?";
+
     //todo: Add coupon title already exists exception
     public static final String IS_COUPON_TITLE_EXISTS = "SELECT count(*) as counter" +
             " FROM `coupon_project`.`coupons`" +
@@ -203,4 +207,7 @@ public class DBmanager {
     public static final String GET_ALL_CUSTOMER_COUPONS_UP_TO_PRICE = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
             " WHERE `coupon_project`.`customers_coupons`.customer_id=? AND `coupon_project`.`coupons`.price<=?";
+
+    public static final String DELETE_COUPON_PURCHASE="DELETE FROM `coupon_project`.`customers_coupons`" +
+            " WHERE customer_id=? AND coupon_id=?";
 }
