@@ -1,15 +1,18 @@
 package dbdao;
 
+import beans.Category;
 import beans.Coupon;
+import com.mysql.cj.exceptions.ConnectionIsClosedException;
 import dao.CouponsDAO;
+import db.ConnectionPool;
 import db.DBUtils;
 import db.DBmanager;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.SQLException;
+import java.util.*;
 
 public class CouponsDBDAO implements CouponsDAO {
 
@@ -58,25 +61,76 @@ public class CouponsDBDAO implements CouponsDAO {
 
     // todo : check the DBManger
     @Override
-    public List<Coupon> getAllCoupons() {
-
+    public List<Coupon> getAllCoupons(String sql,Map<Integer,Object> values) {
         List<Coupon> coupons = new ArrayList<>();
-        return null;
+        ResultSet resultSet=DBUtils.runQueryForResult(sql, values);
+        try{
+            while(resultSet.next()){
+                Coupon coupon=new Coupon(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("company_id"),
+                        Category.getCategoryByValue(resultSet.getInt("category_id")),
+                        resultSet.getString("title"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("start_date"),
+                        resultSet.getDate("end_date"),
+                        resultSet.getInt("amount"),
+                        resultSet.getDouble("price"),
+                        resultSet.getString("image")
+                );
+                coupons.add(coupon);
+            }
+        }catch (SQLException e){
+            System.out.println(e.getMessage());
+        }
+        return coupons;
 
     }
-
+    //todo: finish it
     @Override
     public Coupon getOneCoupon(int couponId) {
-        return null;
+        Coupon coupon=null;
+        Connection connection=null;
+        try{
+            connection= ConnectionPool.getInstance().getConnection();
+            PreparedStatement statement= connection.prepareStatement(DBmanager.GET_ONE_COUPON);
+            statement.setInt(1,couponId);
+            ResultSet resultSet= statement.executeQuery();
+            if(resultSet.next()){
+                coupon=new Coupon(
+                        resultSet.getInt("id"),
+                        resultSet.getInt("company_id"),
+                        Category.getCategoryByValue(resultSet.getInt("category_id")),
+                        resultSet.getString("title"),
+                        resultSet.getString("description"),
+                        resultSet.getDate("start_date"),
+                        resultSet.getDate("end_date"),
+                        resultSet.getInt("amount"),
+                        resultSet.getDouble("price"),
+                        resultSet.getString("image")
+                );
+            }
+        }catch (InterruptedException | SQLException e) {
+            e.printStackTrace();
+        }finally {
+            ConnectionPool.getInstance().returnConnection(connection);
+        }
+        return coupon;
     }
 
     @Override
     public void addCouponPurchase(int customerId, int couponId) {
-
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1,customerId);
+        values.put(2,couponId);
+        DBUtils.runQuery(DBmanager.PURCHASE_COUPON,values);
     }
 
     @Override
     public void deleteCouponPurchase(int customerId, int couponId) {
-
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1,customerId);
+        values.put(2,couponId);
+        DBUtils.runQuery(DBmanager.DELETE_COUPON_PURCHASE,values);
     }
 }
