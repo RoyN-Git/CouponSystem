@@ -86,7 +86,7 @@ public class CouponsDBDAO implements CouponsDAO {
         return coupons;
 
     }
-    //todo: finish it
+
     @Override
     public Coupon getOneCoupon(int couponId) {
         Coupon coupon=null;
