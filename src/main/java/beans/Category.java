@@ -8,6 +8,10 @@ public enum Category {
 
     private final String name;
 
+    /**
+     * Full constructor
+     * @param name is the given name for the category
+     */
     Category(String name) {
         this.name = name;
     }
@@ -16,18 +20,16 @@ public enum Category {
         return this.name;
     }
 
+    /**
+     * Static method used to return a category based on its value.
+     * @param value is the value of the category we want to return
+     * @return category if there is a category for the value, null if not
+     */
     public static Category getCategoryByValue(int value) {
-
-        int option=(value-1)%Category.values().length;
-        switch (option) {
-            case 1:
-                return FOOD;
-            case 2:
-                return ELECTRICITY;
-            case 3:
-                return RESTAURANT;
-            case 4:
-                return  VACATION;
+        for (Category item:Category.values()) {
+            if(item.value==value){
+                return item;
+            }
         }
         return null;
     }
