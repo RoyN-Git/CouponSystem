@@ -1,5 +1,5 @@
 package dbdao;
-public class CompaniesDBDAO {
+public class CompaniesDBDAO_Test {
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,7 +10,7 @@ import beans.Company;
 import dao.CompaniesDAO;
 import db.ConnectionPool;
 
-public class CompaniesDBDAO implements CompaniesDAO {
+public class CompaniesDBDAO_Test implements CompaniesDAO {
 
     @Override
     public boolean isCompanyExists(String email, String password) {
