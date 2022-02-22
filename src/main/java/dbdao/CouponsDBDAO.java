@@ -95,7 +95,8 @@ public class CouponsDBDAO implements CouponsDAO {
         Map<Integer, Object> values = new HashMap<>();
         values.put(1, couponId);
         List<Coupon> coupons = getAllCoupons(DBmanager.GET_ONE_COUPON, values);
-        return coupons.get(0);
+        //todo:add coupon doesn't exist
+        return (coupons.get(0)==null?null:coupons.get(0));
     }
 
     @Override
