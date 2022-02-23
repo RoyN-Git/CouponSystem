@@ -4,8 +4,10 @@ import beans.Coupon;
 import java.lang.reflect.*;
 
 import beans.Customer;
+import dao.CompaniesDAO;
 import db.DBUtils;
 import db.DBmanager;
+import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
 
 import java.sql.Date;
@@ -27,6 +29,7 @@ public class CouponSystemTest {
                 "bla bla bla",
                 new Date(System.currentTimeMillis()),
                 new Date(System.currentTimeMillis()+7*DBmanager.ONE_DAY),
+                false,
                 100,
                 100,
                 "picture"));
@@ -44,8 +47,13 @@ public class CouponSystemTest {
                 "password");
         customer.setCoupons(coupons);
 
-        System.out.println(company.toString());
-        System.out.println(customer.toString());
+        CompaniesDAO companiesDAO=new CompaniesDBDAO();
+        companiesDAO.addCompany(company);
+        //companiesDAO.deleteCompany(2);
+        System.out.println(companiesDAO.isCompanyExists("company@company.com","password"));
+
+        //System.out.println(company.toString());
+        //System.out.println(customer.toString());
     }
 
     public static void createDataBase(){

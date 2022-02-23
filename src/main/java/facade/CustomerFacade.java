@@ -6,6 +6,7 @@ public class CustomerFacade extends ClientFacade {
     private int customerId;
 
     public CustomerFacade(int customerId) {
+        super();
         this.customerId = customerId;
     }
 }

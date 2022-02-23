@@ -21,6 +21,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         values.put(2,password);
         ResultSet resultSet=DBUtils.runQueryForResult(DBmanager.LOGIN_COMPANY,values);
         try {
+            assert resultSet != null;
             resultSet.next();
             return resultSet.getInt(1)==1;
         } catch (SQLException e) {
@@ -29,13 +30,33 @@ public class CompaniesDBDAO implements CompaniesDAO {
         return false;
     }
 
+    //private void checkInfoAlreadyExists(String sql){}
+
     @Override
     public void addCompany(Company company) {
         Map<Integer, Object> values=new HashMap<>();
+        ResultSet resultSet;
+
+        values.put(1,company.getEmail());
+        resultSet=DBUtils.runQueryForResult(DBmanager.IS_COMPANY_EMAIL_EXISTS,values);
+        if(resultSet!=null){
+            //todo: throw company email already exists exception
+            return;
+        }
+        values.clear();
+        values.put(1,company.getName());
+        resultSet=DBUtils.runQueryForResult(DBmanager.IS_COMPANY_NAME_EXISTS,values);
+        if(resultSet!=null){
+            //todo: throw company name already exists exception
+            return;
+        }
+
+
+
+        values.clear();
         values.put(1,company.getName());
         values.put(2,company.getEmail());
         values.put(3,company.getPassword());
-        //todo: Add checking for the name and email already exists
         System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_COMPANY,values)?
                 "Company created successfully":
                 "Company creation failed"));
@@ -44,10 +65,17 @@ public class CompaniesDBDAO implements CompaniesDAO {
     @Override
     public void updateCompany(Company company) {
         Map<Integer, Object> values=new HashMap<>();
+        ResultSet resultSet;
+        values.put(1,company.getEmail());
+        resultSet=DBUtils.runQueryForResult(DBmanager.IS_COMPANY_EMAIL_EXISTS,values);
+        if(resultSet!=null){
+            //todo: throw company email already exists exception
+            return;
+        }
+        values.clear();
         values.put(1,company.getEmail());
         values.put(2,company.getPassword());
         values.put(3,company.getId());
-        //todo: add checking for email already exists
         System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COMPANY_BY_ID,values)?
                 "Company updated successfully":
                 "Company update failed"));
@@ -68,7 +96,9 @@ public class CompaniesDBDAO implements CompaniesDAO {
         List<Company> companies = new ArrayList<>();
         ResultSet resultSet = DBUtils.runQueryForResult(sql, values);
         try {
-            while(resultSet.next()){
+            while(true){
+                assert resultSet != null;
+                if (!resultSet.next()) break;
                 Company company=new Company(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),
@@ -89,7 +119,10 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Map<Integer, Object> values=new HashMap<>();
         values.put(1,companyId);
         List<Company> companies =getAllCompanies(DBmanager.GET_COMPANY_BY_ID,values);
-        //todo: add company doesn't exists
-        return (companies.get(0)==null?null:companies.get(0));
+        if(companies==null){
+            //todo: throw company doesn't exists exception
+            return null;
+        }
+        return companies.get(0);
     }
 }
