@@ -11,6 +11,7 @@ public class Coupon {
     private String description;
     private Date startDate;
     private Date endDate;
+    private boolean expired;
     private int amount;
     private double price;
     private String image;
@@ -29,7 +30,7 @@ public class Coupon {
      * @param price is the price of a single coupon
      * @param image is the string of the file
      */
-    public Coupon(int id, int companyID, Category category, String title, String description, Date startDate, Date endDate, int amount, double price, String image) {
+    public Coupon(int id, int companyID, Category category, String title, String description, Date startDate, Date endDate, boolean expired, int amount, double price, String image) {
         this.id = id;
         this.companyID = companyID;
         this.category = category;
@@ -37,6 +38,7 @@ public class Coupon {
         this.description = description;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.expired=expired;
         this.amount = amount;
         this.price = price;
         this.image = image;
@@ -88,6 +90,14 @@ public class Coupon {
 
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
+    }
+
+    public boolean isExpired() {
+        return expired;
+    }
+
+    public void setExpired(boolean expired) {
+        this.expired = expired;
     }
 
     public int getAmount() {

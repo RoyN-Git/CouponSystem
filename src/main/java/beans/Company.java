@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-
-    //todo: Reorganize fields id and name as final and and rebuild c'tors
     private final int id;
     private final String name;
     private String email;

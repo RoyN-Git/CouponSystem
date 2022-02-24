@@ -1,5 +1,6 @@
 package dao;
 
+import beans.Category;
 import beans.Coupon;
 
 import java.util.List;
@@ -12,5 +13,6 @@ public interface CouponsDAO {
     List<Coupon> getAllCoupons(String sql, Map<Integer,Object> values);
     Coupon getOneCoupon(int couponId);
     void addCouponPurchase(int customerId, int couponId);
-    void deleteCouponPurchase(int customerId, int couponId);;
+    void deleteCouponPurchase(int customerId, int couponId);
+    void addCategory(Category category);
 }
