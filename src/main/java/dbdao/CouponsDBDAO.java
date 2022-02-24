@@ -19,14 +19,25 @@ public class CouponsDBDAO implements CouponsDAO {
     public void addCoupon(Coupon coupon) {
         Map<Integer, Object> values = new HashMap<>();
         ResultSet resultSet;
+
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
-        if (resultSet != null) {
-            //todo: throw coupon title already exists exception
-            return;
+        assert resultSet != null;
+        try {
+            if(resultSet.next()){
+                if(resultSet.getString("title").equals(coupon.getTitle())){
+                    //todo: throw coupon title already exists exception
+                    return;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         values.clear();
+
+
         values.put(1, coupon.getCompanyID());
         values.put(2, coupon.getCategory().value);
         values.put(3, coupon.getTitle());
@@ -50,9 +61,17 @@ public class CouponsDBDAO implements CouponsDAO {
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
-        if (resultSet != null) {
-            //todo: throw coupon title already exists exception
-            return;
+        assert resultSet != null;
+        try {
+            if(resultSet.next()){
+                if(resultSet.getString("title").equals(coupon.getTitle())){
+                    //todo: throw coupon title already exists exception
+                    return;
+                }
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
         values.clear();
         values.put(1, coupon.getCategory().value);
@@ -141,5 +160,26 @@ public class CouponsDBDAO implements CouponsDAO {
         System.out.println((DBUtils.runQuery(DBmanager.DELETE_COUPON_PURCHASE, values) ?
                 "Coupon purchase deleted" :
                 "Coupon purchase deletion failed"));
+    }
+
+    @Override
+    public void addCategory(Category category) {
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1, category.getName());
+        ResultSet resultSet = DBUtils.runQueryForResult(DBmanager.IS_CATEGORY_EXISTS, values);
+        try {
+            assert resultSet != null;
+            if (resultSet.next()) {
+                if (resultSet.getString("name").equals(category.getName())) {
+                    //todo: throw category already exists exception
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        System.out.println(DBUtils.runQuery(DBmanager.CREATE_NEW_CATEGORY, values) ?
+                "Category added successfully" :
+                "Category addition failed");
     }
 }

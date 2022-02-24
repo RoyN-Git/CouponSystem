@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-
-
     private final int id;
     private final String name;
     private String email;
