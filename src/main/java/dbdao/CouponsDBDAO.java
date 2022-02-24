@@ -22,6 +22,7 @@ public class CouponsDBDAO implements CouponsDAO {
 
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
+        values.put(3,coupon.getId());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
         assert resultSet != null;
         try {
@@ -60,6 +61,7 @@ public class CouponsDBDAO implements CouponsDAO {
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
+        values.put(3,coupon.getId());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
         assert resultSet != null;
         try {
@@ -82,9 +84,8 @@ public class CouponsDBDAO implements CouponsDAO {
         values.put(6, coupon.isExpired());
         values.put(7, coupon.getAmount());
         values.put(8, coupon.getPrice());
-        values.put(9, coupon.getPrice());
-        values.put(10, coupon.getImage());
-        values.put(11, coupon.getId());
+        values.put(9, coupon.getImage());
+        values.put(10, coupon.getId());
 
         System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COUPON_BY_ID, values) ?
                 "Coupon update succeed" :
@@ -145,8 +146,21 @@ public class CouponsDBDAO implements CouponsDAO {
     @Override
     public void addCouponPurchase(int customerId, int couponId) {
         Map<Integer, Object> values = new HashMap<>();
+        ResultSet resultSet;
         values.put(1, customerId);
         values.put(2, couponId);
+        resultSet=DBUtils.runQueryForResult(DBmanager.IS_COUPON_PURCHASED,values);
+        try {
+            assert resultSet != null;
+            if(resultSet.next()){
+                if(resultSet.getInt("counter")==1){
+                    //todo:throw coupon already purchased exception
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         System.out.println((DBUtils.runQuery(DBmanager.PURCHASE_COUPON, values) ?
                 "Coupon purchased" :
                 "Coupon purchase failed"));

@@ -53,6 +53,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         try {
 
             values.put(1, company.getEmail());
+            values.put(2,company.getId());
             resultSet = DBUtils.runQueryForResult(DBmanager.IS_COMPANY_EMAIL_EXISTS, values);
             assert resultSet != null;
             if (resultSet.next()) {
