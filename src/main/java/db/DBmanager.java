@@ -148,7 +148,7 @@ public class DBmanager {
 
     //Coupons' queries
     public static final String ADD_NEW_COUPON = "INSERT INTO `coupon_project`.`coupons`" +
-            " (`company_id`,`category_id`,`title`,`description`,`start_date`,`end_date`,`expired`,`amount`,`price`,`image`" +
+            " (`company_id`,`category_id`,`title`,`description`,`start_date`,`end_date`,`expired`,`amount`,`price`,`image`)" +
             " VALUES (?,?,?,?,?,?,?,?,?,?)";
 
     public static final String GET_ONE_COUPON = "SELECT *" +
@@ -158,7 +158,7 @@ public class DBmanager {
     //todo: Add coupon title already exists exception
     public static final String IS_COUPON_TITLE_EXISTS = "SELECT title" +
             " FROM `coupon_project`.`coupons`" +
-            " WHERE title=? AND company_id=?";
+            " WHERE title=? AND company_id=? AND id!=?";
 
     public static final String UPDATE_COUPON_BY_ID = "UPDATE `coupon_project`.`coupons`" +
             "SET category_id=?,title=?,description=?,start_date=?,end_date=?,expired=?,amount=?,price=?,image=?" +
@@ -201,15 +201,20 @@ public class DBmanager {
 
     public static final String GET_ALL_CUSTOMER_COUPONS = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
-            " WHERE `coupon_project`.`customers_coupons`.customer_id=?";
+            " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
 
     public static final String GET_ALL_CUSTOMER_COUPONS_BY_CATEGORY = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
-            " WHERE `coupon_project`.`customers_coupons`.customer_id=? AND `coupon_project`.`coupons`.category_id=?";
+            " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
+            " AND `coupon_project`.`coupons`.category_id=?" +
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
 
     public static final String GET_ALL_CUSTOMER_COUPONS_UP_TO_PRICE = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
-            " WHERE `coupon_project`.`customers_coupons`.customer_id=? AND `coupon_project`.`coupons`.price<=?";
+            " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
+            " AND `coupon_project`.`coupons`.price<=?" +
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
 
     public static final String DELETE_COUPON_PURCHASE = "DELETE FROM `coupon_project`.`customers_coupons`" +
             " WHERE customer_id=? AND coupon_id=?";

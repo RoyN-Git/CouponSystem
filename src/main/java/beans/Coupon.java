@@ -134,11 +134,26 @@ public class Coupon {
         stringBuilder.append("Company: ").append(this.companyID).append("\t");
         stringBuilder.append("Category: ").append(this.category.getName()).append("\n");
         stringBuilder.append(this.title).append("\n").append(this.description).append("\n");
-        stringBuilder.append("start date: ").append(formattedStartDate).append("\t");
-        stringBuilder.append("amount left: ").append(this.amount).append("\n");
-        stringBuilder.append("end date:   ").append(formattedEndDate).append("\t");
-        stringBuilder.append("price: ").append(this.price).append("$\n");
+        if(!this.expired) {
+            stringBuilder.append("start date: ").append(formattedStartDate).append("\t");
+            stringBuilder.append("amount left: ").append(this.amount).append("\n");
+            stringBuilder.append("end date:   ").append(formattedEndDate).append("\t");
+            stringBuilder.append("price: ").append(this.price).append("$\n");
+        }else{
+            stringBuilder.append(expiredBanner());
+        }
         return stringBuilder.toString();
 
+    }
+
+    private String expiredBanner(){
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append(" ###### #    # #####  # #####  ###### #####  \n");
+        stringBuilder.append(" #       #  #  #    # # #    # #      #    # \n");
+        stringBuilder.append(" #####    ##   #    # # #    # #####  #    # \n");
+        stringBuilder.append(" #        ##   #####  # #####  #      #    # \n");
+        stringBuilder.append(" #       #  #  #      # #   #  #      #    # \n");
+        stringBuilder.append(" ###### #    # #      # #    # ###### #####  \n");
+        return stringBuilder.toString();
     }
 }
