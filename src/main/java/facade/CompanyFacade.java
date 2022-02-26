@@ -76,10 +76,10 @@ public class CompanyFacade extends ClientFacade{
         return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_BY_CATEGORY, values);
     }
 
-    public List<Coupon> getCompanyCoupons(double price){
+    public List<Coupon> getCompanyCoupons(double maxPrice){
         Map<Integer, Object> values=new HashMap<>();
         values.put(1,companyId);
-        values.put(2,price);
+        values.put(2, maxPrice);
         return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_UP_TO_PRICE, values);
     }
 
