@@ -6,6 +6,7 @@ import dao.CouponsDAO;
 import dao.CustomersDAO;
 import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
+import dbdao.CustomerDBDAO;
 
 public abstract class ClientFacade {
     protected CouponsDAO couponsDAO;
@@ -15,10 +16,8 @@ public abstract class ClientFacade {
     public ClientFacade() {
         this.couponsDAO = new CouponsDBDAO();
         this.companiesDAO = new CompaniesDBDAO();
-        //this.customersDAO = new CustomerDBDAO();
+        this.customersDAO = new CustomerDBDAO();
     }
 
-    public boolean login(String email, String password){
-        return false;
-    }
+    public abstract boolean login(String email, String password);
 }
