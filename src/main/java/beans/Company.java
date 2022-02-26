@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-
-
     private final int id;
     private final String name;
     private String email;
@@ -13,19 +11,19 @@ public class Company {
     private List<Coupon> coupons;
 
     /**
-     * Full constructor
+     * Constructor without receiving list of coupons.
+     * The list is initialized inside the constructor.
      * @param id is company's id
      * @param name is company's name
      * @param email is company's email
      * @param password is company's password
-     * @param coupons is list of the company's coupons
      */
-    public Company(int id, String name, String email, String password, List<Coupon> coupons) {
+    public Company(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.coupons = coupons;
+        this.coupons = new ArrayList<>();
     }
 
     public int getId() {
