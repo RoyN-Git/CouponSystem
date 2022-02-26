@@ -1,12 +1,15 @@
 package facade;
 
+import beans.Category;
 import beans.Company;
+import beans.Coupon;
 import db.DBUtils;
 import db.DBmanager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class CompanyFacade extends ClientFacade{
@@ -46,4 +49,41 @@ public class CompanyFacade extends ClientFacade{
         }
         return false;
     }
+
+    public void addCoupon(Coupon coupon){
+        this.couponsDAO.addCoupon(coupon);
+    }
+
+    public void updateCoupon(Coupon coupon){
+        //todo: check if need to ask what to update here
+        this.couponsDAO.updateCoupon(coupon);
+    }
+
+    public void deleteCoupon(int couponId){
+        this.couponsDAO.deleteCoupon(couponId);
+    }
+
+    public List<Coupon> getCompanyCoupons(){
+        Map<Integer, Object> values=new HashMap<>();
+        values.put(1,companyId);
+        return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS,values);
+    }
+
+    public List<Coupon> getCompanyCoupons(Category category){
+        Map<Integer, Object> values=new HashMap<>();
+        values.put(1,companyId);
+        values.put(2,category.value);
+        return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_BY_CATEGORY, values);
+    }
+
+    public List<Coupon> getCompanyCoupons(double price){
+        Map<Integer, Object> values=new HashMap<>();
+        values.put(1,companyId);
+        values.put(2,price);
+        return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_UP_TO_PRICE, values);
+    }
+
+     public Company getCompanyDetails(){
+        return this.companiesDAO.getOneCompany(companyId);
+     }
 }
