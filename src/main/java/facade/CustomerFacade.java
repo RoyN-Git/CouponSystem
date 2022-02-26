@@ -9,4 +9,9 @@ public class CustomerFacade extends ClientFacade {
         super();
         this.customerId = customerId;
     }
+
+    @Override
+    public boolean login(String email, String password) {
+        return false;
+    }
 }
