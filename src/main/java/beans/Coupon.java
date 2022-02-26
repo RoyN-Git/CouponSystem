@@ -26,6 +26,7 @@ public class Coupon {
      * @param description is the description of the coupon
      * @param startDate is the date in which the coupon was created
      * @param endDate is the day in which the coupon will be removed
+     * @param expired is true when today is after endDate
      * @param amount is the amount of the available coupons to purchase
      * @param price is the price of a single coupon
      * @param image is the string of the file
@@ -39,7 +40,7 @@ public class Coupon {
         this.startDate = startDate;
         this.endDate = endDate;
         this.expired=expired;
-        this.amount = amount;
+        setAmount(amount);
         this.price = price;
         this.image = image;
     }
@@ -106,6 +107,9 @@ public class Coupon {
 
     public void setAmount(int amount) {
         this.amount = amount;
+        if(this.amount<=0){
+            this.amount=0;
+        }
     }
 
     public double getPrice() {

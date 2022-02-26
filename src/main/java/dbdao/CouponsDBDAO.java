@@ -8,6 +8,7 @@ import db.DBUtils;
 import db.DBmanager;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,12 +23,12 @@ public class CouponsDBDAO implements CouponsDAO {
 
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
-        values.put(3,coupon.getId());
+        values.put(3, coupon.getId());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
         assert resultSet != null;
         try {
-            if(resultSet.next()){
-                if(resultSet.getString("title").equals(coupon.getTitle())){
+            if (resultSet.next()) {
+                if (resultSet.getString("title").equals(coupon.getTitle())) {
                     //todo: throw coupon title already exists exception
                     return;
                 }
@@ -61,12 +62,12 @@ public class CouponsDBDAO implements CouponsDAO {
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
-        values.put(3,coupon.getId());
+        values.put(3, coupon.getId());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_TITLE_EXISTS, values);
         assert resultSet != null;
         try {
-            if(resultSet.next()){
-                if(resultSet.getString("title").equals(coupon.getTitle())){
+            if (resultSet.next()) {
+                if (resultSet.getString("title").equals(coupon.getTitle())) {
                     //todo: throw coupon title already exists exception
                     return;
                 }
@@ -147,13 +148,38 @@ public class CouponsDBDAO implements CouponsDAO {
     public void addCouponPurchase(int customerId, int couponId) {
         Map<Integer, Object> values = new HashMap<>();
         ResultSet resultSet;
-        values.put(1, customerId);
-        values.put(2, couponId);
-        resultSet=DBUtils.runQueryForResult(DBmanager.IS_COUPON_PURCHASED,values);
+        values.put(1, couponId);
+        resultSet = DBUtils.runQueryForResult(DBmanager.COUPON_AMOUNT, values);
         try {
             assert resultSet != null;
-            if(resultSet.next()){
-                if(resultSet.getInt("counter")==1){
+            if (resultSet.next()) {
+                if (resultSet.getInt("amount") == 0) {
+                    //todo:throw coupon amount is 0 exception
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_EXPIRED, values);
+        try {
+            assert resultSet != null;
+            if (resultSet.next()) {
+                if (resultSet.getBoolean("expired")) {
+                    //todo:throw coupon expired exception
+                    return;
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        values.put(1, customerId);
+        values.put(2, couponId);
+        resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_PURCHASED, values);
+        try {
+            assert resultSet != null;
+            if (resultSet.next()) {
+                if (resultSet.getInt("counter") == 1) {
                     //todo:throw coupon already purchased exception
                     return;
                 }
@@ -164,6 +190,9 @@ public class CouponsDBDAO implements CouponsDAO {
         System.out.println((DBUtils.runQuery(DBmanager.PURCHASE_COUPON, values) ?
                 "Coupon purchased" :
                 "Coupon purchase failed"));
+        Coupon coupon=getOneCoupon(couponId);
+        coupon.setAmount(coupon.getAmount()-1);
+        updateCoupon(coupon);
     }
 
     @Override

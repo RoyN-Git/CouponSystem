@@ -84,13 +84,15 @@ public class DBmanager {
     public static final String ADMIN_PASSWORD = "admin";
 
     //Login queries
-    public static final String LOGIN_COMPANY = "SELECT id" +
+    public static final String LOGIN_COMPANY = "SELECT count(*) AS counter, id" +
             " FROM `coupon_project`.`companies`" +
-            " WHERE email=? AND password=?";
+            " WHERE email=? AND password=?" +
+            " GROUP BY id";
 
-    public static final String LOGIN_CUSTOMER = "SELECT id" +
+    public static final String LOGIN_CUSTOMER = "SELECT count(*) AS counter, id" +
             " FROM `coupon_project`.`customers" +
-            " WHERE email=? AND password=?";
+            " WHERE email=? AND password=?" +
+            " GROUP BY id";
 
     //Companies' queries
     public static final String CREATE_NEW_COMPANY = "INSERT INTO `coupon_project`.`companies`" +
@@ -143,7 +145,7 @@ public class DBmanager {
     public static final String CREATE_NEW_CATEGORY = "INSERT INTO `coupon_project`.`categories`" +
             " (`name`)" +
             " VALUES (?)";
-    public static final String IS_CATEGORY_EXISTS="SELECT * FROM `coupon_project`.`categories`" +
+    public static final String IS_CATEGORY_EXISTS = "SELECT * FROM `coupon_project`.`categories`" +
             " WHERE name=?";
 
     //Coupons' queries
@@ -186,6 +188,10 @@ public class DBmanager {
 
     //todo:Add coupon already expired exception
     public static final String COUPON_END_DATE = "SELECT end_date" +
+            " FROM `coupon_project`.`coupons`" +
+            " WHERE id=?";
+
+    public static final String IS_COUPON_EXPIRED="SELECT expired" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
 
