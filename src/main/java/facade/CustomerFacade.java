@@ -5,8 +5,11 @@ import beans.Company;
 import beans.Coupon;
 import beans.Customer;
 import com.mysql.cj.xdevapi.Client;
+import db.DBUtils;
 import db.DBmanager;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,13 +17,39 @@ import java.util.Map;
 public class CustomerFacade extends ClientFacade {
     private int customerId;
 
-    public CustomerFacade(int customerId) {
+    public CustomerFacade() {
         super();
+        this.customerId = 0;
+    }
+
+    public int getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
     @Override
     public boolean login(String email, String password) {
+        Map<Integer,Object> values=new HashMap<>();
+        values.put(1,email);
+        values.put(2,password);
+        if(this.customersDAO.isCustomerExists(email,password)){
+            try {
+                ResultSet resultSet= DBUtils.runQueryForResult(DBmanager.LOGIN_CUSTOMER,values);
+                assert resultSet != null;
+                if(resultSet.next()){
+                    if(resultSet.getInt("counter")==1){
+                        setCustomerId(resultSet.getInt("id"));
+                        return true;
+                    }
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+            return true;
+        }
         return false;
     }
 

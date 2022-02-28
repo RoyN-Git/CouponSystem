@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Customer {
-    private final int id;
+    private int id;
     private String firstName;
     private String lastName;
     private String email;
@@ -32,6 +32,10 @@ public class Customer {
 
     public int getId() {
         return id;
+    }
+
+    public void setId(int id) {
+        //todo: throw cannot change id exception
     }
 
     public String getFirstName() {
@@ -75,8 +79,7 @@ public class Customer {
         this.coupons = coupons;
     }
 
-    @Override
-    public String toString() {
+    public void printDetails(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("id: ").append(this.id).append("\t");
         stringBuilder.append("First name: ").append(this.firstName).append("\t");
@@ -89,6 +92,6 @@ public class Customer {
             stringBuilder.append(item.toString());
             stringBuilder.append("-----------------");
         }
-        return stringBuilder.toString();
+        System.out.println(stringBuilder.toString());
     }
 }

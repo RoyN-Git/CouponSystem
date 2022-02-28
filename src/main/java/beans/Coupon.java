@@ -4,8 +4,8 @@ import java.sql.Date;
 import java.text.SimpleDateFormat;
 
 public class Coupon {
-    private final int id;
-    private final int companyID;
+    private int id;
+    private int companyID;
     private Category category;
     private String title;
     private String description;
@@ -49,8 +49,16 @@ public class Coupon {
         return id;
     }
 
+    public void setId(int id) {
+        //todo: throw cannot change id exception
+    }
+
     public int getCompanyID() {
         return companyID;
+    }
+
+    public void setCompanyID(int companyID) {
+        //todo: throe cannot change company id exception
     }
 
     public Category getCategory() {
@@ -128,8 +136,7 @@ public class Coupon {
         this.image = image;
     }
 
-    @Override
-    public String toString() {
+    public void printDetails(){
         SimpleDateFormat myFormatObj=new SimpleDateFormat("dd/MM/yyyy");
         String formattedStartDate = myFormatObj.format(this.startDate);
         String formattedEndDate = myFormatObj.format(this.endDate);
@@ -146,8 +153,7 @@ public class Coupon {
         }else{
             stringBuilder.append(expiredBanner());
         }
-        return stringBuilder.toString();
-
+        System.out.println(stringBuilder.toString());
     }
 
     private String expiredBanner(){

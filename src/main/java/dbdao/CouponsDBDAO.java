@@ -7,20 +7,17 @@ import db.ConnectionPool;
 import db.DBUtils;
 import db.DBmanager;
 
-import java.sql.Connection;
+import java.sql.*;
 import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.*;
 
-public class CouponsDBDAO implements CouponsDAO {
+public class CouponsDBDAO implements CouponsDAO  {
 
     @Override
-    public void addCoupon(Coupon coupon) {
+    public void addCoupon(Coupon coupon) /*throws SQLIntegrityConstraintViolationException*/{
         Map<Integer, Object> values = new HashMap<>();
+         /*
         ResultSet resultSet;
-
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
         values.put(3, coupon.getId());
@@ -38,8 +35,7 @@ public class CouponsDBDAO implements CouponsDAO {
             e.printStackTrace();
         }
         values.clear();
-
-
+         */
         values.put(1, coupon.getCompanyID());
         values.put(2, coupon.getCategory().value);
         values.put(3, coupon.getTitle());
@@ -57,8 +53,9 @@ public class CouponsDBDAO implements CouponsDAO {
     }
 
     @Override
-    public void updateCoupon(Coupon coupon) {
+    public void updateCoupon(Coupon coupon) /*throws SQLIntegrityConstraintViolationException*/ {
         Map<Integer, Object> values = new HashMap<>();
+        /*
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
@@ -77,6 +74,7 @@ public class CouponsDBDAO implements CouponsDAO {
             e.printStackTrace();
         }
         values.clear();
+         */
         values.put(1, coupon.getCategory().value);
         values.put(2, coupon.getTitle());
         values.put(3, coupon.getDescription());
@@ -159,7 +157,7 @@ public class CouponsDBDAO implements CouponsDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_EXPIRED, values);
         try {
@@ -171,7 +169,7 @@ public class CouponsDBDAO implements CouponsDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         values.put(1, customerId);
         values.put(2, couponId);
@@ -185,7 +183,7 @@ public class CouponsDBDAO implements CouponsDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         System.out.println((DBUtils.runQuery(DBmanager.PURCHASE_COUPON, values) ?
                 "Coupon purchased" :
@@ -219,7 +217,7 @@ public class CouponsDBDAO implements CouponsDAO {
                 }
             }
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());;
         }
         System.out.println(DBUtils.runQuery(DBmanager.CREATE_NEW_CATEGORY, values) ?
                 "Category added successfully" :

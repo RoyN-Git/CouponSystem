@@ -1,10 +1,7 @@
-import beans.Category;
-import beans.Company;
-import beans.Coupon;
+import beans.*;
 
 import java.lang.reflect.*;
 
-import beans.Customer;
 import dao.CompaniesDAO;
 import dao.CouponsDAO;
 import dao.CustomersDAO;
@@ -13,10 +10,13 @@ import db.DBmanager;
 import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
 import dbdao.CustomerDBDAO;
+import facade.*;
+import utils.TablePrinter;
 
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.*;
+import java.util.function.Consumer;
 
 public class CouponSystemTest {
     private static boolean isSuccess;
@@ -28,73 +28,73 @@ public class CouponSystemTest {
         List<Coupon> coupons = new ArrayList<>();
         coupons.add(new Coupon(
                 0,
-                3,
-                Category.getCategoryByValue(3),
-                "check amount coupon",
+                11,
+                Category.getCategoryByValue(1),
+                "hi hi hi",
                 "just by me",
                 new Date(System.currentTimeMillis()),
-                new Date(System.currentTimeMillis() + 5 * DBmanager.ONE_DAY),
+                new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),
                 false,
-                4,
-                150,
+                50,
+                200,
                 "picture"));
         coupons.add(new Coupon(
                 0,
-                5,
-                Category.getCategoryByValue(4),
+                11,
+                Category.getCategoryByValue(2),
                 "check expired coupon",
                 "its a coupon",
-                new Date(System.currentTimeMillis() - 3 * DBmanager.ONE_DAY),
-                new Date(System.currentTimeMillis() - 2 * DBmanager.ONE_DAY),
+                new Date(System.currentTimeMillis()),
+                new Date(System.currentTimeMillis() + 5* DBmanager.ONE_DAY),
                 false,
-                75,
-                100,
+                30,
+                70,
                 "picture"));
+
+
          */
         /*
         Company company=new Company(
                 0,
-                "ShaharCompany",
-                "shaharc@compCoup.com",
+                "Shahar Company",
+                "newCompany@company.com",
                 "password11");
         //company.setCoupons(coupons);
-
          */
-
         /*
         Customer customer=new Customer(
                 0,
                 "stam",
                 "stam",
-                "stamstamstam@gmail.com",
+                "stam@customer.com",
                 "stam");
-        //customer.setCoupons(coupons);
-         */
 
-        CompaniesDAO companiesDAO = new CompaniesDBDAO();
+         */
+        //customer.setCoupons(coupons);
+        //CompaniesDAO companiesDAO = new CompaniesDBDAO();
         //companiesDAO.addCompany(company);//insert new company into DB, working
         //companiesDAO.deleteCompany(2);//delete company from DB, working
         //System.out.println(companiesDAO.isCompanyExists("company@company.com","password"));//check if the company exist, working
-        Company company1=companiesDAO.getOneCompany(5);//get one company from DB, working
+        //Company company1=companiesDAO.getOneCompany(1);//get one company from DB, working
         //companiesDAO.deleteCompany(company1.getId());
         //System.out.println(company1);
         //company1.setEmail("couponComp@compCoup.com");
         //companiesDAO.updateCompany(company1);//update company and push the changes to DB, working
-        List<Company> companies = companiesDAO.getAllCompanies(DBmanager.GET_ALL_COMPANIES, new HashMap<>());// working
+        //List<Company> companies = companiesDAO.getAllCompanies(DBmanager.GET_ALL_COMPANIES, new HashMap<>());// working
         //companies.forEach(System.out::println);
 
 
-        CustomersDAO customersDAO = new CustomerDBDAO();
+        //CustomersDAO customersDAO = new CustomerDBDAO();
         //customersDAO.addCustomer(customer);//working
         //customersDAO.deleteCustomer(6);//working
-        Customer customer1 = customersDAO.getOneCustomer(1);//working
+        //Customer customer1 = customersDAO.getOneCustomer(1);//working
         //System.out.println(customer1);
         //customer1.setPassword("firstlast");//working
         //customersDAO.updateCustomer(customer1);//working
-        List<Customer> customers = customersDAO.getAllCustomers(DBmanager.GET_ALL_CUSTOMERS, new HashMap<>());//working
+        //List<Customer> customers = customersDAO.getAllCustomers(DBmanager.GET_ALL_CUSTOMERS, new HashMap<>());//working
         //customers.forEach(System.out::println);
 
-        CouponsDAO couponsDAO = new CouponsDBDAO();
+        //CouponsDAO couponsDAO = new CouponsDBDAO();
         //for (Category item : Category.values()) {
         //    couponsDAO.addCategory(item);//working
         //}
@@ -102,18 +102,21 @@ public class CouponSystemTest {
         for (Coupon item : coupons) {
            couponsDAO.addCoupon(item);//working
         }
+
          */
         //couponsDAO.deleteCoupon(5);//working
-        Coupon coupon = couponsDAO.getOneCoupon(17);//working
+        //Coupon coupon = couponsDAO.getOneCoupon(17);//working
         //System.out.println(coupon);
         //coupon.setAmount(coupon.getAmount() - 1);
-        coupon.setExpired(true);
-        couponsDAO.updateCoupon(coupon);//working
-
+        //coupon.setExpired(true);
+        //couponsDAO.updateCoupon(coupon);//working
+        /*
         Map<Integer,Object> values=new HashMap<>();
         values.put(1,company1.getId());
         company1.setCoupons(couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS,values));//working
-        System.out.println(company1);
+        TablePrinter.print(company1);
+        company1.printDetails();
+         */
         /*
         values.clear();
         values.put(1,company1.getId());
@@ -135,7 +138,6 @@ public class CouponSystemTest {
         }
 
          */
-
         //companies.forEach(System.out::println);
         /*
         for (Customer customer:customers) {
@@ -144,13 +146,21 @@ public class CouponSystemTest {
             }
         }
          */
-
+        /*
         for (Customer item:customers) {
             couponsDAO.addCouponPurchase(item.getId(), 17);
         }
+         */
 
-
-
+        //todo: expired coupons' check of the daily job
+        /*
+        List<Coupon> expiredCoupons=couponsDAO.getAllCoupons(DBmanager.GET_EXPIRED_COUPONS,new HashMap<>());
+        expiredCoupons.forEach(System.out::println);
+        for (Coupon item:expiredCoupons) {
+            item.setExpired(true);
+            couponsDAO.updateCoupon(item);
+        }
+         */
         /*
         for (Customer customer:customers) {
             Map<Integer,Object> values=new HashMap<>();
@@ -166,7 +176,88 @@ public class CouponSystemTest {
         customer1.setCoupons(couponsDAO.getAllCoupons(DBmanager.GET_ALL_CUSTOMER_COUPONS,values));
         System.out.println(customer1);
          */
+        /*
+        Company company2=companiesDAO.getOneCompany(4);
+        company2.setEmail("company@company.com");
+        couponsDAO.addCoupon(new Coupon(
+                0,
+                1,
+                Category.getCategoryByValue(3),
+                "title",
+                "description",
+                new Date(System.currentTimeMillis()-10*DBmanager.ONE_DAY),
+                new Date(System.currentTimeMillis()-5*DBmanager.ONE_DAY),
+                false,
+                100,
+                100,
+                "picture"
+        ));
+        System.out.println(company2);
+        companiesDAO.updateCompany(company2);
+        company1=companiesDAO.getOneCompany(4);
+        System.out.println(company1);
 
+ */
+
+        //todo: login manager check, use it where you need to write the login manager
+        /*
+        LoginManager loginManager=LoginManager.getInstance();
+        ClientFacade clientFacade;
+         */
+        //todo: how to work with admin facade
+        /*
+        clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
+        if(clientFacade instanceof AdminFacade){
+            System.out.println("admin");
+            AdminFacade adminFacade=(AdminFacade) clientFacade;
+            //adminFacade.addCompany(company);
+            List<Company> companyList=adminFacade.getAllCompanies();
+            adminFacade.addCustomer(customer);
+            List<Customer> customerList=adminFacade.getAllCustomers();
+            //companyList.forEach(System.out::println);
+            TablePrinter.print(companyList);
+            TablePrinter.print(customerList);
+        }
+         */
+        //todo: how to work with company facade
+        /*
+        clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
+        if(clientFacade instanceof CompanyFacade){
+            System.out.println("company");
+            CompanyFacade companyFacade=(CompanyFacade) clientFacade;
+            System.out.println(companyFacade.getCompanyId());
+
+            companyFacade.addCoupon(new Coupon(
+                    0,
+                    companyFacade.getCompanyId(),
+                    Category.FOOD,
+                    "amazing coupon",
+                    "amazing description",
+                    new Date(System.currentTimeMillis()),
+                    new Date(System.currentTimeMillis() + 5* DBmanager.ONE_DAY),
+                    false,
+                    500,
+                    10,
+                    "picture"
+            ));
+            Company myCompany=companyFacade.getCompanyDetails();
+            myCompany.setCoupons(companyFacade.getCompanyCoupons());
+            TablePrinter.print(myCompany);
+        }
+         */
+        //todo: how to work with customer facade
+        /*
+        clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
+        if(clientFacade instanceof CustomerFacade) {
+            System.out.println("customer");
+            CustomerFacade customerFacade = (CustomerFacade) clientFacade;
+            System.out.println(customerFacade.getCustomerId());
+            Customer myCustomer=customerFacade.getCustomerDetails();
+            //customerFacade.purchaseCoupon();//todo: ask zeev how do I get a coupon from customerFacade
+            myCustomer.setCoupons(customerFacade.getCustomerCoupons());
+            TablePrinter.print(myCustomer);
+        }
+         */
 
     }
 
