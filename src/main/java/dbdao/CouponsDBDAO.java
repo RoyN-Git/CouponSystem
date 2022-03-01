@@ -3,12 +3,17 @@ package dbdao;
 import beans.Category;
 import beans.Coupon;
 import dao.CouponsDAO;
-import db.ConnectionPool;
 import db.DBUtils;
 import db.DBmanager;
 
+<<<<<<< HEAD
 import java.sql.*;
 import java.sql.Date;
+=======
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+>>>>>>> master
 import java.util.*;
 
 public class CouponsDBDAO implements CouponsDAO  {
