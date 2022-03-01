@@ -1,7 +1,5 @@
 package exception;
 
-import beans.ErrorType;
-
 public class CouponSystemException extends Exception {
 
     private ErrorType errorType;
