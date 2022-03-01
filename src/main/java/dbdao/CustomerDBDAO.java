@@ -7,6 +7,7 @@ import db.DBmanager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -24,18 +25,18 @@ public class CustomerDBDAO implements CustomersDAO {
             resultSet.next();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
 
     @Override
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer) /*throws SQLIntegrityConstraintViolationException*/ {
         Map<Integer, Object> values = new HashMap<>();
+        /*
         ResultSet resultSet;
         values.put(1, customer.getEmail());
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
-
         try {
             assert resultSet != null;
             if (resultSet.next()) {
@@ -47,15 +48,7 @@ public class CustomerDBDAO implements CustomersDAO {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-
-        /*
-        if(isCustomerExists(customer.getEmail(), customer.getPassword())){
-            //todo: throw exception
-            return;
-        }
-
          */
-        values.clear();
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());
@@ -70,8 +63,9 @@ public class CustomerDBDAO implements CustomersDAO {
 
 
     @Override
-    public void updateCustomer(Customer customer) {
+    public void updateCustomer(Customer customer) /*throws SQLIntegrityConstraintViolationException*/{
         Map<Integer, Object> values = new HashMap<>();
+        /*
         ResultSet resultSet;
         values.put(1, customer.getEmail());
         values.put(2,customer.getId());
@@ -89,6 +83,7 @@ public class CustomerDBDAO implements CustomersDAO {
             ex.printStackTrace();
         }
         values.clear();
+         */
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());

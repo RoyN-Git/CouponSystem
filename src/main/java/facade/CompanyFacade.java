@@ -8,11 +8,12 @@ import db.DBmanager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CompanyFacade extends ClientFacade{
+public class CompanyFacade extends ClientFacade {
     private int companyId;
 
     public CompanyFacade() {
@@ -30,60 +31,60 @@ public class CompanyFacade extends ClientFacade{
 
     @Override
     public boolean login(String email, String password) {
-        Map<Integer,Object> values=new HashMap<>();
-        values.put(1,email);
-        values.put(2,password);
-        if(this.companiesDAO.isCompanyExists(email,password)){
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1, email);
+        values.put(2, password);
+        if (this.companiesDAO.isCompanyExists(email, password)) {
             try {
-                ResultSet resultSet= DBUtils.runQueryForResult(DBmanager.LOGIN_COMPANY,values);
+                ResultSet resultSet = DBUtils.runQueryForResult(DBmanager.LOGIN_COMPANY, values);
                 assert resultSet != null;
-                if(resultSet.next()){
-                    setCompanyId(resultSet.getInt("id"));
-                    return true;
+                if (resultSet.next()) {
+                    if (resultSet.getInt("counter") == 1) {
+                        setCompanyId(resultSet.getInt("id"));
+                        return true;
+                    }
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
-            //setCompanyId();A
             return true;
         }
         return false;
     }
 
-    public void addCoupon(Coupon coupon){
+    public void addCoupon(Coupon coupon) {
         this.couponsDAO.addCoupon(coupon);
     }
 
-    public void updateCoupon(Coupon coupon){
-        //todo: check if need to ask what to update here
+    public void updateCoupon(Coupon coupon) {
         this.couponsDAO.updateCoupon(coupon);
     }
 
-    public void deleteCoupon(int couponId){
+    public void deleteCoupon(int couponId) {
         this.couponsDAO.deleteCoupon(couponId);
     }
 
-    public List<Coupon> getCompanyCoupons(){
-        Map<Integer, Object> values=new HashMap<>();
-        values.put(1,companyId);
-        return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS,values);
+    public List<Coupon> getCompanyCoupons() {
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1, companyId);
+        return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS, values);
     }
 
-    public List<Coupon> getCompanyCoupons(Category category){
-        Map<Integer, Object> values=new HashMap<>();
-        values.put(1,companyId);
-        values.put(2,category.value);
+    public List<Coupon> getCompanyCoupons(Category category) {
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1, companyId);
+        values.put(2, category.value);
         return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_BY_CATEGORY, values);
     }
 
-    public List<Coupon> getCompanyCoupons(double maxPrice){
-        Map<Integer, Object> values=new HashMap<>();
-        values.put(1,companyId);
+    public List<Coupon> getCompanyCoupons(double maxPrice) {
+        Map<Integer, Object> values = new HashMap<>();
+        values.put(1, companyId);
         values.put(2, maxPrice);
         return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_UP_TO_PRICE, values);
     }
 
-     public Company getCompanyDetails(){
+    public Company getCompanyDetails() {
         return this.companiesDAO.getOneCompany(companyId);
-     }
+    }
 }

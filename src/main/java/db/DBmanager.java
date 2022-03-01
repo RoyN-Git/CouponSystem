@@ -17,8 +17,8 @@ public class DBmanager {
     //Initiate tables
     public static final String CREATE_COMPANIES_TABLE = "CREATE TABLE IF NOT EXISTS `coupon_project`.`companies` (" +
             "  `id` INT NOT NULL AUTO_INCREMENT," +
-            "  `name` VARCHAR(45) NOT NULL," +
-            "  `email` VARCHAR(45) NOT NULL," +
+            "  `name` VARCHAR(45) NOT NULL UNIQUE," +
+            "  `email` VARCHAR(45) NOT NULL UNIQUE," +
             "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`))";
 
@@ -26,7 +26,7 @@ public class DBmanager {
             "  `id` INT NOT NULL AUTO_INCREMENT," +
             "  `first_name` VARCHAR(45) NOT NULL," +
             "  `last_name` VARCHAR(45) NOT NULL," +
-            "  `email` VARCHAR(45) NOT NULL," +
+            "  `email` VARCHAR(45) NOT NULL UNIQUE," +
             "  `password` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`))";
 
@@ -48,6 +48,7 @@ public class DBmanager {
             "  `price` DOUBLE NOT NULL," +
             "  `image` VARCHAR(45) NOT NULL," +
             "  PRIMARY KEY (`id`)," +
+            "  CONSTRAINT `uc_company_title` UNIQUE (`company_id`, `title`)," +
             "  INDEX `company_id_idx` (`company_id` ASC) VISIBLE," +
             "  INDEX `category_id_idx` (`category_id` ASC) VISIBLE," +
             "  CONSTRAINT `company_id`" +
@@ -90,7 +91,7 @@ public class DBmanager {
             " GROUP BY id";
 
     public static final String LOGIN_CUSTOMER = "SELECT count(*) AS counter, id" +
-            " FROM `coupon_project`.`customers" +
+            " FROM `coupon_project`.`customers`" +
             " WHERE email=? AND password=?" +
             " GROUP BY id";
 
@@ -190,6 +191,10 @@ public class DBmanager {
     public static final String COUPON_END_DATE = "SELECT end_date" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
+
+    public static final String GET_EXPIRED_COUPONS="SELECT *" +
+            " FROM `coupon_project`.`coupons`" +
+            " WHERE end_date<CURDATE() AND expired=false";
 
     public static final String IS_COUPON_EXPIRED="SELECT expired" +
             " FROM `coupon_project`.`coupons`" +

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-    private final int id;
-    private final String name;
+    private int id;
+    private String name;
     private String email;
     private String password;
     private List<Coupon> coupons;
+
+    //public Company(){}
 
     /**
      * Constructor without receiving list of coupons.
@@ -30,8 +32,16 @@ public class Company {
         return id;
     }
 
+    public void setId(int id) {
+        //todo: throw cannot change id exception
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        //todo: throw cannot change name exception
     }
 
     public String getEmail() {
@@ -39,7 +49,6 @@ public class Company {
     }
 
     public void setEmail(String email) {
-        //todo:Check if the email doesn't belong to another company
         this.email = email;
     }
 
@@ -59,8 +68,7 @@ public class Company {
         this.coupons = coupons;
     }
 
-    @Override
-    public String toString() {
+    public  void printDetails(){
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Company name: ").append(this.name).append("\tid: ").append(this.id).append("\n");
         stringBuilder.append("email: ").append(this.email).append("\n");
@@ -71,7 +79,7 @@ public class Company {
             stringBuilder.append(item.toString());
             stringBuilder.append("-----------------");
         }
-        return stringBuilder.toString();
+        System.out.println(stringBuilder.toString());
     }
 
 }

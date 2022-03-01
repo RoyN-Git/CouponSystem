@@ -8,6 +8,7 @@ import db.DBmanager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -25,7 +26,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             resultSet.next();
             return true;
         } catch (SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
         return false;
     }
@@ -47,8 +48,9 @@ public class CompaniesDBDAO implements CompaniesDAO {
      */
 
     @Override
-    public void addCompany(Company company) {
+    public void addCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/ {
         Map<Integer, Object> values = new HashMap<>();
+        /*
         ResultSet resultSet;
         try {
 
@@ -64,13 +66,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
 
             values.clear();
-            /*
-            if(isCompanyExists(company.getEmail(), company.getPassword())){
-                //todo: throw exception
-                return;
-            }
 
-             */
             values.put(1, company.getName());
             resultSet = DBUtils.runQueryForResult(DBmanager.IS_COMPANY_NAME_EXISTS, values);
             assert resultSet != null;
@@ -84,17 +80,20 @@ public class CompaniesDBDAO implements CompaniesDAO {
             e.printStackTrace();
         }
         values.clear();
+        */
         values.put(1, company.getName());
         values.put(2, company.getEmail());
         values.put(3, company.getPassword());
         System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_COMPANY, values) ?
                 "Company created successfully" :
                 "Company creation failed"));
+
     }
 
     @Override
-    public void updateCompany(Company company) {
+    public void updateCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/{
         Map<Integer, Object> values = new HashMap<>();
+        /*
         ResultSet resultSet;
         //todo: find out why the email check doesn't work properly
         try {
@@ -111,14 +110,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             e.printStackTrace();
         }
         values.clear();
-
-        /*
-        if(isCompanyExists(company.getEmail(), company.getPassword())){
-            //todo: throw exception
-            return;
-        }
-
-         */
+        */
         values.put(1, company.getEmail());
         values.put(2, company.getPassword());
         values.put(3, company.getId());
@@ -131,7 +123,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
     public void deleteCompany(int companyId) {
         Map<Integer, Object> values = new HashMap<>();
         values.put(1, companyId);
-
         System.out.println((DBUtils.runQuery(DBmanager.DELETE_COMPANY_BY_ID, values) ?
                 "Company deleted successfully" :
                 "Company deletion failed"));
