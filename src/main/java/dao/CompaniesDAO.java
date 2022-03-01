@@ -3,6 +3,7 @@ package dao;
 import beans.Company;
 
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -14,3 +15,4 @@ public interface CompaniesDAO {
     List<Company> getAllCompanies(String sql, Map<Integer,Object> values);
     Company getOneCompany(int companyId);
 }
+

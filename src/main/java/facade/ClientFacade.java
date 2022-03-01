@@ -1,8 +1,6 @@
 package facade;
 
-import beans.Customer;
 import dao.CompaniesDAO;
-import dao.CouponsDAO;
 import dao.CustomersDAO;
 import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
