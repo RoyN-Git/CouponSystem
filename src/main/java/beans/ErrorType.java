@@ -1,6 +1,6 @@
 package beans;
 
-public class ErrorType {
+public enum ErrorType {
     DB_GET_ERROR("error fetching data from db", "general error. please try again in a few minutes"),
     DB_SET_ERROR("error setting data to db", "general error. please try again in a few minutes"),
     NAME_ALREADY_EXISTS("error creating new entity since the name chosen exists", "the name chosen is already exists"),
@@ -27,5 +27,4 @@ public class ErrorType {
     }
 
 }
-
 
