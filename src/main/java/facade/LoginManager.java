@@ -12,32 +12,39 @@ public class LoginManager {
 
     public static LoginManager getInstance() {
         if (instance == null) {
-            instance = new LoginManager();
+            synchronized (LoginManager.class) {
+                if (instance == null) {
+                    instance = new LoginManager();
+                }
+            }
         }
         return instance;
     }
     //todo: Finish the login logic later
-
+    /*
     public ClientFacade login(String email, String password, ClientType clientType) {
-        //ClientFacade clientFacade = null;
-        AdminFacade adminFacade=new AdminFacade();
-        CompanyFacade companyFacade=new CompanyFacade();
-        CustomerFacade customerFacade=new CustomerFacade();
+        ClientFacade clientFacade = null;
         switch (clientType) {
             case ADMINISTRATOR:
-                if (adminFacade.login(email, password)) {
-                    return adminFacade;
+                if (clientFacade.login(email, password)){
+                    clientFacade = new AdminFacade();
+                    return clientFacade;
                 }
             case COMPANY:
-                if (companyFacade.login(email, password)) {
-                    return companyFacade;
+                if (clientFacade.login(email, password)){
+                    clientFacade = new CompanyFacade();
+                    return clientFacade;
                 }
             case CUSTOMER:
-                if (customerFacade.login(email, password)) {
-                    return customerFacade;
+                if (clientFacade.login(email, password)){
+                    clientFacade = new CustomerFacade();
+                    return clientFacade;
                 }
         }
-        return null;
+        return clientFacade;
     }
+
+
+     */
 
 }
