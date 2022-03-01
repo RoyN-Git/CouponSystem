@@ -1,7 +1,6 @@
 package jobs;
 
 import dbdao.CouponsDBDAO;
-import dao.CouponsDAO;
 import exception.CouponSystemException;
 
     public class CouponExpirationDailyJob implements Runnable {
