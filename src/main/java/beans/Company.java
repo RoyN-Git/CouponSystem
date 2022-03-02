@@ -68,7 +68,8 @@ public class Company {
         this.coupons = coupons;
     }
 
-    public  void printDetails(){
+    @Override
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("Company name: ").append(this.name).append("\tid: ").append(this.id).append("\n");
         stringBuilder.append("email: ").append(this.email).append("\n");
@@ -79,7 +80,8 @@ public class Company {
             stringBuilder.append(item.toString());
             stringBuilder.append("-----------------");
         }
-        System.out.println(stringBuilder.toString());
+        return stringBuilder.toString();
     }
+
 
 }

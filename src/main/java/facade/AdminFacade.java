@@ -28,8 +28,8 @@ public class AdminFacade extends ClientFacade{
         companiesDAO.updateCompany(company);
     }
 
-    public void deleteCompany(Company company){
-        companiesDAO.deleteCompany(company.getId());
+    public void deleteCompany(int companyId){
+        companiesDAO.deleteCompany(companyId);
     }
 
     public List<Company> getAllCompanies(){

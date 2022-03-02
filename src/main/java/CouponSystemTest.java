@@ -1,29 +1,13 @@
-import beans.*;
-
-import java.lang.reflect.*;
-
-import dao.CompaniesDAO;
+import beans.Category;
 import dao.CouponsDAO;
-import dao.CustomersDAO;
-import db.DBUtils;
-import db.DBmanager;
-import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
-import dbdao.CustomerDBDAO;
-import facade.*;
 import test.Test;
-import utils.TablePrinter;
-
-import java.sql.Date;
-import java.sql.ResultSet;
-import java.util.*;
-import java.util.function.Consumer;
 
 public class CouponSystemTest {
     private static boolean isSuccess;
 
     public static void main(String[] args) {
-        Test test = new Test();
+        new Test();
 
         //dropDataBase();
         //createDataBase();

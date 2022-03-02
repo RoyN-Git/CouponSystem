@@ -136,7 +136,8 @@ public class Coupon {
         this.image = image;
     }
 
-    public void printDetails(){
+    @Override
+    public String toString() {
         SimpleDateFormat myFormatObj=new SimpleDateFormat("dd/MM/yyyy");
         String formattedStartDate = myFormatObj.format(this.startDate);
         String formattedEndDate = myFormatObj.format(this.endDate);
@@ -153,8 +154,9 @@ public class Coupon {
         }else{
             stringBuilder.append(expiredBanner());
         }
-        System.out.println(stringBuilder.toString());
+        return stringBuilder.toString();
     }
+
 
     private String expiredBanner(){
         StringBuilder stringBuilder = new StringBuilder();
