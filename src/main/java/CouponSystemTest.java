@@ -12,6 +12,8 @@ import dbdao.CouponsDBDAO;
 import dbdao.CustomerDBDAO;
 import facade.*;
 import utils.TablePrinter;
+import exception.CouponSystemException;
+
 
 import java.sql.Date;
 import java.sql.ResultSet;
