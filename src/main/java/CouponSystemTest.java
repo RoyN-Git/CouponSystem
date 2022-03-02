@@ -210,7 +210,7 @@ public class CouponSystemTest {
         if(clientFacade instanceof AdminFacade){
             System.out.println("admin");
             AdminFacade adminFacade=(AdminFacade) clientFacade;
-            //adminFacade.addCompany(company);
+            adminFacade.addCompany(new Company(0,"WANT TO CHECK", "checkCompany@comp.com","check"));
             List<Company> companyList=adminFacade.getAllCompanies();
             //adminFacade.addCustomer(customer);
             List<Customer> customerList=adminFacade.getAllCustomers();
@@ -220,13 +220,13 @@ public class CouponSystemTest {
         }
 
         //todo: how to work with company facade
-
+        /*
         clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
         if(clientFacade instanceof CompanyFacade){
             System.out.println("company");
             CompanyFacade companyFacade=(CompanyFacade) clientFacade;
             System.out.println(companyFacade.getCompanyId());
-            /*
+
             companyFacade.addCoupon(new Coupon(
                     0,
                     companyFacade.getCompanyId(),
@@ -240,12 +240,13 @@ public class CouponSystemTest {
                     10,
                     "picture"
             ));
-             */
+
             Company myCompany=companyFacade.getCompanyDetails();
             myCompany.setCoupons(companyFacade.getCompanyCoupons());
             TablePrinter.print(myCompany);
-        }
 
+        }
+        */
         //todo: how to work with customer facade
 
         clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
@@ -258,6 +259,8 @@ public class CouponSystemTest {
             myCustomer.setCoupons(customerFacade.getCustomerCoupons());
             TablePrinter.print(myCustomer);
         }
+
+
 
 
     }

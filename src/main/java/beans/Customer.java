@@ -11,6 +11,8 @@ public class Customer {
     private String password;
     private List<Coupon> coupons;
 
+    public Customer(){}
+
     /**
      * Constructor without receiving list of coupons.
      * The list is initialized inside the constructor.
