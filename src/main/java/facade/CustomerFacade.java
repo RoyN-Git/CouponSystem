@@ -22,6 +22,7 @@ public class CustomerFacade extends ClientFacade {
         this.customerId = 0;
     }
 
+
     public int getCustomerId() {
         return customerId;
     }
