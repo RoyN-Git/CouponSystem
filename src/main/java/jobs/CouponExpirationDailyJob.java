@@ -18,6 +18,7 @@ public class CouponExpirationDailyJob implements Runnable {
 
     @Override
     public void run() {
+
         while (!quit){
             List<Coupon> expiredCoupons = couponsDAO.getAllCoupons(DBmanager.GET_EXPIRED_COUPONS,new HashMap<>());
             expiredCoupons.forEach(System.out::println);  // todo: delete
