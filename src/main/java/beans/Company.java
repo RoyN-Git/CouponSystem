@@ -10,7 +10,7 @@ public class Company {
     private String password;
     private List<Coupon> coupons;
 
-    //public Company(){}
+    public Company(){}
 
     /**
      * Constructor without receiving list of coupons.

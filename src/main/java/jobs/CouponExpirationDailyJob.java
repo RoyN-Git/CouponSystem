@@ -1,39 +1,44 @@
 package jobs;
 
+import beans.Coupon;
+import dao.CouponsDAO;
+import db.DBmanager;
 import dbdao.CouponsDBDAO;
 import exception.CouponSystemException;
 
-    public class CouponExpirationDailyJob implements Runnable {
+import java.util.HashMap;
+import java.util.List;
 
-        private CouponsDAO couponsDAO;
-        private static final long TWENTY_FOUR_HOURS = 24 * 60 * 60 * 1000;
-        private boolean quit;
-
-        public CouponExpirationDailyJob() {
-
-            couponsDAO = new CouponsDBDAO();
-        }
-
-        @Override
-        public void run() {
-            while (!quit) {
-                try {
-                    couponsDAO.deleteExpiredCoupons();
-                } catch (CouponSystemException couponSystemException) {
-                    System.out.println(couponSystemException.getMessage());
-                }
-
-                try {
-                    Thread.sleep(TWENTY_FOUR_HOURS);
-                } catch (InterruptedException exception) {
-                    exception.printStackTrace();
-                    break;
-                }
-            }
-        }
-        public void stop() {
-            quit = true;
-        }
-
+public class CouponExpirationDailyJob implements Runnable {
+    private CouponsDAO couponsDAO;
+    boolean quit=false;
+  
+  
+    public CouponExpirationDailyJob() {
+        this.couponsDAO = new CouponsDBDAO();
     }
+
+  
+    @Override
+    public void run() {
+        while (!quit){
+            List<Coupon> expiredCoupons = couponsDAO.getAllCoupons(DBmanager.GET_EXPIRED_COUPONS,new HashMap<>());
+            expiredCoupons.forEach(System.out::println);  // todo: delete
+            for (Coupon item:expiredCoupons){
+                item.setExpired(true);
+                couponsDAO.updateCoupon(item);
+            }
+            try {
+                Thread.sleep(DBmanager.ONE_DAY);
+            } catch (InterruptedException e) {
+                System.out.println(e.getMessage());
+            }
+
+        }
+    }
+
+    public void stop(){
+        quit = true;
+    }
+}
 

@@ -1,5 +1,25 @@
+import beans.*;
+
+import java.lang.reflect.*;
+
+import dao.CompaniesDAO;
+import dao.CouponsDAO;
+import dao.CustomersDAO;
 import db.DBUtils;
 import db.DBmanager;
+import dbdao.CompaniesDBDAO;
+import dbdao.CouponsDBDAO;
+import dbdao.CustomerDBDAO;
+import facade.*;
+import utils.TablePrinter;
+import exception.CouponSystemException;
+import jobs.CouponExpirationDailyJob;
+
+
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class CouponSystemTest {
     private static boolean isSuccess;
@@ -183,25 +203,25 @@ public class CouponSystemTest {
  */
 
         //todo: login manager check, use it where you need to write the login manager
-        /*
+
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
-         */
+
         //todo: how to work with admin facade
-        /*
+
         clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
         if(clientFacade instanceof AdminFacade){
             System.out.println("admin");
             AdminFacade adminFacade=(AdminFacade) clientFacade;
-            //adminFacade.addCompany(company);
+            adminFacade.addCompany(new Company(0,"WANT TO CHECK", "checkCompany@comp.com","check"));
             List<Company> companyList=adminFacade.getAllCompanies();
-            adminFacade.addCustomer(customer);
+            //adminFacade.addCustomer(customer);
             List<Customer> customerList=adminFacade.getAllCustomers();
             //companyList.forEach(System.out::println);
             TablePrinter.print(companyList);
             TablePrinter.print(customerList);
         }
-         */
+
         //todo: how to work with company facade
         /*
         clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
@@ -223,13 +243,15 @@ public class CouponSystemTest {
                     10,
                     "picture"
             ));
+
             Company myCompany=companyFacade.getCompanyDetails();
             myCompany.setCoupons(companyFacade.getCompanyCoupons());
             TablePrinter.print(myCompany);
+
         }
-         */
+        */
         //todo: how to work with customer facade
-        /*
+
         clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
         if(clientFacade instanceof CustomerFacade) {
             System.out.println("customer");
@@ -240,7 +262,9 @@ public class CouponSystemTest {
             myCustomer.setCoupons(customerFacade.getCustomerCoupons());
             TablePrinter.print(myCustomer);
         }
-         */
+
+
+
 
     }
 
