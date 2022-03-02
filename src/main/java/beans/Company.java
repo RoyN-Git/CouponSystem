@@ -4,54 +4,44 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Company {
-
-    //todo: Reorganize fields id and name as final and and rebuild c'tors
-    private /*final*/ int id;
-    private /*final*/ String name;
+    private int id;
+    private String name;
     private String email;
     private String password;
     private List<Coupon> coupons;
 
-    public Company() {
-    }
+    //public Company(){}
 
-    /*Full c'tor
-    public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
-        this.id=id;
-        this.name=name;
-        this.email=email;
-        this.password=password;
-        this.coupons = coupons;
-    }
+    /**
+     * Constructor without receiving list of coupons.
+     * The list is initialized inside the constructor.
+     * @param id is company's id
+     * @param name is company's name
+     * @param email is company's email
+     * @param password is company's password
      */
-
-    public Company(String name, String email, String password) {
+    public Company(int id, String name, String email, String password) {
+        this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-    }
-
-    public Company(String name, String email, String password, ArrayList<Coupon> coupons) {
-        this(name, email, password);
-        this.coupons = coupons;
-    }
-
-    public Company(int id, String name, String email, String password) {
-        this(name, email, password);
-        this.id = id;
-    }
-
-    public Company(int id, String name, String email, String password, ArrayList<Coupon> coupons) {
-        this(id, name, email, password);
-        this.coupons = coupons;
+        this.coupons = new ArrayList<>();
     }
 
     public int getId() {
         return id;
     }
 
+    public void setId(int id) {
+        //todo: throw cannot change id exception
+    }
+
     public String getName() {
         return name;
+    }
+
+    public void setName(String name) {
+        //todo: throw cannot change name exception
     }
 
     public String getEmail() {
@@ -59,7 +49,6 @@ public class Company {
     }
 
     public void setEmail(String email) {
-        //todo:Check if the email doesn't belong to another company
         this.email = email;
     }
 
@@ -75,14 +64,24 @@ public class Company {
         return coupons;
     }
 
-    public void setCoupons(ArrayList<Coupon> coupons) {
+    public void setCoupons(List<Coupon> coupons) {
         this.coupons = coupons;
     }
 
     @Override
     public String toString() {
-        return String.format("Company [id=%s, name=%s, email=%s, password=%s, coupons=%s]", id, name, email, password,
-                coupons);
+        StringBuilder stringBuilder = new StringBuilder();
+        stringBuilder.append("Company name: ").append(this.name).append("\tid: ").append(this.id).append("\n");
+        stringBuilder.append("email: ").append(this.email).append("\n");
+        stringBuilder.append("Coupons: ").append("\n");
+        stringBuilder.append("-----------------");
+        for (Coupon item:this.coupons) {
+            stringBuilder.append("\n");
+            stringBuilder.append(item.toString());
+            stringBuilder.append("-----------------");
+        }
+        return stringBuilder.toString();
     }
+
 
 }
