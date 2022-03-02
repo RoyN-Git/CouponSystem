@@ -33,7 +33,6 @@ public class Company {
     }
 
     public void setId(int id) {
-        //todo: throw cannot change id exception
     }
 
     public String getName() {
@@ -41,7 +40,6 @@ public class Company {
     }
 
     public void setName(String name) {
-        //todo: throw cannot change name exception
     }
 
     public String getEmail() {
