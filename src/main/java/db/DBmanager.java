@@ -4,8 +4,8 @@ public class DBmanager {
 
     //sql connection
     public static final String URL = "jdbc:mysql://localhost:3306/";
-    public static final String SQL_USER = "root";//change the user to your root username
-    public static final String SQL_PASSWORD = "12345678";//change password to your root password
+    public static final String SQL_USER = "admin";//change the user to your root username
+    public static final String SQL_PASSWORD = "Sa12345678!!";//change password to your root password
 
     //Calculating one day in milliseconds
     public static final int ONE_DAY = 1000 * 60 * 60 * 24;
@@ -32,7 +32,7 @@ public class DBmanager {
 
     public static final String CREATE_CATEGORIES_TABLE = "CREATE TABLE IF NOT EXISTS `coupon_project`.`categories` (" +
             "  `id` INT NOT NULL AUTO_INCREMENT," +
-            "  `name` VARCHAR(45) NOT NULL," +
+            "  `name` VARCHAR(45) NOT NULL UNIQUE," +
             "  PRIMARY KEY (`id`));";
 
     public static final String CREATE_COUPONS_TABLE = "CREATE TABLE IF NOT EXISTS `coupon_project`.`coupons` (" +
@@ -66,6 +66,7 @@ public class DBmanager {
             "  `customer_id` INT NOT NULL," +
             "  `coupon_id` INT NOT NULL," +
             "  PRIMARY KEY (`customer_id`, `coupon_id`)," +
+            "  CONSTRAINT `uc_customer_coupon` UNIQUE (`customer_id`, `coupon_id`)," +
             "  INDEX `coupon_id_idx` (`coupon_id` ASC) VISIBLE," +
             "  CONSTRAINT `customer_id`" +
             "    FOREIGN KEY (`customer_id`)" +
@@ -100,12 +101,12 @@ public class DBmanager {
             " (`name`,`email`,`password`)" +
             " VALUES (?,?,?)";
 
-    //todo: Add company name already exists exception
+
     public static final String IS_COMPANY_NAME_EXISTS = "SELECT name" +
             " FROM `coupon_project`.`companies`" +
             " WHERE name=?";
 
-    //todo: Add company email already exists exception
+
     public static final String IS_COMPANY_EMAIL_EXISTS = "SELECT email" +
             " FROM `coupon_project`.`companies`" +
             " WHERE email=? AND id !=?";
@@ -118,7 +119,7 @@ public class DBmanager {
 
     public static final String GET_ALL_COMPANIES = "SELECT * FROM `coupon_project`.`companies`";
 
-    //todo: Add company doesn't exist exception
+
     public static final String GET_COMPANY_BY_ID = "SELECT * FROM `coupon_project`.`companies` WHERE id=?";
 
     //Customers' queries
@@ -126,7 +127,7 @@ public class DBmanager {
             " (`first_name`,`last_name`,`email`,`password`)" +
             " VALUES (?,?,?,?)";
 
-    //todo: Add customer email already exists exception
+
     public static final String IS_CUSTOMER_EMAIL_EXISTS = "SELECT email" +
             " FROM `coupon_project`.`customers`" +
             " WHERE email=? AND id !=?";
@@ -139,7 +140,7 @@ public class DBmanager {
 
     public static final String GET_ALL_CUSTOMERS = "SELECT * FROM `coupon_project`.`customers`";
 
-    //todo: Add customer doesn't exist exception
+
     public static final String GET_CUSTOMER_BY_ID = "SELECT * FROM `coupon_project`.`customers` WHERE id=?";
 
     //Categories' queries
@@ -158,7 +159,7 @@ public class DBmanager {
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
 
-    //todo: Add coupon title already exists exception
+
     public static final String IS_COUPON_TITLE_EXISTS = "SELECT title" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE title=? AND company_id=? AND id!=?";
@@ -185,12 +186,12 @@ public class DBmanager {
             " ORDER BY id";
 
 
-    //todo: Add coupon amount is 0, can't purchase exception
+
     public static final String COUPON_AMOUNT = "SELECT amount" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
 
-    //todo:Add coupon already expired exception
+
     public static final String COUPON_END_DATE = "SELECT end_date" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
@@ -208,7 +209,6 @@ public class DBmanager {
             " (`customer_id`,`coupon_id`)" +
             " VALUES (?,?)";
 
-    //todo: Add coupon already purchased exception
     public static final String IS_COUPON_PURCHASED = "SELECT count(*) as counter" +
             " FROM `coupon_project`.`customers_coupons`" +
             " WHERE customer_id=? AND coupon_id=?";
@@ -235,4 +235,11 @@ public class DBmanager {
 
     public static final String DELETE_COUPON_PURCHASE = "DELETE FROM `coupon_project`.`customers_coupons`" +
             " WHERE customer_id=? AND coupon_id=?";
+
+    public static final String VIEW_ALL_COUPONS="SELECT *" +
+            " FROM `coupon_project`.`coupons`" +
+            " WHERE expired=false"/*AND id NOT IN" +
+            " (SELECT coupon_id" +
+            " FROM `coupon_project`.`customers_coupons`" +
+            " WHERE customer_id=?)"*/;
 }

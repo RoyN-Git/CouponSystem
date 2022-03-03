@@ -2,6 +2,7 @@ package dao;
 
 import beans.Company;
 
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,7 @@ public interface CompaniesDAO {
     boolean isCompanyExists(String email, String password);
     void addCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/;
     void updateCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/;
-    void deleteCompany(int companyId);
+    void deleteCompany(int companyId) throws SQLException;
     List<Company> getAllCompanies(String sql, Map<Integer,Object> values);
     Company getOneCompany(int companyId);
 }
