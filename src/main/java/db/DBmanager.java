@@ -4,8 +4,8 @@ public class DBmanager {
 
     //sql connection
     public static final String URL = "jdbc:mysql://localhost:3306/";
-    public static final String SQL_USER = "admin";//change the user to your root username
-    public static final String SQL_PASSWORD = "Sa12345678!!";//change password to your root password
+    public static final String SQL_USER = "root";//change the user to your root username
+    public static final String SQL_PASSWORD = "12345678";//change password to your root password
 
     //Calculating one day in milliseconds
     public static final int ONE_DAY = 1000 * 60 * 60 * 24;
@@ -171,15 +171,18 @@ public class DBmanager {
 
     public static final String GET_ALL_COMPANY_COUPONS = "SELECT *" +
             " FROM `coupon_project`.`coupons`" +
-            " WHERE company_id=?";
+            " WHERE company_id=?" +
+            " ORDER BY id";
 
     public static final String GET_ALL_COMPANY_COUPONS_BY_CATEGORY = "SELECT *" +
             " FROM `coupon_project`.`coupons`" +
-            " WHERE company_id=? AND category_id=?";
+            " WHERE company_id=? AND category_id=?" +
+            " ORDER BY id";
 
     public static final String GET_ALL_COMPANY_COUPONS_UP_TO_PRICE = "SELECT *" +
             "FROM `coupon_project`.`coupons`" +
-            " WHERE company_id=? AND price<=?";
+            " WHERE company_id=? AND price<=?" +
+            " ORDER BY id";
 
 
     //todo: Add coupon amount is 0, can't purchase exception
@@ -213,19 +216,22 @@ public class DBmanager {
     public static final String GET_ALL_CUSTOMER_COUPONS = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
             " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
-            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id" +
+            " ORDER BY id";
 
     public static final String GET_ALL_CUSTOMER_COUPONS_BY_CATEGORY = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
             " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
             " AND `coupon_project`.`coupons`.category_id=?" +
-            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id" +
+            " ORDER BY id";
 
     public static final String GET_ALL_CUSTOMER_COUPONS_UP_TO_PRICE = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
             " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
             " AND `coupon_project`.`coupons`.price<=?" +
-            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id";
+            " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id" +
+            " ORDER BY id";
 
     public static final String DELETE_COUPON_PURCHASE = "DELETE FROM `coupon_project`.`customers_coupons`" +
             " WHERE customer_id=? AND coupon_id=?";
