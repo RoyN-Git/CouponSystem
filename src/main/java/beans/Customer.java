@@ -81,7 +81,8 @@ public class Customer {
         this.coupons = coupons;
     }
 
-    public void printDetails(){
+    @Override
+    public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
         stringBuilder.append("id: ").append(this.id).append("\t");
         stringBuilder.append("First name: ").append(this.firstName).append("\t");
@@ -94,6 +95,7 @@ public class Customer {
             stringBuilder.append(item.toString());
             stringBuilder.append("-----------------");
         }
-        System.out.println(stringBuilder.toString());
+        return stringBuilder.toString();
     }
+
 }
