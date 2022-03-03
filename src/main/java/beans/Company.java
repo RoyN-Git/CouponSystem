@@ -1,5 +1,7 @@
 package beans;
 
+import exception.CouponSystemException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +12,7 @@ public class Company {
     private String password;
     private List<Coupon> coupons;
 
-    //public Company(){}
+    public Company(){}
 
     /**
      * Constructor without receiving list of coupons.
@@ -32,16 +34,16 @@ public class Company {
         return id;
     }
 
-    public void setId(int id) {
-        //todo: throw cannot change id exception
+    public void setId(int id) throws CouponSystemException {
+        throw new CouponSystemException(ErrorType.VALUE_CANNOT_BE_CHANGED.getMessage());
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        //todo: throw cannot change name exception
+    public void setName(String name) throws CouponSystemException {
+        throw new CouponSystemException(ErrorType.VALUE_CANNOT_BE_CHANGED.getMessage());
     }
 
     public String getEmail() {

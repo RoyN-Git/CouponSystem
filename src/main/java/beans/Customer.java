@@ -1,5 +1,7 @@
 package beans;
 
+import exception.CouponSystemException;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,6 +12,8 @@ public class Customer {
     private String email;
     private String password;
     private List<Coupon> coupons;
+
+    public Customer(){}
 
     /**
      * Constructor without receiving list of coupons.
@@ -34,8 +38,8 @@ public class Customer {
         return id;
     }
 
-    public void setId(int id) {
-        //todo: throw cannot change id exception
+    public void setId(int id) throws CouponSystemException {
+        throw new CouponSystemException(ErrorType.VALUE_CANNOT_BE_CHANGED.getMessage());
     }
 
     public String getFirstName() {
@@ -59,7 +63,6 @@ public class Customer {
     }
 
     public void setEmail(String email) {
-        //todo:First check if the email doesn't belong to another customer
         this.email = email;
     }
 

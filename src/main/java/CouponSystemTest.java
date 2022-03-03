@@ -1,14 +1,29 @@
-import beans.Category;
+import beans.*;
+
+import java.lang.reflect.*;
+
+import dao.CompaniesDAO;
 import dao.CouponsDAO;
+import dao.CustomersDAO;
+import db.DBUtils;
+import db.DBmanager;
+import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
+import dbdao.CustomerDBDAO;
+import facade.*;
 import test.Test;
+
+
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.util.*;
+import java.util.function.Consumer;
 
 public class CouponSystemTest {
     private static boolean isSuccess;
 
     public static void main(String[] args) {
-        new Test();
-
+        //new Test();
         //dropDataBase();
         //createDataBase();
         /*
@@ -138,16 +153,6 @@ public class CouponSystemTest {
             couponsDAO.addCouponPurchase(item.getId(), 17);
         }
          */
-
-        //todo: expired coupons' check of the daily job
-        /*
-        List<Coupon> expiredCoupons=couponsDAO.getAllCoupons(DBmanager.GET_EXPIRED_COUPONS,new HashMap<>());
-        expiredCoupons.forEach(System.out::println);
-        for (Coupon item:expiredCoupons) {
-            item.setExpired(true);
-            couponsDAO.updateCoupon(item);
-        }
-         */
         /*
         for (Customer customer:customers) {
             Map<Integer,Object> values=new HashMap<>();
@@ -187,33 +192,36 @@ public class CouponSystemTest {
  */
 
         //todo: login manager check, use it where you need to write the login manager
-
-//        LoginManager loginManager=LoginManager.getInstance();
-//        ClientFacade clientFacade;
+        /*
+        LoginManager loginManager=LoginManager.getInstance();
+        ClientFacade clientFacade;
 
         //todo: how to work with admin facade
 
-//        clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
-//        if(clientFacade instanceof AdminFacade){
-//            System.out.println("admin");
-//            AdminFacade adminFacade=(AdminFacade) clientFacade;
-//            //adminFacade.addCompany(company);
-//            List<Company> companyList=adminFacade.getAllCompanies();
-//            //adminFacade.addCustomer(customer);
-//            List<Customer> customerList=adminFacade.getAllCustomers();
-//            //companyList.forEach(System.out::println);
-//            TablePrinter.print(companyList);
-//            TablePrinter.print(customerList);
-//        }
+        clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
+        if(clientFacade instanceof AdminFacade){
+            System.out.println("admin");
+            AdminFacade adminFacade=(AdminFacade) clientFacade;
+            adminFacade.addCompany(new Company(0,"WANT TO CHECK", "checkCompany@comp.com","check"));
+            List<Company> companyList=adminFacade.getAllCompanies();
+            //adminFacade.addCustomer(customer);
+            List<Customer> customerList=adminFacade.getAllCustomers();
+            //companyList.forEach(System.out::println);
+            adminFacade.deleteCompany(100);
+
+        }
+
+         */
+
 
         //todo: how to work with company facade
+/*
+        clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
+        if(clientFacade instanceof CompanyFacade){
+            System.out.println("company");
+            CompanyFacade companyFacade=(CompanyFacade) clientFacade;
+            System.out.println(companyFacade.getCompanyId());
 
-//        clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
-//        if(clientFacade instanceof CompanyFacade){
-//            System.out.println("company");
-//            CompanyFacade companyFacade=(CompanyFacade) clientFacade;
-//            System.out.println(companyFacade.getCompanyId());
-            /*
             companyFacade.addCoupon(new Coupon(
                     0,
                     companyFacade.getCompanyId(),
@@ -227,27 +235,72 @@ public class CouponSystemTest {
                     10,
                     "picture"
             ));
-             */
-//            Company myCompany=companyFacade.getCompanyDetails();
-//            myCompany.setCoupons(companyFacade.getCompanyCoupons());
-//            TablePrinter.print(myCompany);
-//        }
-//
-//        //todo: how to work with customer facade
-//
-//        clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
-//        if(clientFacade instanceof CustomerFacade) {
-//            System.out.println("customer");
-//            CustomerFacade customerFacade = (CustomerFacade) clientFacade;
-//            System.out.println(customerFacade.getCustomerId());
-//            Customer myCustomer=customerFacade.getCustomerDetails();
-//            //customerFacade.purchaseCoupon();//todo: ask zeev how do I get a coupon from customerFacade
-//            myCustomer.setCoupons(customerFacade.getCustomerCoupons());
-//            TablePrinter.print(myCustomer);
-//        }
+            Company myCompany=companyFacade.getCompanyDetails();
+            myCompany.setCoupons(companyFacade.getCompanyCoupons());
+            companyFacade.deleteCoupon(100);
+        }
+        */
+
+        //todo: how to work with customer facade
+        /*
+        clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
+        if(clientFacade instanceof CustomerFacade) {
+            System.out.println("customer");
+            CustomerFacade customerFacade = (CustomerFacade) clientFacade;
+            System.out.println(customerFacade.getCustomerId());
+            Customer myCustomer=customerFacade.getCustomerDetails();
+            //customerFacade.purchaseCoupon();
+            myCustomer.setCoupons(customerFacade.getCustomerCoupons());
+            //System.out.println(myCustomer);
+            //customerFacade.getAllCoupons().forEach(System.out::println);
+            List<Coupon> viewCoupons=customerFacade.getAllCoupons();
+            //viewCoupons.forEach(System.out::println);
+            System.out.println(viewCoupons.get(3));
+            customerFacade.purchaseCoupon(viewCoupons.get(3));
+            customerFacade.purchaseCoupon(viewCoupons.get(3));
+
+
+        }
+
+         */
+
+
 
 
     }
 
+    public static void createDataBase() {
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_DB);
+        System.out.println(isSuccess ?
+                "database created successfully" :
+                "database creation failed");
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_CUSTOMERS_TABLE);
+        System.out.println(isSuccess ?
+                "customers table created successfully" :
+                "customers table creation failed");
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_CATEGORIES_TABLE);
+        System.out.println(isSuccess ?
+                "categories table created successfully" :
+                "categories table creation failed");
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_COMPANIES_TABLE);
+        System.out.println(isSuccess ?
+                "companies table created successfully" :
+                "companies table creation failed");
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_COUPONS_TABLE);
+        System.out.println(isSuccess ?
+                "coupons table created successfully" :
+                "coupons table creation failed");
+        isSuccess = DBUtils.runQuery(DBmanager.CREATE_CUSTOMERS_VS_COUPONS_TABLE);
+        System.out.println(isSuccess ?
+                "customers vs coupons table created successfully" :
+                "customers vs coupons table creation failed");
 
+    }
+
+    public static void dropDataBase() {
+        isSuccess = DBUtils.runQuery(DBmanager.DROP_DB);
+        System.out.println(isSuccess ?
+                "delete db successfully" :
+                "delete failed");
+    }
 }

@@ -1,5 +1,7 @@
 package beans;
 
+import exception.CouponSystemException;
+
 import java.sql.Date;
 import java.text.SimpleDateFormat;
 
@@ -16,6 +18,7 @@ public class Coupon {
     private double price;
     private String image;
 
+    public Coupon(){}
 
     /**
      * Full constructor
@@ -49,16 +52,16 @@ public class Coupon {
         return id;
     }
 
-    public void setId(int id) {
-        //todo: throw cannot change id exception
+    public void setId(int id) throws CouponSystemException {
+        throw new CouponSystemException(ErrorType.VALUE_CANNOT_BE_CHANGED.getMessage());
     }
 
     public int getCompanyID() {
         return companyID;
     }
 
-    public void setCompanyID(int companyID) {
-        //todo: throe cannot change company id exception
+    public void setCompanyID(int companyID) throws CouponSystemException {
+        throw new CouponSystemException(ErrorType.VALUE_CANNOT_BE_CHANGED.getMessage());
     }
 
     public Category getCategory() {

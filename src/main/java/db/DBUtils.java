@@ -61,7 +61,7 @@ public class DBUtils {
             preparedStatement.execute();
             return true;
         } catch (InterruptedException | SQLException e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         } finally {
             ConnectionPool.getInstance().returnConnection(connection);
         }

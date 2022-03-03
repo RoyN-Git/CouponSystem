@@ -2,9 +2,11 @@ package dbdao;
 
 import beans.Company;
 import beans.Coupon;
+import beans.ErrorType;
 import dao.CompaniesDAO;
 import db.DBUtils;
 import db.DBmanager;
+import exception.CouponSystemException;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -26,41 +28,27 @@ public class CompaniesDBDAO implements CompaniesDAO {
             resultSet.next();
             return true;
         } catch (SQLException e) {
-            System.out.println(e.getMessage());
+            System.out.println(ErrorType.COMPANY_NOT_EXIST.getMessage());
         }
         return false;
     }
 
-    /*
-    private void checkInfoAlreadyExists(String sql, String checkValue) throws SQLException {
-        Map<Integer, Object> values = new HashMap<>();
-        values.put(1,checkValue);
-        ResultSet resultSet=DBUtils.runQueryForResult(sql,values);
-        assert resultSet!=null;
-        if(resultSet.next()){
-            if(resultSet.getString(1).equals(checkValue)){
-                //todo:throw coupon system exception
-                return;
-            }
-        }
-    }
-
-     */
 
     @Override
-    public void addCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/ {
+    public void addCompany(Company company)  {
         Map<Integer, Object> values = new HashMap<>();
         /*
+        //delete from here
         ResultSet resultSet;
         try {
 
             values.put(1, company.getEmail());
-            values.put(2,company.getId());
+            values.put(2, company.getId());
             resultSet = DBUtils.runQueryForResult(DBmanager.IS_COMPANY_EMAIL_EXISTS, values);
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(company.getEmail()))
-                    //todo: throw company email already exists exception
+                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                     return;
             }
 
@@ -72,7 +60,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("name").equals(company.getName())) {
-                    //todo: throw company name already exists exception
+                    //throw new CouponSystemException(ErrorType.NAME_ALREADY_EXIST.getMessage());
                     return;
                 }
             }
@@ -80,22 +68,37 @@ public class CompaniesDBDAO implements CompaniesDAO {
             e.printStackTrace();
         }
         values.clear();
-        */
+        //delete to here
+
+         */
         values.put(1, company.getName());
         values.put(2, company.getEmail());
         values.put(3, company.getPassword());
+        try{
+            if(DBUtils.runQuery(DBmanager.CREATE_NEW_COMPANY, values)){
+                System.out.println("Company created successfully");
+            }else{
+                System.out.println("Company creation failed");
+                throw new SQLIntegrityConstraintViolationException();
+            }
+        }catch (SQLIntegrityConstraintViolationException e){
+            System.out.println(e.getMessage());
+        }
+        /*
         System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_COMPANY, values) ?
                 "Company created successfully" :
                 "Company creation failed"));
 
+         */
+
     }
 
     @Override
-    public void updateCompany(Company company) /*throws SQLIntegrityConstraintViolationException*/{
+    public void updateCompany(Company company) {
         Map<Integer, Object> values = new HashMap<>();
         /*
+        //delete from here
         ResultSet resultSet;
-        //todo: find out why the email check doesn't work properly
         try {
             values.put(1, company.getEmail());
             values.put(2, company.getId());
@@ -103,29 +106,56 @@ public class CompaniesDBDAO implements CompaniesDAO {
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(company.getEmail()))
-                    //todo: throw company email already exists exception
+                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                     return;
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         values.clear();
-        */
+        //delete to here
+         */
         values.put(1, company.getEmail());
         values.put(2, company.getPassword());
         values.put(3, company.getId());
+        try {
+            if(DBUtils.runQuery(DBmanager.UPDATE_COMPANY_BY_ID, values)){
+                System.out.println("Company updated successfully");
+            }else{
+                System.out.println("Company update failed");
+                throw new SQLIntegrityConstraintViolationException();
+            }
+        }catch (SQLIntegrityConstraintViolationException e){
+            System.out.println(e.getMessage());
+        }
+        /*
         System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COMPANY_BY_ID, values) ?
                 "Company updated successfully" :
                 "Company update failed"));
+
+         */
     }
 
     @Override
-    public void deleteCompany(int companyId) {
+    public void deleteCompany(int companyId){
         Map<Integer, Object> values = new HashMap<>();
         values.put(1, companyId);
+        try {
+            if(DBUtils.runQuery(DBmanager.DELETE_COMPANY_BY_ID, values)){
+                System.out.println("Company deleted successfully");
+            }else{
+                System.out.println("Company deletion failed");
+                throw new SQLException();
+            }
+        }catch (SQLException e){
+            System.out.println(ErrorType.COMPANY_NOT_EXIST.getMessage());
+        }
+        /*
         System.out.println((DBUtils.runQuery(DBmanager.DELETE_COMPANY_BY_ID, values) ?
                 "Company deleted successfully" :
                 "Company deletion failed"));
+
+         */
     }
 
     @Override
@@ -156,10 +186,15 @@ public class CompaniesDBDAO implements CompaniesDAO {
         Map<Integer, Object> values = new HashMap<>();
         values.put(1, companyId);
         List<Company> companies = getAllCompanies(DBmanager.GET_COMPANY_BY_ID, values);
-        if (companies == null) {
-            //todo: throw company doesn't exists exception
+        try {
+            if (companies.size() > 0) {
+                return companies.get(0);
+            } else {
+                throw new CouponSystemException();
+            }
+        } catch (CouponSystemException e) {
+            System.out.println(ErrorType.COMPANY_NOT_EXIST.getMessage());
             return null;
         }
-        return companies.get(0);
     }
 }
