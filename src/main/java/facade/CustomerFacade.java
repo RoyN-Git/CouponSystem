@@ -16,10 +16,12 @@ import java.util.Map;
 
 public class CustomerFacade extends ClientFacade {
     private int customerId;
+    List<Coupon> allCoupons;
 
     public CustomerFacade() {
         super();
         this.customerId = 0;
+        this.allCoupons=this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>());
     }
 
     public int getCustomerId() {
@@ -28,6 +30,14 @@ public class CustomerFacade extends ClientFacade {
 
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
+    }
+
+    public List<Coupon> getAllCoupons() {
+        return this.allCoupons;
+    }
+
+    public void setAllCoupons(List<Coupon> allCoupons) {
+        this.allCoupons = allCoupons;
     }
 
     @Override
@@ -46,7 +56,7 @@ public class CustomerFacade extends ClientFacade {
                     }
                 }
             } catch (SQLException e) {
-                e.printStackTrace();
+                System.out.println(e.getMessage());
             }
             return true;
         }
@@ -55,6 +65,7 @@ public class CustomerFacade extends ClientFacade {
 
     public void purchaseCoupon(Coupon coupon){
         this.couponsDAO.addCouponPurchase(this.customerId, coupon.getId());
+        setAllCoupons(this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>()));
     }
 
     public List<Coupon> getCustomerCoupons(){
@@ -80,4 +91,6 @@ public class CustomerFacade extends ClientFacade {
     public Customer getCustomerDetails(){
         return this.customersDAO.getOneCustomer(this.customerId);
     }
+
+
 }
