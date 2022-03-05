@@ -4,6 +4,7 @@ import beans.Company;
 import beans.Customer;
 import db.DBmanager;
 
+import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
@@ -29,7 +30,11 @@ public class AdminFacade extends ClientFacade{
     }
 
     public void deleteCompany(int companyId){
-        companiesDAO.deleteCompany(companyId);
+        try {
+            companiesDAO.deleteCompany(companyId);
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
     }
 
     public List<Company> getAllCompanies(){
