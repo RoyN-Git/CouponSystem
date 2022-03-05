@@ -25,7 +25,7 @@ public class Test {
         thread = new Thread(couponExpirationDailyJob);
         thread.start();
         loginMangerAdministrator();
-        loginMangerCompany();
+//        loginMangerCompany();
 //        loginMangerCustomer();
         try {
             ConnectionPool.getInstance().closeAllConnections();
@@ -186,12 +186,38 @@ public class Test {
     public void loginMangerCustomer(){
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
-        clientFacade= loginManager.login("saharNew@gmail.com","gfh5t5tg", ClientType.COMPANY);
+        // todo : take care when login failed
+        clientFacade= loginManager.login("golanC@walla.com","12345678", ClientType.CUSTOMER);
         CustomerFacade customerFacade =(CustomerFacade) clientFacade;
 
         // todo : add query for get all coupons
-//        List<Coupon> coupons =
-//        customerFacade.purchaseCoupon();
+        List<Coupon> coupons =
+        customerFacade.getAllCoupons();
+        System.out.println("-------------------");
+        for (Coupon coupon:coupons) {
+            System.out.println(coupon);
+        }
+//        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
+        // testing a not exists coupon
+        Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
+//        customerFacade.purchaseCoupon(coupons.get(0));
+        // trying purchase coupon that not exist
+        customerFacade.purchaseCoupon(coupon);
+        List<Coupon> customerCoupons = customerFacade.getCustomerCoupons();
+        customerCoupons.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByCatgory = customerFacade.getCustomerCoupons(Category.FOOD);
+        customerCouponsByCatgory.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByPrice = customerFacade.getCustomerCoupons(300);
+        customerCouponsByPrice.forEach(System.out::println);
+
+        Customer customerGolan = customerFacade.getCustomerDetails();
+        System.out.println(customerGolan);
+
+
+
+
     }
 
 

@@ -71,7 +71,12 @@ public class Customer {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.equals("")){
+            System.out.println("invalid password");
+        }
+        else {
+            this.password = password;
+        }
     }
 
     public List<Coupon> getCoupons() {
