@@ -25,8 +25,8 @@ public class Test {
         thread = new Thread(couponExpirationDailyJob);
         thread.start();
         loginMangerAdministrator();
-//        loginMangerCompany();
-//        loginMangerCustomer();
+        loginMangerCompany();
+        loginMangerCustomer();
         try {
             ConnectionPool.getInstance().closeAllConnections();
         } catch (InterruptedException e) {
@@ -187,7 +187,11 @@ public class Test {
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
         // todo : take care when login failed
-        clientFacade= loginManager.login("golanC@walla.com","12345678", ClientType.CUSTOMER);
+        clientFacade= loginManager.login("golanC@walla.com","1245678", ClientType.CUSTOMER);
+//        if (clientFacade==null){
+//            System.out.println("login failed !");
+//            return;
+//        }
         CustomerFacade customerFacade =(CustomerFacade) clientFacade;
 
         // todo : add query for get all coupons

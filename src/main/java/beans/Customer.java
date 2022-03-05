@@ -63,7 +63,12 @@ public class Customer {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.equals("")){
+            System.out.println("invalid email !");
+        }
+        else {
+            this.email = email;
+        }
     }
 
     public String getPassword() {

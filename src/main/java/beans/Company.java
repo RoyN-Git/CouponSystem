@@ -51,7 +51,13 @@ public class Company {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.equals("")){
+            System.out.println("invaild email !");
+        }
+        else {
+            this.email = email;
+        }
+
     }
 
     public String getPassword() {
