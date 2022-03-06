@@ -51,7 +51,13 @@ public class Company {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.equals("")){
+            System.out.println("invaild email !");
+        }
+        else {
+            this.email = email;
+        }
+
     }
 
     public String getPassword() {
@@ -59,7 +65,12 @@ public class Company {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.equals("")){
+            System.out.println("invalid password !");
+        }
+        else {
+            this.password = password;
+        }
     }
 
     public List<Coupon> getCoupons() {
