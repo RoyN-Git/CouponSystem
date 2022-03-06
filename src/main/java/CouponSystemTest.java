@@ -26,7 +26,7 @@ public class CouponSystemTest {
 
     public static void main(String[] args) {
         //dropDataBase();
-        //createDataBase();
+        createDataBase();
         /*
         List<Coupon> coupons = new ArrayList<>();
         coupons.add(new Coupon(
@@ -251,7 +251,7 @@ public class CouponSystemTest {
         }
         */
         //todo: how to work with customer facade
-
+        /*
         clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
         if(clientFacade instanceof CustomerFacade) {
             System.out.println("customer");
@@ -263,12 +263,15 @@ public class CouponSystemTest {
             TablePrinter.print(myCustomer);
         }
 
+         */
+
 
 
 
     }
 
     public static void createDataBase() {
+        CouponsDAO couponsDAO=new CouponsDBDAO();
         isSuccess = DBUtils.runQuery(DBmanager.CREATE_DB);
         System.out.println(isSuccess ?
                 "database created successfully" :
@@ -293,6 +296,10 @@ public class CouponSystemTest {
         System.out.println(isSuccess ?
                 "customers vs coupons table created successfully" :
                 "customers vs coupons table creation failed");
+
+        for(Category item:Category.values()){
+            couponsDAO.addCategory(item);
+        }
 
     }
 
