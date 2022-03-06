@@ -25,9 +25,13 @@ public class CustomerDBDAO implements CustomersDAO {
         try {
             assert resultSet != null;
             resultSet.next();
-            return true;
-        } catch (SQLException e) {
-            System.out.println(ErrorType.CUSTOMER_NOT_EXIST.getMessage());
+            if(resultSet.getInt("counter")==1) {
+                return true;
+            }else{
+                throw new CouponSystemException(ErrorType.AUTHENTICATION_FAILED.getMessage());
+            }
+        } catch (SQLException |CouponSystemException e) {
+            System.out.println(e.getMessage());
         }
         return false;
     }
