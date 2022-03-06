@@ -57,7 +57,7 @@ public class ConnectionPool {
                     try {
                         instance = new ConnectionPool();
                     } catch (SQLException e) {
-                        e.printStackTrace();
+                        System.out.println(e.getMessage());
                     }
                 }
             }

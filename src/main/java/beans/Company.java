@@ -25,8 +25,8 @@ public class Company {
     public Company(int id, String name, String email, String password) {
         this.id = id;
         this.name = name;
-        this.email = email;
-        this.password = password;
+        setEmail(email);
+        setPassword(password);
         this.coupons = new ArrayList<>();
     }
 
