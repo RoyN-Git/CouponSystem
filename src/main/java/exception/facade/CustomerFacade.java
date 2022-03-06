@@ -1,10 +1,8 @@
-package facade;
+package exception.facade;
 
 import beans.Category;
-import beans.Company;
 import beans.Coupon;
 import beans.Customer;
-import com.mysql.cj.xdevapi.Client;
 import db.DBUtils;
 import db.DBmanager;
 

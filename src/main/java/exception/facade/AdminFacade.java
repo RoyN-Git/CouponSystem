@@ -1,13 +1,11 @@
-package facade;
+package exception.facade;
 
 import beans.Company;
 import beans.Customer;
 import db.DBmanager;
 
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 public class AdminFacade extends ClientFacade{
 

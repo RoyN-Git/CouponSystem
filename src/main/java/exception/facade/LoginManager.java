@@ -1,9 +1,6 @@
-package facade;
+package exception.facade;
 
 import beans.ClientType;
-import db.DBUtils;
-import db.DBmanager;
-import exception.CouponSystemException;
 
 public class LoginManager {
     private static LoginManager instance = null;

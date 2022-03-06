@@ -1,4 +1,4 @@
-package facade;
+package exception.facade;
 
 import beans.Category;
 import beans.Company;
@@ -8,7 +8,6 @@ import db.DBmanager;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

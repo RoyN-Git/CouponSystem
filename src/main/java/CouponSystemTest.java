@@ -1,25 +1,17 @@
 import beans.*;
 
-import java.lang.reflect.*;
-
-import dao.CompaniesDAO;
 import dao.CouponsDAO;
-import dao.CustomersDAO;
 import db.DBUtils;
 import db.DBmanager;
-import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
-import dbdao.CustomerDBDAO;
+import exception.facade.AdminFacade;
+import exception.facade.ClientFacade;
+import exception.facade.LoginManager;
 import facade.*;
 import utils.TablePrinter;
-import exception.CouponSystemException;
-import jobs.CouponExpirationDailyJob;
 
 
-import java.sql.Date;
-import java.sql.ResultSet;
 import java.util.*;
-import java.util.function.Consumer;
 
 public class CouponSystemTest {
     private static boolean isSuccess;

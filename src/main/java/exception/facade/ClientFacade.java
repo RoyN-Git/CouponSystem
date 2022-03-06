@@ -1,4 +1,4 @@
-package facade;
+package exception.facade;
 
 import dao.CompaniesDAO;
 import dao.CouponsDAO;
