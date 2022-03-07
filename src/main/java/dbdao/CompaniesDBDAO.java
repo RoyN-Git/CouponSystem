@@ -172,9 +172,7 @@ public class CompaniesDBDAO implements CompaniesDAO {
         List<Company> companies = new ArrayList<>();
         ResultSet resultSet = DBUtils.runQueryForResult(sql, values);
         try {
-            while (true) {
-                assert resultSet != null;
-                if (!resultSet.next()) break;
+            while (resultSet.next()) {
                 Company company = new Company(
                         resultSet.getInt("id"),
                         resultSet.getString("name"),

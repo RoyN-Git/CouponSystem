@@ -164,9 +164,7 @@ public class CustomerDBDAO implements CustomersDAO {
         List<Customer> customers = new ArrayList<>();
         ResultSet resultSet = DBUtils.runQueryForResult(sql, values);
         try {
-            while (true) {
-                assert resultSet != null;
-                if (!resultSet.next()) break;
+            while (resultSet.next()) {
                 Customer customer = new Customer(
                         resultSet.getInt("id"),
                         resultSet.getString("first_name"),
