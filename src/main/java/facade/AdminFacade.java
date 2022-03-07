@@ -62,13 +62,16 @@ public class AdminFacade extends ClientFacade{
     public List<Company> getAllCompanies(){
         return this.companiesDAO.getAllCompanies(DBmanager.GET_ALL_COMPANIES,new HashMap<>());
     }
+
     /**
      * This method returns one company from the database
-     * @return one company from all companies from the database.
+     * @param companyId from all companies from the database.
+     * @return
      */
     public Company getOneCompany(int companyId){
         return this.companiesDAO.getOneCompany(companyId);
     }
+
     /**
      * This method add a Custumer to the database
      * @param Custumer to the database.
@@ -76,6 +79,7 @@ public class AdminFacade extends ClientFacade{
     public void addCustomer(Customer customer){
         this.customersDAO.addCustomer(customer);
     }
+
     /**
      * This method update a Customer to the database
      * @param Customer to the database.
@@ -83,9 +87,10 @@ public class AdminFacade extends ClientFacade{
     public void updateCustomer(Customer customer){
         this.customersDAO.updateCustomer(customer);
     }
+
     /**
-     * This method delete a Customer from the database
-     * @param a Customer from the database.
+     * This method delete customerId from the database
+     * @param customerId from the database.
      */
     public void deleteCustomer(int customerId){
         this.customersDAO.deleteCustomer(customerId);
@@ -97,9 +102,11 @@ public class AdminFacade extends ClientFacade{
     public List<Customer> getAllCustomers(){
         return  this.customersDAO.getAllCustomers(DBmanager.GET_ALL_CUSTOMERS, new HashMap<>());
     }
+
     /**
-     * This method returns One Customer from the database
-     * @return One Customer from the database.
+     *This method returns One Customer from the database
+     * @param customerId from the database.
+     * @return
      */
     public Customer getOneCustomer(int customerId){
         return this.customersDAO.getOneCustomer(customerId);
