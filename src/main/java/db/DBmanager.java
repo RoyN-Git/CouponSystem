@@ -4,8 +4,8 @@ public class DBmanager {
 
     //sql connection
     public static final String URL = "jdbc:mysql://localhost:3306/";
-    public static final String SQL_USER = "root";//change the user to your root username
-    public static final String SQL_PASSWORD = "12345678";//change password to your root password
+    public static final String SQL_USER = "root";//change the user to your root username//admin
+    public static final String SQL_PASSWORD = "12345678";//change password to your root password//Sa12345678!!
 
     //Calculating one day in milliseconds
     public static final int ONE_DAY = 1000 * 60 * 60 * 24;

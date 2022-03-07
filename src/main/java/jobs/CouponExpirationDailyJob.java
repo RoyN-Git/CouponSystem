@@ -12,10 +12,13 @@ import java.util.List;
 public class CouponExpirationDailyJob implements Runnable {
     private CouponsDAO couponsDAO;
     boolean quit=false;
+  
+  
     public CouponExpirationDailyJob() {
         this.couponsDAO = new CouponsDBDAO();
     }
 
+  
     @Override
     public void run() {
 
@@ -31,6 +34,7 @@ public class CouponExpirationDailyJob implements Runnable {
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
+
         }
     }
 
