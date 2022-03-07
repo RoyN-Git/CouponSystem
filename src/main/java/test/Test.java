@@ -28,6 +28,7 @@ public class Test {
         loginMangerAdministrator();
         loginMangerCompany();
         loginMangerCustomer();
+        wrongLogin();
 
         try {
             ConnectionPool.getInstance().closeAllConnections();
@@ -243,16 +244,17 @@ public class Test {
 
     }
 
-
-
-
-
-
-
-
+    public void wrongLogin(){
+        LoginManager loginManager=LoginManager.getInstance();
+        ClientFacade clientFacade;
+        clientFacade= loginManager.login("wrong@wrong.com","wrongPassword", ClientType.CUSTOMER);
+        if(clientFacade instanceof CustomerFacade){
+            CustomerFacade customerFacade=(CustomerFacade) clientFacade ;
+            System.out.println(customerFacade.getCustomerId());
+        }
+    }
 
     public  void createDataBase() {
-
         boolean isSuccess = DBUtils.runQuery(DBmanager.CREATE_DB);
         System.out.println(isSuccess ?
                 "database created successfully" :

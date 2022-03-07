@@ -17,6 +17,7 @@ public class Company {
     /**
      * Constructor without receiving list of coupons.
      * The list is initialized inside the constructor.
+     * This constructor is used when we receive a company from the database.
      * @param id is company's id
      * @param name is company's name
      * @param email is company's email
@@ -28,6 +29,16 @@ public class Company {
         setEmail(email);
         setPassword(password);
         this.coupons = new ArrayList<>();
+    }
+
+    /**
+     * This constructor is used when creating new company.
+     * @param name is company's name
+     * @param email is company's email
+     * @param password is company's password
+     */
+    public Company(String name, String email, String password) {
+        this(0,name,email,password);
     }
 
     public int getId() {

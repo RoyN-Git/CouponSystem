@@ -23,6 +23,7 @@ public class Coupon {
 
     /**
      * Full constructor
+     * This constructor is used when receiving coupon from the database.
      * @param id is coupon's id
      * @param companyID is the id of the coupon's company
      * @param category is the category of the coupon
@@ -50,7 +51,7 @@ public class Coupon {
     }
 
     /**
-     * Constructor used to create a new coupon
+     * Constructor used to create a new coupon.
      * @param companyID is the id pf the company which created the coupon
      * @param category is the category of the coupon
      * @param title is the title of the coupon

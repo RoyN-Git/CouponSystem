@@ -16,6 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerDBDAO implements CustomersDAO {
+    /**
+     * This method checks if a company exist based on its email and password.
+     * The method is used when trying to log in as a customer.
+     * @param email is the customer's email
+     * @param password is the customer's password
+     * @return true if the login was successful, false if not
+     */
     @Override
     public boolean isCustomerExists(String email, String password) {
         Map<Integer, Object> values = new HashMap<>();
@@ -36,6 +43,12 @@ public class CustomerDBDAO implements CustomersDAO {
         return false;
     }
 
+    /**
+     * This method adds new customer into the database.
+     * The method first check if there is no other customer in the database with the sane email.
+     * If not, adds the customer to the database.
+     * @param customer is the customer we want to add to the database.
+     */
     @Override
     public void addCustomer(Customer customer)  {
         Map<Integer, Object> values = new HashMap<>();
@@ -55,7 +68,6 @@ public class CustomerDBDAO implements CustomersDAO {
             System.out.println(e.getMessage());
             return;
         }
-         //delete to here
 
         values.clear();
         values.put(1,customer.getFirstName());
@@ -74,10 +86,12 @@ public class CustomerDBDAO implements CustomersDAO {
         }
     }
 
-
-
-
-
+    /**
+     * This method updates an existing customer in the database.
+     * The method first check if there is no other customer in the database with the same email.
+     * If not, it updates the customer
+     * @param customer is the customer we want to update.
+     */
     @Override
     public void updateCustomer(Customer customer){
         Map<Integer, Object> values = new HashMap<>();
@@ -118,6 +132,10 @@ public class CustomerDBDAO implements CustomersDAO {
         }
     }
 
+    /**
+     * This method deletes a customer based on id
+     * @param customerId is the id of the customer we want to delete
+     */
     @Override
     public void deleteCustomer(int customerId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -135,6 +153,12 @@ public class CustomerDBDAO implements CustomersDAO {
 
     }
 
+    /**
+     * This method receive a lit of all customers in the database.
+     * @param sql is a sql query that receives all the customers.
+     * @param values is a map of values to insert into the query.
+     * @return a list of customers from the database.
+     */
     @Override
     public List<Customer> getAllCustomers(String sql, Map<Integer, Object> values) {
         List<Customer> customers = new ArrayList<>();
@@ -159,6 +183,11 @@ public class CustomerDBDAO implements CustomersDAO {
         return customers;
     }
 
+    /**
+     * This method gets one customer from the database based on its id
+     * @param customerId is the id of the customer we want to receive
+     * @return the customer from the database
+     */
     @Override
     public Customer getOneCustomer(int customerId) {
         Map<Integer, Object> values = new HashMap<>();
