@@ -41,67 +41,59 @@ public class Test {
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
         clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
-        AdminFacade adminFacade=(AdminFacade) clientFacade;
-        Company golan = new Company(1,"golan","golan@gmail.com","122333");
-        adminFacade.addCompany(golan);
-//        golan.setEmail("golanNew@gmail.com");
-//        golan.setPassword("104045342332");
-        Company newGolan = adminFacade.getOneCompany(1);
-        newGolan.setEmail("golanNew@gmail.com");
-        newGolan.setPassword("dfr43d33r");
-        adminFacade.updateCompany(newGolan);
+        if(clientFacade instanceof AdminFacade) {
+            AdminFacade adminFacade = (AdminFacade) clientFacade;
+            Company golan = new Company(1, "golan", "golan@gmail.com", "122333");
+            adminFacade.addCompany(golan);
 
-        Company sahar = new Company(2,"sahar","sahar@gmail.com","64576gs");
-        adminFacade.addCompany(sahar);
-        sahar.setEmail("saharNew@gmail.com");
-        sahar.setPassword("gfh5t5tg");
-        adminFacade.updateCompany(sahar);
+            Company newGolan = adminFacade.getOneCompany(1);
+            newGolan.setEmail("golanNew@gmail.com");
+            newGolan.setPassword("dfr43d33r");
+            adminFacade.updateCompany(newGolan);
 
-        Company roy = new Company(3,"roy","roy@gmail.com","fsgth54");
-        adminFacade.addCompany(roy);
-        roy.setEmail("royNew@gmail.com");
-        roy.setPassword("32445687gefer");
-        adminFacade.updateCompany(roy);
+            Company sahar = new Company(2, "sahar", "sahar@gmail.com", "64576gs");
+            adminFacade.addCompany(sahar);
 
-        Company shahar = new Company(4,"shahar","shahar@gmail.com","fsf45");
-        adminFacade.addCompany(shahar);
-        shahar.setEmail("shaharNew@gmail.com");
-        shahar.setPassword("fruefw35g");
-        adminFacade.updateCompany(shahar);
+            Company roy = new Company(3, "roy", "roy@gmail.com", "fsgth54");
+            adminFacade.addCompany(roy);
 
-        adminFacade.deleteCompany(adminFacade.getOneCompany(1).getId());
+            Company shahar = new Company(4, "shahar", "shahar@gmail.com", "fsf45");
+            adminFacade.addCompany(shahar);
 
-        for (Company company:adminFacade.getAllCompanies()) {
-            System.out.println(company);
+            adminFacade.deleteCompany(adminFacade.getOneCompany(1).getId());
+
+            for (Company company : adminFacade.getAllCompanies()) {
+                System.out.println(company);
+            }
+
+            System.out.println(adminFacade.getOneCompany(2));
+
+            Customer golanC = new Customer(1, "golan", "klein", "golanC@walla.com", "12345678");
+            Customer c2 = new Customer(2, "grdg", "fredse", "frfd@walla.com", "fr44b5");
+            Customer c3 = new Customer(3, "fsfre", "efrfwfwee", "hjmkj@walla.com", "fffrf44br43");
+            Customer c4 = new Customer(1, "gfgrdgtr", "hbtyhry", "gtrmhrtmk@walla.com", "65et3ferg3");
+            Customer c5 = new Customer(1, "dnewufn", "frejnfre", "gtgter@walla.com", "grege3");
+
+            adminFacade.addCustomer(golanC);
+            adminFacade.addCustomer(c2);
+            adminFacade.addCustomer(c3);
+            adminFacade.addCustomer(c4);
+            adminFacade.addCustomer(c5);
+
+            c3.setPassword("gtrgerf");
+            c3.setEmail("change@gmail.com");
+            c3.setLastName("change");
+
+            adminFacade.updateCustomer(c3);
+
+            adminFacade.deleteCustomer(c2.getId());
+
+            for (Customer customer : adminFacade.getAllCustomers()) {
+                System.out.println(customer);
+            }
+
+            System.out.println(adminFacade.getOneCustomer(4));
         }
-
-        System.out.println(adminFacade.getOneCompany(2));
-
-        Customer golanC = new Customer(1,"golan","klein","golanC@walla.com","12345678");
-        Customer c2 = new Customer(2,"grdg","fredse","frfd@walla.com","fr44b5");
-        Customer c3 = new Customer(3,"fsfre","efrfwfwee","hjmkj@walla.com","fffrf44br43");
-        Customer c4 = new Customer(1,"gfgrdgtr","hbtyhry","gtrmhrtmk@walla.com","65et3ferg3");
-        Customer c5 = new Customer(1,"dnewufn","frejnfre","gtgter@walla.com","grege3");
-
-        adminFacade.addCustomer(golanC);
-        adminFacade.addCustomer(c2);
-        adminFacade.addCustomer(c3);
-        adminFacade.addCustomer(c4);
-        adminFacade.addCustomer(c5);
-
-        c3.setPassword("gtrgerf");
-        c3.setEmail("change@gmail.com");
-        c3.setLastName("change");
-
-        adminFacade.updateCustomer(c3);
-
-        adminFacade.deleteCustomer(c2.getId());
-
-        for (Customer customer:adminFacade.getAllCustomers()){
-            System.out.println(customer);
-        }
-
-        System.out.println(adminFacade.getOneCustomer(4));
 
 
     }
@@ -110,76 +102,78 @@ public class Test {
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
         clientFacade= loginManager.login("saharNew@gmail.com","gfh5t5tg", ClientType.COMPANY);
-        CompanyFacade companyFacade =(CompanyFacade) clientFacade;
+        if(clientFacade instanceof CompanyFacade) {
+            CompanyFacade companyFacade = (CompanyFacade) clientFacade;
 
-        List<Coupon> coupons = new ArrayList<>();
-        coupons.add(new Coupon(
-                0,
-                companyFacade.getCompanyId(),
-                Category.FOOD,
-                "hi hi hi",
-                "just by me",
-                new Date(System.currentTimeMillis()),
-                new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),
-                false,
-                50,
-                200,
-                "picture"));
-        coupons.add(new Coupon(
-                0,
-                companyFacade.getCompanyId(),
-                Category.ELECTRICITY,
-                "check expired coupon",
-                "its a coupon",
-                new Date(System.currentTimeMillis()),
-                new Date(System.currentTimeMillis() + 5* DBmanager.ONE_DAY),
-                false,
-                30,
-                70,
-                "picture"));
-        coupons.add(new Coupon(
-                0,
-                companyFacade.getCompanyId(),
-                Category.FOOD,
-                "new",
-                "its a new coupon",
-                new Date(System.currentTimeMillis()),
-                new Date(System.currentTimeMillis() + 7* DBmanager.ONE_DAY),
-                false,
-                40,
-                3434,
-                "picture"));
+            List<Coupon> coupons = new ArrayList<>();
+            coupons.add(new Coupon(
+                    0,
+                    companyFacade.getCompanyId(),
+                    Category.FOOD,
+                    "hi hi hi",
+                    "just by me",
+                    new Date(System.currentTimeMillis()),
+                    new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),
+                    false,
+                    50,
+                    200,
+                    "picture"));
+            coupons.add(new Coupon(
+                    0,
+                    companyFacade.getCompanyId(),
+                    Category.ELECTRICITY,
+                    "check expired coupon",
+                    "its a coupon",
+                    new Date(System.currentTimeMillis()),
+                    new Date(System.currentTimeMillis() + 5 * DBmanager.ONE_DAY),
+                    false,
+                    30,
+                    70,
+                    "picture"));
+            coupons.add(new Coupon(
+                    0,
+                    companyFacade.getCompanyId(),
+                    Category.FOOD,
+                    "new",
+                    "its a new coupon",
+                    new Date(System.currentTimeMillis()),
+                    new Date(System.currentTimeMillis() + 7 * DBmanager.ONE_DAY),
+                    false,
+                    40,
+                    3434,
+                    "picture"));
 
-        companyFacade.addCoupon(coupons.get(0));
-        companyFacade.addCoupon(coupons.get(1));
-        companyFacade.addCoupon(coupons.get(2));
+            companyFacade.addCoupon(coupons.get(0));
+            companyFacade.addCoupon(coupons.get(1));
+            companyFacade.addCoupon(coupons.get(2));
 
-        List<Coupon> coupons2 = companyFacade.getCompanyCoupons();
-        coupons2.forEach(System.out::println);
-        coupons2.get(1).setImage("new image");
+            List<Coupon> coupons2 = companyFacade.getCompanyCoupons();
+            coupons2.forEach(System.out::println);
+            coupons2.get(1).setImage("new image");
 
-        companyFacade.updateCoupon(coupons2.get(1));  // todo: ask zeev
+            companyFacade.updateCoupon(coupons2.get(1));  // todo: ask zeev
 
-        companyFacade.deleteCoupon(coupons2.get(2).getId());
+            companyFacade.deleteCoupon(coupons2.get(2).getId());
 
-        System.out.println(" all coupons");
-        for (Coupon coupon:companyFacade.getCompanyCoupons()){
-            System.out.println(coupon);
-        }
-        System.out.println("coupons by category");
-        for (Coupon coupon:companyFacade.getCompanyCoupons(Category.ELECTRICITY)){
-            System.out.println(coupon);
-        }
+            System.out.println(" all coupons");
+            for (Coupon coupon : companyFacade.getCompanyCoupons()) {
+                System.out.println(coupon);
+            }
+            System.out.println("coupons by category");
+            for (Coupon coupon : companyFacade.getCompanyCoupons(Category.ELECTRICITY)) {
+                System.out.println(coupon);
+            }
 
-        System.out.println("coupons by price");
-        for (Coupon coupon:companyFacade.getCompanyCoupons(700)){
-            System.out.println(coupon);
-        }
+            System.out.println("coupons by price");
+            for (Coupon coupon : companyFacade.getCompanyCoupons(700)) {
+                System.out.println(coupon);
+            }
 
 //        System.out.println(companyFacade.getCompanyDetails());
-        Company company = companyFacade.getCompanyDetails();
-        company.setCoupons(companyFacade.getCompanyCoupons());
-        System.out.println(company);
+            Company company = companyFacade.getCompanyDetails();
+            company.setCoupons(companyFacade.getCompanyCoupons());
+            System.out.println(company);
+        }
 
     }
 
