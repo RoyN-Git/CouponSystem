@@ -29,8 +29,8 @@ public class Customer {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
-        this.email = email;
-        this.password = password;
+        setEmail(email);
+        setPassword(password);
         this.coupons = new ArrayList<>();
     }
 
@@ -63,7 +63,12 @@ public class Customer {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        if (email.equals("")){
+            System.out.println("invalid email !");
+        }
+        else {
+            this.email = email;
+        }
     }
 
     public String getPassword() {
@@ -71,7 +76,12 @@ public class Customer {
     }
 
     public void setPassword(String password) {
-        this.password = password;
+        if (password.equals("")){
+            System.out.println("invalid password");
+        }
+        else {
+            this.password = password;
+        }
     }
 
     public List<Coupon> getCoupons() {

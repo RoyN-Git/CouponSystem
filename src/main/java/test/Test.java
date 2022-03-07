@@ -26,7 +26,7 @@ public class Test {
         thread.start();
         loginMangerAdministrator();
         loginMangerCompany();
-//        loginMangerCustomer();
+        loginMangerCustomer();
         try {
             ConnectionPool.getInstance().closeAllConnections();
         } catch (InterruptedException e) {
@@ -115,8 +115,8 @@ public class Test {
         List<Coupon> coupons = new ArrayList<>();
         coupons.add(new Coupon(
                 0,
-                2,
-                Category.getCategoryByValue(1),
+                companyFacade.getCompanyId(),
+                Category.FOOD,
                 "hi hi hi",
                 "just by me",
                 new Date(System.currentTimeMillis()),
@@ -127,8 +127,8 @@ public class Test {
                 "picture"));
         coupons.add(new Coupon(
                 0,
-                2,
-                Category.getCategoryByValue(2),
+                companyFacade.getCompanyId(),
+                Category.ELECTRICITY,
                 "check expired coupon",
                 "its a coupon",
                 new Date(System.currentTimeMillis()),
@@ -139,8 +139,8 @@ public class Test {
                 "picture"));
         coupons.add(new Coupon(
                 0,
-                2,
-                Category.getCategoryByValue(1),
+                companyFacade.getCompanyId(),
+                Category.FOOD,
                 "new",
                 "its a new coupon",
                 new Date(System.currentTimeMillis()),
@@ -167,7 +167,7 @@ public class Test {
             System.out.println(coupon);
         }
         System.out.println("coupons by category");
-        for (Coupon coupon:companyFacade.getCompanyCoupons(Category.getCategoryByValue(2))){
+        for (Coupon coupon:companyFacade.getCompanyCoupons(Category.ELECTRICITY)){
             System.out.println(coupon);
         }
 
@@ -186,12 +186,47 @@ public class Test {
     public void loginMangerCustomer(){
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
-        clientFacade= loginManager.login("saharNew@gmail.com","gfh5t5tg", ClientType.COMPANY);
+        // todo : take care when login failed
+        clientFacade= loginManager.login("golanC@walla.com","1245678", ClientType.CUSTOMER);
+//        if (clientFacade==null){
+//            System.out.println("login failed !");
+//            return;
+//        }
         CustomerFacade customerFacade =(CustomerFacade) clientFacade;
 
         // todo : add query for get all coupons
-//        List<Coupon> coupons =
-//        customerFacade.purchaseCoupon();
+        List<Coupon> coupons = customerFacade.getAllCoupons();
+        System.out.println("-------------------");
+        for (Coupon coupon:coupons) {
+            System.out.println(coupon);
+        }
+//        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
+        // testing a not exists coupon
+        //Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
+//        customerFacade.purchaseCoupon(coupons.get(0));
+        // trying purchase coupon that not exist
+        //customerFacade.purchaseCoupon(coupon);
+
+        //purchase all coupons
+        for (Coupon item:coupons) {
+            customerFacade.purchaseCoupon(item);
+        }
+
+        List<Coupon> customerCoupons = customerFacade.getCustomerCoupons();
+        customerCoupons.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByCategory = customerFacade.getCustomerCoupons(Category.FOOD);
+        customerCouponsByCategory.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByPrice = customerFacade.getCustomerCoupons(300);
+        customerCouponsByPrice.forEach(System.out::println);
+
+        Customer customerGolan = customerFacade.getCustomerDetails();
+        System.out.println(customerGolan);
+
+
+
+
     }
 
 

@@ -192,13 +192,13 @@ public class CouponSystemTest {
  */
 
         //todo: login manager check, use it where you need to write the login manager
-        /*
+
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
 
         //todo: how to work with admin facade
-
-        clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
+        /*
+        clientFacade= loginManager.login("adm1in@admin.com","admin", ClientType.ADMINISTRATOR);
         if(clientFacade instanceof AdminFacade){
             System.out.println("admin");
             AdminFacade adminFacade=(AdminFacade) clientFacade;
@@ -214,9 +214,13 @@ public class CouponSystemTest {
          */
 
 
+
+
+
+
         //todo: how to work with company facade
-/*
-        clientFacade= loginManager.login("newCompany@company.com","password11",ClientType.COMPANY);
+        /*
+        clientFacade= loginManager.login("newCo1mpany@company.com","password11",ClientType.COMPANY);
         if(clientFacade instanceof CompanyFacade){
             System.out.println("company");
             CompanyFacade companyFacade=(CompanyFacade) clientFacade;
@@ -235,14 +239,19 @@ public class CouponSystemTest {
                     10,
                     "picture"
             ));
+
+
             Company myCompany=companyFacade.getCompanyDetails();
             myCompany.setCoupons(companyFacade.getCompanyCoupons());
-            companyFacade.deleteCoupon(100);
+            //companyFacade.deleteCoupon(100);
         }
-        */
+
+         */
+
+
 
         //todo: how to work with customer facade
-        /*
+
         clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
         if(clientFacade instanceof CustomerFacade) {
             System.out.println("customer");
@@ -256,13 +265,16 @@ public class CouponSystemTest {
             List<Coupon> viewCoupons=customerFacade.getAllCoupons();
             //viewCoupons.forEach(System.out::println);
             System.out.println(viewCoupons.get(3));
-            customerFacade.purchaseCoupon(viewCoupons.get(3));
-            customerFacade.purchaseCoupon(viewCoupons.get(3));
+            //customerFacade.purchaseCoupon(viewCoupons.get(3));
+            //customerFacade.purchaseCoupon(viewCoupons.get(3));
+            //customerFacade.purchaseCoupon(new Coupon());
 
 
         }
 
-         */
+
+
+
 
 
 
