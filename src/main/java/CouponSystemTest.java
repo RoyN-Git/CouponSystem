@@ -5,6 +5,8 @@ public class CouponSystemTest {
 
     public static void main(String[] args) {
         new Test();
+
+
         //dropDataBase();
         //createDataBase();
         /*
@@ -172,14 +174,14 @@ public class CouponSystemTest {
 
  */
 
-        //todo: login manager check, use it where you need to write the login manager
+
         /*
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
 
          */
 
-        //todo: how to work with admin facade
+
         /*
         clientFacade= loginManager.login("adm1in@admin.com","admin", ClientType.ADMINISTRATOR);
         if(clientFacade instanceof AdminFacade){
@@ -203,7 +205,7 @@ public class CouponSystemTest {
 
 
 
-        //todo: how to work with company facade
+
         /*
         clientFacade= loginManager.login("newCo1mpany@company.com","password11",ClientType.COMPANY);
         if(clientFacade instanceof CompanyFacade){
@@ -237,7 +239,7 @@ public class CouponSystemTest {
 
 
 
-        //todo: how to work with customer facade
+
         /*
         clientFacade= loginManager.login("cust1omer@customer.com","firstlast",ClientType.CUSTOMER);
         if(clientFacade instanceof CustomerFacade) {
@@ -260,13 +262,6 @@ public class CouponSystemTest {
         }
 
          */
-
-
-
-
-
-
-
 
     }
     /*

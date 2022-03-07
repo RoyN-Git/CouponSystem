@@ -29,7 +29,7 @@ public class Test {
         loginMangerCompany();
         loginMangerCustomer();
         wrongLogin();
-
+        //in order to see the coupon change to expired, make lines 33-40 as a comment :)
         try {
             ConnectionPool.getInstance().closeAllConnections();
         } catch (InterruptedException e) {
@@ -37,6 +37,9 @@ public class Test {
         }
         thread.interrupt();
         endSystem();
+
+
+
 
 
 

@@ -24,14 +24,14 @@ public class CouponExpirationDailyJob implements Runnable {
 
         while (!quit){
             List<Coupon> expiredCoupons = couponsDAO.getAllCoupons(DBmanager.GET_EXPIRED_COUPONS,new HashMap<>());
-            expiredCoupons.forEach(System.out::println);  // todo: delete
             for (Coupon item:expiredCoupons){
                 item.setExpired(true);
                 couponsDAO.updateCoupon(item);
             }
+
             try {
-                //Thread.sleep(DBmanager.ONE_DAY);
-                Thread.sleep(1000*30);
+                Thread.sleep(DBmanager.ONE_DAY);//sleep for 24 hours
+                //Thread.sleep(1000*30);//sleep for 30 seconds (for testing)
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }
