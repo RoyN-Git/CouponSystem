@@ -197,7 +197,7 @@ public class CouponSystemTest {
         ClientFacade clientFacade;
 
         //todo: how to work with admin facade
-        /*
+
         clientFacade= loginManager.login("adm1in@admin.com","admin", ClientType.ADMINISTRATOR);
         if(clientFacade instanceof AdminFacade){
             System.out.println("admin");
@@ -211,7 +211,7 @@ public class CouponSystemTest {
 
         }
 
-         */
+
 
 
 
@@ -219,7 +219,7 @@ public class CouponSystemTest {
 
 
         //todo: how to work with company facade
-        /*
+
         clientFacade= loginManager.login("newCo1mpany@company.com","password11",ClientType.COMPANY);
         if(clientFacade instanceof CompanyFacade){
             System.out.println("company");
@@ -246,13 +246,13 @@ public class CouponSystemTest {
             //companyFacade.deleteCoupon(100);
         }
 
-         */
+
 
 
 
         //todo: how to work with customer facade
 
-        clientFacade= loginManager.login("customer@customer.com","firstlast",ClientType.CUSTOMER);
+        clientFacade= loginManager.login("cust1omer@customer.com","firstlast",ClientType.CUSTOMER);
         if(clientFacade instanceof CustomerFacade) {
             System.out.println("customer");
             CustomerFacade customerFacade = (CustomerFacade) clientFacade;

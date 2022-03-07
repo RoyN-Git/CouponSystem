@@ -4,8 +4,8 @@ public class DBmanager {
 
     //sql connection
     public static final String URL = "jdbc:mysql://localhost:3306/";
-    public static final String SQL_USER = "root";//change the user to your root username//admin
-    public static final String SQL_PASSWORD = "12345678";//change password to your root password//Sa12345678!!
+    public static final String SQL_USER = "admin";//change the user to your root username//admin
+    public static final String SQL_PASSWORD = "Sa12345678!!";//change password to your root password//Sa12345678!!
 
     //Calculating one day in milliseconds
     public static final int ONE_DAY = 1000 * 60 * 60 * 24;
@@ -228,7 +228,7 @@ public class DBmanager {
 
     public static final String GET_ALL_CUSTOMER_COUPONS_UP_TO_PRICE = "SELECT `coupon_project`.`coupons`.*" +
             " FROM `coupon_project`.`coupons`, `coupon_project`.`customers_coupons`" +
-            " WHERE `coupon_project`.`customers_coupons`.customer_id=? " +
+            " WHERE `coupon_project`.`customers_coupons`.customer_id=?" +
             " AND `coupon_project`.`coupons`.price<=?" +
             " AND `coupon_project`.`coupons`.id=`coupon_project`.`customers_coupons`.coupon_id" +
             " ORDER BY id";

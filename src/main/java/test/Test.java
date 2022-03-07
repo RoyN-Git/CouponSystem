@@ -43,7 +43,11 @@ public class Test {
         clientFacade= loginManager.login("admin@admin.com","admin", ClientType.ADMINISTRATOR);
         if(clientFacade instanceof AdminFacade) {
             AdminFacade adminFacade = (AdminFacade) clientFacade;
+<<<<<<< HEAD
             Company golan = new Company(1, "golan", "golan@gmail.com", "122333");
+=======
+            Company golan = new Company(0, "golan", "golan@gmail.com", "122333");
+>>>>>>> shahar
             adminFacade.addCompany(golan);
 
             Company newGolan = adminFacade.getOneCompany(1);
@@ -51,6 +55,7 @@ public class Test {
             newGolan.setPassword("dfr43d33r");
             adminFacade.updateCompany(newGolan);
 
+<<<<<<< HEAD
             Company sahar = new Company(2, "sahar", "sahar@gmail.com", "64576gs");
             adminFacade.addCompany(sahar);
 
@@ -58,6 +63,15 @@ public class Test {
             adminFacade.addCompany(roy);
 
             Company shahar = new Company(4, "shahar", "shahar@gmail.com", "fsf45");
+=======
+            Company sahar = new Company(0, "sahar", "sahar@gmail.com", "64576gs");
+            adminFacade.addCompany(sahar);
+
+            Company roy = new Company(0, "roy", "roy@gmail.com", "fsgth54");
+            adminFacade.addCompany(roy);
+
+            Company shahar = new Company(0, "shahar", "shahar@gmail.com", "fsf45");
+>>>>>>> shahar
             adminFacade.addCompany(shahar);
 
             adminFacade.deleteCompany(adminFacade.getOneCompany(1).getId());
@@ -68,22 +82,38 @@ public class Test {
 
             System.out.println(adminFacade.getOneCompany(2));
 
+<<<<<<< HEAD
             Customer golanC = new Customer(1, "golan", "klein", "golanC@walla.com", "12345678");
             Customer c2 = new Customer(2, "grdg", "fredse", "frfd@walla.com", "fr44b5");
             Customer c3 = new Customer(3, "fsfre", "efrfwfwee", "hjmkj@walla.com", "fffrf44br43");
             Customer c4 = new Customer(1, "gfgrdgtr", "hbtyhry", "gtrmhrtmk@walla.com", "65et3ferg3");
             Customer c5 = new Customer(1, "dnewufn", "frejnfre", "gtgter@walla.com", "grege3");
+=======
+            Customer golanC = new Customer(0, "golan", "klein", "golanC@walla.com", "12345678");
+            Customer c2 = new Customer(0, "grdg", "fredse", "frfd@walla.com", "fr44b5");
+            Customer c3 = new Customer(0, "fsfre", "efrfwfwee", "hjmkj@walla.com", "fffrf44br43");
+            Customer c4 = new Customer(0, "gfgrdgtr", "hbtyhry", "gtrmhrtmk@walla.com", "65et3ferg3");
+            Customer c5 = new Customer(0, "dnewufn", "frejnfre", "gtgter@walla.com", "grege3");
+>>>>>>> shahar
 
             adminFacade.addCustomer(golanC);
             adminFacade.addCustomer(c2);
             adminFacade.addCustomer(c3);
             adminFacade.addCustomer(c4);
             adminFacade.addCustomer(c5);
+<<<<<<< HEAD
 
             c3.setPassword("gtrgerf");
             c3.setEmail("change@gmail.com");
             c3.setLastName("change");
 
+=======
+
+            c3.setPassword("gtrgerf");
+            c3.setEmail("change@gmail.com");
+            c3.setLastName("change");
+
+>>>>>>> shahar
             adminFacade.updateCustomer(c3);
 
             adminFacade.deleteCustomer(c2.getId());
@@ -180,6 +210,7 @@ public class Test {
     public void loginMangerCustomer(){
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
+<<<<<<< HEAD
         // todo : take care when login failed
         clientFacade= loginManager.login("golanC@walla.com","12345678", ClientType.CUSTOMER);
         if (clientFacade instanceof CustomerFacade) {
@@ -191,6 +222,21 @@ public class Test {
             for (Coupon coupon : coupons) {
                 System.out.println(coupon);
             }
+=======
+        clientFacade= loginManager.login("golanC@walla.com","1245678", ClientType.CUSTOMER);
+//        if (clientFacade==null){
+//            System.out.println("login failed !");
+//            return;
+//        }
+        CustomerFacade customerFacade =(CustomerFacade) clientFacade;
+
+        // todo : add query for get all coupons
+        List<Coupon> coupons = customerFacade.getAllCoupons();
+        System.out.println("-------------------");
+        for (Coupon coupon:coupons) {
+            System.out.println(coupon);
+        }
+>>>>>>> shahar
 //        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
             // testing a not exists coupon
             //Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
