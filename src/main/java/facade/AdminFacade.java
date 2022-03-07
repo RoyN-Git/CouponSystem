@@ -71,21 +71,21 @@ public class AdminFacade extends ClientFacade{
     }
     /**
      * This method add a Custumer to the database
-     * @add Custumer to the database.
+     * @param Custumer to the database.
      */
     public void addCustomer(Customer customer){
         this.customersDAO.addCustomer(customer);
     }
     /**
      * This method update a Customer to the database
-     * @update Customer to the database.
+     * @param Customer to the database.
      */
     public void updateCustomer(Customer customer){
         this.customersDAO.updateCustomer(customer);
     }
     /**
      * This method delete a Customer from the database
-     * @rdelete a Customer from the database.
+     * @param a Customer from the database.
      */
     public void deleteCustomer(int customerId){
         this.customersDAO.deleteCustomer(customerId);
