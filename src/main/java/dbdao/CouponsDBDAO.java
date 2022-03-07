@@ -10,21 +10,21 @@ import exception.CouponSystemException;
 
 
 import java.sql.*;
-import java.sql.Date;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.*;
+import java.util.Date;
 
 public class CouponsDBDAO implements CouponsDAO {
 
     @Override
     public void addCoupon(Coupon coupon) {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-         //delete from here
+
+         //check constraints
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
@@ -34,18 +34,16 @@ public class CouponsDBDAO implements CouponsDAO {
         try {
             if (resultSet.next()) {
                 if (resultSet.getString("title").equals(coupon.getTitle())) {
-                    //throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
-        values.clear();
-         //delete to here
 
-         */
+        values.clear();
         values.put(1, coupon.getCompanyID());
         values.put(2, coupon.getCategory().value);
         values.put(3, coupon.getTitle());
@@ -67,19 +65,13 @@ public class CouponsDBDAO implements CouponsDAO {
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.ADD_NEW_COUPON, values) ?
-                "Coupon added successfully" :
-                "Coupon addition failed"));
-
-         */
     }
 
     @Override
     public void updateCoupon(Coupon coupon) /*throws SQLIntegrityConstraintViolationException*/ {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+
+        //check constraints
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
@@ -89,18 +81,15 @@ public class CouponsDBDAO implements CouponsDAO {
         try {
             if (resultSet.next()) {
                 if (resultSet.getString("title").equals(coupon.getTitle())) {
-                    //throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
         }
-        values.clear();
-        //delete to here
 
-         */
+        values.clear();
         values.put(1, coupon.getCategory().value);
         values.put(2, coupon.getTitle());
         values.put(3, coupon.getDescription());
@@ -122,12 +111,6 @@ public class CouponsDBDAO implements CouponsDAO {
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COUPON_BY_ID, values) ?
-                "Coupon update succeed" :
-                "Coupon update failed"));
-
-         */
     }
 
     @Override
@@ -143,13 +126,8 @@ public class CouponsDBDAO implements CouponsDAO {
             }
         }catch (SQLException e){
             System.out.println(ErrorType.COUPON_NOT_EXIST.getMessage());
-        }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_COUPON, values) ?
-                "Coupon deleted successfully" :
-                "Coupon deletion failed"));
 
-         */
+        }
     }
 
 
@@ -213,17 +191,20 @@ public class CouponsDBDAO implements CouponsDAO {
             }
         } catch (SQLException | CouponSystemException e) {
             System.out.println(e.getMessage());
+            return;
         }
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_EXPIRED, values);
         try {
             assert resultSet != null;
             if (resultSet.next()) {
-                if (resultSet.getBoolean("expired")) {
+                if (/*resultSet.getBoolean("expired")||*/
+                resultSet.getDate("end_date").before(new Date(System.currentTimeMillis()))) {
                     throw new CouponSystemException(ErrorType.COUPON_EXPIRED.getMessage());
                 }
             }
         } catch (SQLException | CouponSystemException e) {
             System.out.println(e.getMessage());
+            return;
         }
         values.put(1, customerId);
         values.put(2, couponId);

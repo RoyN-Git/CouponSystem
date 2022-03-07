@@ -37,31 +37,27 @@ public class CustomerDBDAO implements CustomersDAO {
     }
 
     @Override
-    public void addCustomer(Customer customer) /*throws SQLIntegrityConstraintViolationException*/ {
+    public void addCustomer(Customer customer)  {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+        //check constraints
         ResultSet resultSet;
-        values.put(1, customer.getEmail());
-        resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
         try {
-            //assert resultSet != null;
-            try {
-
-            }catch (CouponSystemException e){
-                System.out.println(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-            }
+            values.put(1, customer.getEmail());
+            values.put(2, customer.getId());
+            resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
+            assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(customer.getEmail())) {
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
          //delete to here
 
-         */
+        values.clear();
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());
@@ -76,12 +72,6 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_CUSTOMER, values) ?
-                "Customer created successfully" :
-                "Customer creation failed"));
-
-         */
     }
 
 
@@ -91,27 +81,26 @@ public class CustomerDBDAO implements CustomersDAO {
     @Override
     public void updateCustomer(Customer customer){
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
-        ResultSet resultSet;
-        values.put(1, customer.getEmail());
-        values.put(2,customer.getId());
-        resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
 
+        //check constraints
+        ResultSet resultSet;
         try {
+            values.put(1, customer.getEmail());
+            values.put(2,customer.getId());
+            resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(customer.getEmail())) {
-                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+
+
         values.clear();
-        */
-         //delete to here
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());
@@ -127,12 +116,6 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.UPDATE_CUSTOMER_BY_ID, values) ?
-                "Customer updated successfully" :
-                "Customer update failed"));
-
-         */
     }
 
     @Override
@@ -149,12 +132,6 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLException e){
             System.out.println(ErrorType.CUSTOMER_NOT_EXIST.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_CUSTOMER_BY_ID, values) ?
-                "Customer deleted successfully" :
-                "Customer deletion failed"));
-
-         */
 
     }
 

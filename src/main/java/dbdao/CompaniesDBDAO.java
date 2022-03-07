@@ -42,22 +42,18 @@ public class CompaniesDBDAO implements CompaniesDAO {
     @Override
     public void addCompany(Company company)  {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+
+        //check constraints
         ResultSet resultSet;
         try {
-
             values.put(1, company.getEmail());
             values.put(2, company.getId());
             resultSet = DBUtils.runQueryForResult(DBmanager.IS_COMPANY_EMAIL_EXISTS, values);
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(company.getEmail()))
-                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
             }
-
-
             values.clear();
 
             values.put(1, company.getName());
@@ -65,17 +61,15 @@ public class CompaniesDBDAO implements CompaniesDAO {
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("name").equals(company.getName())) {
-                    //throw new CouponSystemException(ErrorType.NAME_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.NAME_ALREADY_EXIST.getMessage());
                 }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
-        values.clear();
-        //delete to here
 
-         */
+        values.clear();
         values.put(1, company.getName());
         values.put(2, company.getEmail());
         values.put(3, company.getPassword());
@@ -89,20 +83,14 @@ public class CompaniesDBDAO implements CompaniesDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_COMPANY, values) ?
-                "Company created successfully" :
-                "Company creation failed"));
-
-         */
 
     }
 
     @Override
     public void updateCompany(Company company) {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+
+        //check constraints
         ResultSet resultSet;
         try {
             values.put(1, company.getEmail());
@@ -111,15 +99,15 @@ public class CompaniesDBDAO implements CompaniesDAO {
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(company.getEmail()))
-                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException |CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+
+
         values.clear();
-        //delete to here
-         */
         values.put(1, company.getEmail());
         values.put(2, company.getPassword());
         values.put(3, company.getId());
@@ -133,12 +121,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COMPANY_BY_ID, values) ?
-                "Company updated successfully" :
-                "Company update failed"));
-
-         */
     }
 
     @Override
@@ -155,12 +137,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
         }catch (SQLException e){
             System.out.println(ErrorType.COMPANY_NOT_EXIST.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_COMPANY_BY_ID, values) ?
-                "Company deleted successfully" :
-                "Company deletion failed"));
-
-         */
     }
 
     @Override

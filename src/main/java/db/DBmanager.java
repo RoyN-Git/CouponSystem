@@ -200,7 +200,7 @@ public class DBmanager {
             " FROM `coupon_project`.`coupons`" +
             " WHERE end_date<CURDATE() AND expired=false";
 
-    public static final String IS_COUPON_EXPIRED="SELECT expired" +
+    public static final String IS_COUPON_EXPIRED="SELECT expired, end_date" +
             " FROM `coupon_project`.`coupons`" +
             " WHERE id=?";
 
