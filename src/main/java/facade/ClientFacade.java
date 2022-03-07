@@ -7,10 +7,12 @@ import dbdao.CompaniesDBDAO;
 import dbdao.CouponsDBDAO;
 import dbdao.CustomerDBDAO;
 
+
 public abstract class ClientFacade {
     protected CouponsDAO couponsDAO;
     protected CompaniesDAO companiesDAO;
     protected CustomersDAO customersDAO;
+
 
     public ClientFacade() {
         this.couponsDAO = new CouponsDBDAO();
