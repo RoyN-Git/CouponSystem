@@ -2,20 +2,29 @@ package beans;
 
 import beans.Company;
 import exception.CouponSystemException;
+import org.junit.After;
 import org.junit.BeforeClass;
 import org.junit.Test;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CompanyTest {
-    public static Company company;
+    static Company company;
     @BeforeClass
     public void init(){
         company=new Company(1,"testCompany","test@gmail.com","testPassword");
+        //company.setCoupons();
 
     }
 
+    @After
+    public void reset(){
+        company.setPassword("testPassword");
+        company.setEmail("test@gmail.com");
+    }
+
     @Test
-    void getId() throws CouponSystemException {
+    public void getId() throws CouponSystemException {
         assertEquals(1,company.getId());
     }
 
@@ -47,12 +56,15 @@ class CompanyTest {
 
     @Test
     void getPassword() {
+        assertEquals("testPassword", company.getPassword());
     }
 
     @Test
     void setPassword() {
+        company.setPassword("change");
+        assertEquals("change",company.getPassword());
     }
-
+    /*
     @Test
     void getCoupons() {
     }
@@ -60,4 +72,6 @@ class CompanyTest {
     @Test
     void setCoupons() {
     }
+
+     */
 }
