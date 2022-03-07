@@ -65,7 +65,7 @@ public class CustomerFacade extends ClientFacade {
 
     public void purchaseCoupon(Coupon coupon){
         this.couponsDAO.addCouponPurchase(this.customerId, coupon.getId());
-        setAllCoupons(this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>()));
+        //setAllCoupons(this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>()));
     }
 
     public List<Coupon> getCustomerCoupons(){

@@ -83,7 +83,7 @@ public class CompanyFacade extends ClientFacade {
         values.put(2, maxPrice);
         return this.couponsDAO.getAllCoupons(DBmanager.GET_ALL_COMPANY_COUPONS_UP_TO_PRICE, values);
     }
-
+//
     public Company getCompanyDetails() {
         return this.companiesDAO.getOneCompany(companyId);
     }
