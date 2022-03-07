@@ -30,11 +30,7 @@ public class AdminFacade extends ClientFacade{
     }
 
     public void deleteCompany(int companyId){
-        try {
-            companiesDAO.deleteCompany(companyId);
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
+        companiesDAO.deleteCompany(companyId);
     }
 
     public List<Company> getAllCompanies(){
