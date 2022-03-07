@@ -1,8 +1,10 @@
 package beans;
 
+import beans.Company;
 import exception.CouponSystemException;
 import org.junit.BeforeClass;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -13,9 +15,9 @@ class CompanyTest {
 
     }
 
-    @Test
-    void getId() {
-
+    @Test(expected = CouponSystemException.class)
+    void getId() throws CouponSystemException {
+        throw new CouponSystemException("test");
     }
 
     @Test
