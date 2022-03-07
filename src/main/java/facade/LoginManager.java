@@ -9,9 +9,14 @@ import exception.CouponSystemException;
 public class LoginManager {
     private static LoginManager instance = null;
 
+    
     private LoginManager() {
     }
 
+    /**
+     * This method returns Instance from the database
+     * @return Instance
+     */
     public static LoginManager getInstance() {
         if (instance == null) {
             instance = new LoginManager();
@@ -19,7 +24,13 @@ public class LoginManager {
         return instance;
     }
 
-
+    /**
+     * Method used to log in as an admin by checking email and password.
+     * The check is hard coded.
+     * @param password is the email the user entered.
+     * @param clientType  is the password the user entered
+     * @return true if login succeed, false if not.
+     */
     public ClientFacade login(String email, String password, ClientType clientType) {
         AdminFacade adminFacade=new AdminFacade();
         CompanyFacade companyFacade=new CompanyFacade();
@@ -51,7 +62,5 @@ public class LoginManager {
         }
         return null;
     }
-
-
 
 }
