@@ -52,7 +52,8 @@ public class Company {
 
     public void setEmail(String email) {
         if (email.equals("")){
-            System.out.println("invaild email !");
+            System.out.println("invalid email !");
+            //throw new CouponSystemException(ErrorType.INVALID_INPUT.getMessage());
         }
         else {
             this.email = email;

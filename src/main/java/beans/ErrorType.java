@@ -42,7 +42,8 @@ public enum ErrorType {
     COUPON_EXPIRED("Coupon is expired, cannot be purchased"),
     COUPON_ALREADY_PURCHASED("Coupon was already purchased"),
     PURCHASE_FAILED("The purchase failed"),
-    AUTHENTICATION_FAILED("Your email or password is wrong, please try again");
+    AUTHENTICATION_FAILED("Your email or password is wrong, please try again"),
+    INVALID_INPUT("Invalid details, please try again");
 
 
     private final String message;

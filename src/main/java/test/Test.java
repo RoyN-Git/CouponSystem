@@ -187,41 +187,46 @@ public class Test {
         LoginManager loginManager=LoginManager.getInstance();
         ClientFacade clientFacade;
         // todo : take care when login failed
-        clientFacade= loginManager.login("golanC@walla.com","12345678", ClientType.CUSTOMER);
-        if (clientFacade instanceof CustomerFacade) {
-            CustomerFacade customerFacade = (CustomerFacade) clientFacade;
+        clientFacade= loginManager.login("golanC@walla.com","1245678", ClientType.CUSTOMER);
+//        if (clientFacade==null){
+//            System.out.println("login failed !");
+//            return;
+//        }
+        CustomerFacade customerFacade =(CustomerFacade) clientFacade;
 
-            // todo : add query for get all coupons
-            List<Coupon> coupons = customerFacade.getAllCoupons();
-            System.out.println("-------------------");
-            for (Coupon coupon : coupons) {
-                System.out.println(coupon);
-            }
-//        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
-            // testing a not exists coupon
-            //Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
-//        customerFacade.purchaseCoupon(coupons.get(0));
-            // trying purchase coupon that not exist
-            //customerFacade.purchaseCoupon(coupon);
-
-            //purchase all coupons
-            for (Coupon item : coupons) {
-                customerFacade.purchaseCoupon(item);
-            }
-
-            List<Coupon> customerCoupons = customerFacade.getCustomerCoupons();
-            customerCoupons.forEach(System.out::println);
-
-            List<Coupon> customerCouponsByCategory = customerFacade.getCustomerCoupons(Category.FOOD);
-            customerCouponsByCategory.forEach(System.out::println);
-
-            List<Coupon> customerCouponsByPrice = customerFacade.getCustomerCoupons(300);
-            customerCouponsByPrice.forEach(System.out::println);
-
-            Customer customerGolan = customerFacade.getCustomerDetails();
-            System.out.println(customerGolan);
-
+        // todo : add query for get all coupons
+        List<Coupon> coupons = customerFacade.getAllCoupons();
+        System.out.println("-------------------");
+        for (Coupon coupon:coupons) {
+            System.out.println(coupon);
         }
+//        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
+        // testing a not exists coupon
+        //Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
+//        customerFacade.purchaseCoupon(coupons.get(0));
+        // trying purchase coupon that not exist
+        //customerFacade.purchaseCoupon(coupon);
+
+        //purchase all coupons
+        for (Coupon item:coupons) {
+            customerFacade.purchaseCoupon(item);
+        }
+
+        List<Coupon> customerCoupons = customerFacade.getCustomerCoupons();
+        customerCoupons.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByCategory = customerFacade.getCustomerCoupons(Category.FOOD);
+        customerCouponsByCategory.forEach(System.out::println);
+
+        List<Coupon> customerCouponsByPrice = customerFacade.getCustomerCoupons(300);
+        customerCouponsByPrice.forEach(System.out::println);
+
+        Customer customerGolan = customerFacade.getCustomerDetails();
+        System.out.println(customerGolan);
+
+
+
+
     }
 
 
