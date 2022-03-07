@@ -17,6 +17,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CompaniesDBDAO implements CompaniesDAO {
+    /**
+     * this method checks if the company exist based on its email and password.
+     * the method is used when trying to log in as a company.
+     * @param email is company email
+     * @param password is company password
+     * @return return true if company exist false if not.
+     */
     @Override
     public boolean isCompanyExists(String email, String password) {
         Map<Integer, Object> values = new HashMap<>();
@@ -39,6 +46,12 @@ public class CompaniesDBDAO implements CompaniesDAO {
     }
 
 
+    /**
+     * this method adds new company in tow the database.
+     * the method first checks if there is no other company in the database with the same email or name,
+     * if not, add the company to the database.
+     * @param company is the company we want to add to the database.
+     */
     @Override
     public void addCompany(Company company)  {
         Map<Integer, Object> values = new HashMap<>();
@@ -86,6 +99,12 @@ public class CompaniesDBDAO implements CompaniesDAO {
 
     }
 
+    /**
+     * this method update an existing company in the database.
+     * The function checks if there is another identical email in the database and then changes,
+     * if not it updates the company.
+     * @param company is the company that we want to update.
+     */
     @Override
     public void updateCompany(Company company) {
         Map<Integer, Object> values = new HashMap<>();
@@ -106,7 +125,6 @@ public class CompaniesDBDAO implements CompaniesDAO {
             return;
         }
 
-
         values.clear();
         values.put(1, company.getEmail());
         values.put(2, company.getPassword());
@@ -123,6 +141,10 @@ public class CompaniesDBDAO implements CompaniesDAO {
         }
     }
 
+    /**
+     * this method deleted company by its id.
+     * @param companyId its company id we want to delete.
+     */
     @Override
     public void deleteCompany(int companyId){
         Map<Integer, Object> values = new HashMap<>();
@@ -139,6 +161,12 @@ public class CompaniesDBDAO implements CompaniesDAO {
         }
     }
 
+    /**
+     * this method get all companies from the database.
+     * @param sql is a sql query.
+     * @param values is the map of the values to insert to the query.
+     * @return list of all the companies.
+     */
     @Override
     public List<Company> getAllCompanies(String sql, Map<Integer, Object> values) {
         List<Company> companies = new ArrayList<>();
@@ -162,6 +190,11 @@ public class CompaniesDBDAO implements CompaniesDAO {
         return companies;
     }
 
+    /**
+     * this method gets one company by its id from the database.
+     * @param companyId the id of the company that we want to get.
+     * @return
+     */
     @Override
     public Company getOneCompany(int companyId) {
         Map<Integer, Object> values = new HashMap<>();
