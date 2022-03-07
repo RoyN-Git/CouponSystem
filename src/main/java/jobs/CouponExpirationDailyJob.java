@@ -30,7 +30,8 @@ public class CouponExpirationDailyJob implements Runnable {
                 couponsDAO.updateCoupon(item);
             }
             try {
-                Thread.sleep(DBmanager.ONE_DAY);
+                //Thread.sleep(DBmanager.ONE_DAY);
+                Thread.sleep(1000*30);
             } catch (InterruptedException e) {
                 System.out.println(e.getMessage());
             }

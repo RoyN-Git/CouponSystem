@@ -10,21 +10,27 @@ import exception.CouponSystemException;
 
 
 import java.sql.*;
-import java.sql.Date;
 
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import java.util.*;
+import java.util.Date;
 
 public class CouponsDBDAO implements CouponsDAO {
 
+    /**
+     * This method add new coupon to the database.
+     * The method checks first if the received coupon doesn't have a title
+     * which already exist in the database for the sane company
+     * @param coupon is the new coupon we want to add to the database
+     */
     @Override
     public void addCoupon(Coupon coupon) {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-         //delete from here
+
+         //check constraints
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
@@ -34,18 +40,16 @@ public class CouponsDBDAO implements CouponsDAO {
         try {
             if (resultSet.next()) {
                 if (resultSet.getString("title").equals(coupon.getTitle())) {
-                    //throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
-        values.clear();
-         //delete to here
 
-         */
+        values.clear();
         values.put(1, coupon.getCompanyID());
         values.put(2, coupon.getCategory().value);
         values.put(3, coupon.getTitle());
@@ -67,19 +71,19 @@ public class CouponsDBDAO implements CouponsDAO {
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.ADD_NEW_COUPON, values) ?
-                "Coupon added successfully" :
-                "Coupon addition failed"));
-
-         */
     }
 
+    /**
+     * This method updates a coupon in the database.
+     * The method checks first if the received coupon doesn't have a title
+     * which already exist in the database for the sane company
+     * @param coupon is the coupon we want to update
+     */
     @Override
-    public void updateCoupon(Coupon coupon) /*throws SQLIntegrityConstraintViolationException*/ {
+    public void updateCoupon(Coupon coupon)  {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+
+        //check constraints
         ResultSet resultSet;
         values.put(1, coupon.getTitle());
         values.put(2, coupon.getCompanyID());
@@ -89,18 +93,15 @@ public class CouponsDBDAO implements CouponsDAO {
         try {
             if (resultSet.next()) {
                 if (resultSet.getString("title").equals(coupon.getTitle())) {
-                    //throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.TITLE_ALREADY_EXIST.getMessage());
                 }
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
         }
-        values.clear();
-        //delete to here
 
-         */
+        values.clear();
         values.put(1, coupon.getCategory().value);
         values.put(2, coupon.getTitle());
         values.put(3, coupon.getDescription());
@@ -122,14 +123,12 @@ public class CouponsDBDAO implements CouponsDAO {
         } catch (SQLIntegrityConstraintViolationException e) {
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.UPDATE_COUPON_BY_ID, values) ?
-                "Coupon update succeed" :
-                "Coupon update failed"));
-
-         */
     }
 
+    /**
+     * This method deletes a coupon from the database based on it's id
+     * @param couponId is the id of the coupon we want to delete
+     */
     @Override
     public void deleteCoupon(int couponId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -143,16 +142,17 @@ public class CouponsDBDAO implements CouponsDAO {
             }
         }catch (SQLException e){
             System.out.println(ErrorType.COUPON_NOT_EXIST.getMessage());
-        }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_COUPON, values) ?
-                "Coupon deleted successfully" :
-                "Coupon deletion failed"));
 
-         */
+        }
     }
 
-
+    /**
+     * This method receives a list of coupons from the database based on our filters:
+     * 1- all coupons, 2- all coupons by category, 3- all coupons up to a price
+     * @param sql is a sql query. Each time we receive a query based on the filter we want.
+     * @param values is a map of the values to insert into the query based on the filter we want.
+     * @return list of coupons.
+     */
     @Override
     public List<Coupon> getAllCoupons(String sql, Map<Integer, Object> values) {
         List<Coupon> coupons = new ArrayList<>();
@@ -181,6 +181,11 @@ public class CouponsDBDAO implements CouponsDAO {
 
     }
 
+    /**
+     * This method returns a coupon from the database based on its id.
+     * @param couponId is the id of the coupon we want to get from the database.
+     * @return a coupon from the database.
+     */
     @Override
     public Coupon getOneCoupon(int couponId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -198,6 +203,13 @@ public class CouponsDBDAO implements CouponsDAO {
         }
     }
 
+    /**
+     * This method adds a new coupon purchase in the database.
+     * The method checks first if a coupon can be purchased:
+     * coupon amount >0, coupon is not expired and coupon not purchased
+     * @param customerId is the id of the customer who wants to purchase the cooupon.
+     * @param couponId is the id of the coupon that we want to purchase
+     */
     @Override
     public void addCouponPurchase(int customerId, int couponId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -213,21 +225,24 @@ public class CouponsDBDAO implements CouponsDAO {
             }
         } catch (SQLException | CouponSystemException e) {
             System.out.println(e.getMessage());
+            return;
         }
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_EXPIRED, values);
         try {
             assert resultSet != null;
             if (resultSet.next()) {
-                if (resultSet.getBoolean("expired")) {
+                if (/*resultSet.getBoolean("expired")||*/
+                resultSet.getDate("end_date").before(new Date(System.currentTimeMillis()))) {
                     throw new CouponSystemException(ErrorType.COUPON_EXPIRED.getMessage());
                 }
             }
         } catch (SQLException | CouponSystemException e) {
             System.out.println(e.getMessage());
+            return;
         }
         values.put(1, customerId);
         values.put(2, couponId);
-        /*
+
         resultSet = DBUtils.runQueryForResult(DBmanager.IS_COUPON_PURCHASED, values);
         try {
             assert resultSet != null;
@@ -239,8 +254,6 @@ public class CouponsDBDAO implements CouponsDAO {
         } catch (SQLException | CouponSystemException e) {
             System.out.println(e.getMessage());
         }
-
-         */
 
         try {
             if(DBUtils.runQuery(DBmanager.PURCHASE_COUPON,values)){
@@ -255,15 +268,14 @@ public class CouponsDBDAO implements CouponsDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.PURCHASE_COUPON, values) ?
-                "Coupon purchased" :
-                "Coupon purchase failed"));
-
-         */
 
     }
 
+    /**
+     * This method deletes a single coupon purchase based on customer id and coupon id
+     * @param customerId is the id of the customer.
+     * @param couponId is the id of the coupon
+     */
     @Override
     public void deleteCouponPurchase(int customerId, int couponId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -280,14 +292,13 @@ public class CouponsDBDAO implements CouponsDAO {
         }catch (SQLException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_COUPON_PURCHASE, values) ?
-                "Coupon purchase deleted" :
-                "Coupon purchase deletion failed"));
-
-         */
     }
 
+    /**
+     * This method adds a new category to the database.
+     * The method checks first if there is no category with the same name in the database.
+     * @param category is the category we want to add.
+     */
     @Override
     public void addCategory(Category category) {
         Map<Integer, Object> values = new HashMap<>();

@@ -16,6 +16,13 @@ import java.util.List;
 import java.util.Map;
 
 public class CustomerDBDAO implements CustomersDAO {
+    /**
+     * This method checks if a company exist based on its email and password.
+     * The method is used when trying to log in as a customer.
+     * @param email is the customer's email
+     * @param password is the customer's password
+     * @return true if the login was successful, false if not
+     */
     @Override
     public boolean isCustomerExists(String email, String password) {
         Map<Integer, Object> values = new HashMap<>();
@@ -36,32 +43,33 @@ public class CustomerDBDAO implements CustomersDAO {
         return false;
     }
 
+    /**
+     * This method adds new customer into the database.
+     * The method first check if there is no other customer in the database with the sane email.
+     * If not, adds the customer to the database.
+     * @param customer is the customer we want to add to the database.
+     */
     @Override
-    public void addCustomer(Customer customer) /*throws SQLIntegrityConstraintViolationException*/ {
+    public void addCustomer(Customer customer)  {
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
+        //check constraints
         ResultSet resultSet;
-        values.put(1, customer.getEmail());
-        resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
         try {
-            //assert resultSet != null;
-            try {
-
-            }catch (CouponSystemException e){
-                System.out.println(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-            }
+            values.put(1, customer.getEmail());
+            values.put(2, customer.getId());
+            resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
+            assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(customer.getEmail())) {
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
-         //delete to here
 
-         */
+        values.clear();
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());
@@ -76,42 +84,37 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.CREATE_NEW_CUSTOMER, values) ?
-                "Customer created successfully" :
-                "Customer creation failed"));
-
-         */
     }
 
-
-
-
-
+    /**
+     * This method updates an existing customer in the database.
+     * The method first check if there is no other customer in the database with the same email.
+     * If not, it updates the customer
+     * @param customer is the customer we want to update.
+     */
     @Override
     public void updateCustomer(Customer customer){
         Map<Integer, Object> values = new HashMap<>();
-        /*
-        //delete from here
-        ResultSet resultSet;
-        values.put(1, customer.getEmail());
-        values.put(2,customer.getId());
-        resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
 
+        //check constraints
+        ResultSet resultSet;
         try {
+            values.put(1, customer.getEmail());
+            values.put(2,customer.getId());
+            resultSet = DBUtils.runQueryForResult(DBmanager.IS_CUSTOMER_EMAIL_EXISTS, values);
             assert resultSet != null;
             if (resultSet.next()) {
                 if (resultSet.getString("email").equals(customer.getEmail())) {
-                    //throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
-                    return;
+                    throw new CouponSystemException(ErrorType.EMAIL_ALREADY_EXIST.getMessage());
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        } catch (SQLException | CouponSystemException e) {
+            System.out.println(e.getMessage());
+            return;
         }
+
+
         values.clear();
-        */
-         //delete to here
         values.put(1,customer.getFirstName());
         values.put(2,customer.getLastName());
         values.put(3,customer.getEmail());
@@ -127,14 +130,12 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLIntegrityConstraintViolationException e){
             System.out.println(e.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.UPDATE_CUSTOMER_BY_ID, values) ?
-                "Customer updated successfully" :
-                "Customer update failed"));
-
-         */
     }
 
+    /**
+     * This method deletes a customer based on id
+     * @param customerId is the id of the customer we want to delete
+     */
     @Override
     public void deleteCustomer(int customerId) {
         Map<Integer, Object> values = new HashMap<>();
@@ -149,15 +150,15 @@ public class CustomerDBDAO implements CustomersDAO {
         }catch (SQLException e){
             System.out.println(ErrorType.CUSTOMER_NOT_EXIST.getMessage());
         }
-        /*
-        System.out.println((DBUtils.runQuery(DBmanager.DELETE_CUSTOMER_BY_ID, values) ?
-                "Customer deleted successfully" :
-                "Customer deletion failed"));
-
-         */
 
     }
 
+    /**
+     * This method receive a lit of all customers in the database.
+     * @param sql is a sql query that receives all the customers.
+     * @param values is a map of values to insert into the query.
+     * @return a list of customers from the database.
+     */
     @Override
     public List<Customer> getAllCustomers(String sql, Map<Integer, Object> values) {
         List<Customer> customers = new ArrayList<>();
@@ -182,6 +183,11 @@ public class CustomerDBDAO implements CustomersDAO {
         return customers;
     }
 
+    /**
+     * This method gets one customer from the database based on its id
+     * @param customerId is the id of the customer we want to receive
+     * @return the customer from the database
+     */
     @Override
     public Customer getOneCustomer(int customerId) {
         Map<Integer, Object> values = new HashMap<>();

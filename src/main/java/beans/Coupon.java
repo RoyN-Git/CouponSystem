@@ -1,5 +1,6 @@
 package beans;
 
+import db.DBmanager;
 import exception.CouponSystemException;
 
 import java.sql.Date;
@@ -22,6 +23,7 @@ public class Coupon {
 
     /**
      * Full constructor
+     * This constructor is used when receiving coupon from the database.
      * @param id is coupon's id
      * @param companyID is the id of the coupon's company
      * @param category is the category of the coupon
@@ -46,6 +48,32 @@ public class Coupon {
         setAmount(amount);
         this.price = price;
         this.image = image;
+    }
+
+    /**
+     * Constructor used to create a new coupon.
+     * @param companyID is the id pf the company which created the coupon
+     * @param category is the category of the coupon
+     * @param title is the title of the coupon
+     * @param description is the description of the coupon
+     * @param duration is the duration of the coupon
+     * @param amount is the amount of the coupon
+     * @param price is the price of the coupon
+     * @param image is the image of the coupon
+     */
+    public Coupon( int companyID, Category category, String title, String description, long duration, int amount, double price, String image){
+        this(
+                0,
+                companyID,
+                category,
+                title,
+                description,
+                new Date(System.currentTimeMillis()),
+                new Date(System.currentTimeMillis()+duration*DBmanager.ONE_DAY),
+                false,
+                amount,
+                price,
+                image);
     }
 
     public int getId() {

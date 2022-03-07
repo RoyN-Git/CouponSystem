@@ -18,12 +18,12 @@ public class Customer {
     /**
      * Constructor without receiving list of coupons.
      * The list is initialized inside the constructor.
+     * This constructor is used when receiving customer from the database.
      * @param id is the customer's id
      * @param firstName is the first name of the customer
      * @param lastName is the last name of the customer
      * @param email is the email of the customer
      * @param password is the password of the customer
-     *
      */
     public Customer(int id, String firstName, String lastName, String email, String password) {
         this.id = id;
@@ -32,6 +32,17 @@ public class Customer {
         setEmail(email);
         setPassword(password);
         this.coupons = new ArrayList<>();
+    }
+
+    /**
+     * This constructor is used when creating new customer.
+     * @param firstName is the first name of the customer
+     * @param lastName is the last name of the customer
+     * @param email is the email of the customer
+     * @param password is the password of the customer
+     */
+    public Customer(String firstName, String lastName, String email, String password) {
+        this(0,firstName,lastName,email,password);
     }
 
     public int getId() {
