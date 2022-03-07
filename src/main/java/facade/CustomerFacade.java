@@ -18,6 +18,13 @@ public class CustomerFacade extends ClientFacade {
     private int customerId;
     List<Coupon> allCoupons;
 
+
+    /**
+     * Empty constructor.
+     * The constructor's default is to set the customerId as 0,
+     * because in the database all ids are natural numbers (1,2,...).
+     * It also sets the field allCoupons as the list of all not expired coupons in the database.
+     */
     public CustomerFacade() {
         super();
         this.customerId = 0;
@@ -30,43 +37,32 @@ public class CustomerFacade extends ClientFacade {
          */
     }
 
-    /**
-     * This method returns customerId from the database
-     * @return customerId
-     */
+
     public int getCustomerId() {
         return customerId;
     }
 
-    /**
-     * This method set customerId from the database
-     * @param customerId set
-     */
+
     public void setCustomerId(int customerId) {
         this.customerId = customerId;
     }
 
-    /**
-     * This method return all Coupons from the database
-     * @return all Coupons
-     */
+
     public List<Coupon> getAllCoupons() {
         return this.allCoupons;
     }
 
-    /**
-     * This method set all Coupons in the database
-     * @param allCoupons
-     */
+
     public void setAllCoupons(List<Coupon> allCoupons) {
         this.allCoupons = allCoupons;
     }
 
     /**
-     * Method used to log in as an admin by checking email and password.
-     * The check is hard coded.
-     * @param email is the email the user entered.
-     * @param password is the password the user entered.
+     * Method used to log in as a customer by checking email and password.
+     * The check of the credentials is through the database.
+     * The method also sets the field companyId as the id of the logged customer.
+     * @param email is the email the user typed in.
+     * @param password is the password the user typed in.
      * @return true if login succeed, false if not.
      */
     @Override
@@ -93,8 +89,8 @@ public class CustomerFacade extends ClientFacade {
     }
 
     /**
-     * This method purchase coupon and set it to the database
-     * @param coupon purchase Coupon
+     * This method purchase a single coupon and updates the purchase in the database.
+     * @param coupon is the coupon the customer wants to purchase.
      */
     public void purchaseCoupon(Coupon coupon){
         this.couponsDAO.addCouponPurchase(this.customerId, coupon.getId());
@@ -102,8 +98,8 @@ public class CustomerFacade extends ClientFacade {
     }
 
     /**
-     * This method get Customer Coupons and from the database
-     * @return get Customer Coupons
+     * This method receives a list of coupons from the database that the customer has purchased.
+     * @return list of coupons that the customer has purchased.
      */
     public List<Coupon> getCustomerCoupons(){
         Map<Integer,Object> values=new HashMap<>();
@@ -112,9 +108,9 @@ public class CustomerFacade extends ClientFacade {
     }
 
     /**
-     * This method get Customer Coupons from the database
-     * @param category set category
-     * @return get All Coupons
+     * This method receives a list of coupons from the database that the customer has purchased from a single category.
+     * @param category is the category we want the coupons to be filtered by.
+     * @return list of coupons that the customer has purchased from a single category.
      */
     public List<Coupon> getCustomerCoupons(Category category){
         Map<Integer,Object> values=new HashMap<>();
@@ -124,9 +120,9 @@ public class CustomerFacade extends ClientFacade {
     }
 
     /**
-     * This method get Customer Coupons from the database and put them in order from maxPrice
-     * @param maxPrice will be first. from high to low price order
-     * @return  Customer Coupons from high to low price order
+     * This method receives a list of coupons from the database that the customer has purchased up to a maximum price.
+     * @param maxPrice is the maximum price we want the coupons to be filtered by.
+     * @return list of coupons that the customer has purchased up to a maximum price.
      */
     public List<Coupon> getCustomerCoupons(double maxPrice){
         Map<Integer,Object> values=new HashMap<>();
@@ -136,8 +132,8 @@ public class CustomerFacade extends ClientFacade {
     }
 
     /**
-     * This method return one Customer Details
-     * @return One Customer Details
+     * This method returns the details of the logged company based on field customerId.
+     * @return the details of the logged customer.
      */
     public Customer getCustomerDetails(){
         return this.customersDAO.getOneCustomer(this.customerId);

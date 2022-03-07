@@ -14,8 +14,8 @@ public class LoginManager {
     }
 
     /**
-     * This method returns Instance from the database
-     * @return Instance
+     * Creates an instance of the login manager if not null.
+     * @return the created instance.
      */
     public static LoginManager getInstance() {
         if (instance == null) {
@@ -25,11 +25,14 @@ public class LoginManager {
     }
 
     /**
-     * Method used to log in as an admin by checking email and password.
-     * The check is hard coded.
-     * @param password is the email the user entered.
-     * @param clientType  is the password the user entered
-     * @return true if login succeed, false if not.
+     * This method manages the login to the system.
+     * It uses the clientType param to call the right login method for each type of client:
+     * administrator, company and customer.
+     * @param email is the email the user typed in.
+     * @param password is the password the user typed in.
+     * @param clientType is the client type that the user wants to log in as.
+     * @return the corresponding clientFacade to the clientType on successful login,
+     *         null when the login failed.
      */
     public ClientFacade login(String email, String password, ClientType clientType) {
         AdminFacade adminFacade=new AdminFacade();

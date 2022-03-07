@@ -13,10 +13,10 @@ import java.util.Map;
 public class AdminFacade extends ClientFacade{
 
     /**
-     * Method used to log in as an admin by checking email and password.
+     * This method logs in as an admin by checking email and password.
      * The check is hard coded.
-     * @param email is the email the user entered.
-     * @param password is the password the user entered.
+     * @param email is the email the user typed in.
+     * @param password is the password the user typed in.
      * @return true if login succeed, false if not.
      */
     @Override
@@ -73,8 +73,8 @@ public class AdminFacade extends ClientFacade{
     }
 
     /**
-     * This method add a Custumer to the database
-     * @param Custumer to the database.
+     * This method adds a single customer to the database.
+     * @param customer is the customer we want to add.
      */
     public void addCustomer(Customer customer){
         this.customersDAO.addCustomer(customer);
@@ -82,31 +82,32 @@ public class AdminFacade extends ClientFacade{
 
     /**
      * This method update a Customer to the database
-     * @param Customer to the database.
+     * @param customer is the customer we want to update.
      */
     public void updateCustomer(Customer customer){
         this.customersDAO.updateCustomer(customer);
     }
 
     /**
-     * This method delete customerId from the database
-     * @param customerId from the database.
+     * This method delete customer from the database based on its id
+     * @param customerId is the id of the customer we want to delete from the database.
      */
     public void deleteCustomer(int customerId){
         this.customersDAO.deleteCustomer(customerId);
     }
+
     /**
      * This method returns a list of companies from the database
-     * @return list of companies from the database.
+     * @return the list of companies from the database.
      */
     public List<Customer> getAllCustomers(){
         return  this.customersDAO.getAllCustomers(DBmanager.GET_ALL_CUSTOMERS, new HashMap<>());
     }
 
     /**
-     *This method returns One Customer from the database
-     * @param customerId from the database.
-     * @return
+     *This method returns one customer from the database based on its id
+     * @param customerId is the id of the customer we want to receive from the database.
+     * @return the customer
      */
     public Customer getOneCustomer(int customerId){
         return this.customersDAO.getOneCustomer(customerId);

@@ -39,10 +39,6 @@ public class Test {
         endSystem();
 
 
-
-
-
-
     }
 
     public void loginMangerAdministrator(){
@@ -52,7 +48,7 @@ public class Test {
         if(clientFacade instanceof AdminFacade) {
             AdminFacade adminFacade = (AdminFacade) clientFacade;
 
-            Company golan = new Company(0, "golan", "golan@gmail.com", "122333");
+            Company golan = new Company("golan", "golan@gmail.com", "122333");
             adminFacade.addCompany(golan);
 
             Company newGolan = adminFacade.getOneCompany(1);
@@ -60,16 +56,16 @@ public class Test {
             newGolan.setPassword("dfr43d33r");
             adminFacade.updateCompany(newGolan);
 
-            Company sahar = new Company(0, "sahar", "sahar@gmail.com", "64576gs");
+            Company sahar = new Company("sahar", "sahar@gmail.com", "64576gs");
             adminFacade.addCompany(sahar);
 
-            Company roy = new Company(0, "roy", "roy@gmail.com", "fsgth54");
+            Company roy = new Company("roy", "roy@gmail.com", "fsgth54");
             adminFacade.addCompany(roy);
 
-            Company shahar = new Company(0, "shahar", "shahar@gmail.com", "fsf45");
+            Company shahar = new Company("shahar", "shahar@gmail.com", "fsf45");
             adminFacade.addCompany(shahar);
 
-            Company cloneCompany = new Company(0, "shahar", "shahar@gmail.com", "fsf45");
+            Company cloneCompany = new Company( "shahar", "shahar@gmail.com", "fsf45");
             adminFacade.addCompany(cloneCompany);
 
 
@@ -83,12 +79,12 @@ public class Test {
 
             System.out.println(adminFacade.getOneCompany(2));
 
-            Customer golanC = new Customer(0, "golan", "klein", "golanC@walla.com", "12345678");
-            Customer c2 = new Customer(0, "grdg", "fredse", "frfd@walla.com", "fr44b5");
-            Customer c3 = new Customer(0, "fsfre", "efrfwfwee", "hjmkj@walla.com", "fffrf44br43");
-            Customer c4 = new Customer(0, "gfgrdgtr", "hbtyhry", "gtrmhrtmk@walla.com", "65et3ferg3");
-            Customer c5 = new Customer(0, "dnewufn", "frejnfre", "gtgter@walla.com", "grege3");
-            Customer cloneCustomer = new Customer(0, "clone", "clone", "gtgter@walla.com", "clone");
+            Customer golanC = new Customer( "golan", "klein", "golanC@walla.com", "12345678");
+            Customer c2 = new Customer("grdg", "fredse", "frfd@walla.com", "fr44b5");
+            Customer c3 = new Customer("fsfre", "efrfwfwee", "hjmkj@walla.com", "fffrf44br43");
+            Customer c4 = new Customer("gfgrdgtr", "hbtyhry", "gtrmhrtmk@walla.com", "65et3ferg3");
+            Customer c5 = new Customer("dnewufn", "frejnfre", "gtgter@walla.com", "grege3");
+            Customer cloneCustomer = new Customer("clone", "clone", "gtgter@walla.com", "clone");
 
             adminFacade.addCustomer(golanC);
             adminFacade.addCustomer(c2);
