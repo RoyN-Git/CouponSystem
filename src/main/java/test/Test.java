@@ -35,6 +35,7 @@ public class Test {
         } catch (InterruptedException e) {
             System.out.println(e.getMessage());
         }
+        couponExpirationDailyJob.stopSystem();
         thread.interrupt();
         endSystem();
 
