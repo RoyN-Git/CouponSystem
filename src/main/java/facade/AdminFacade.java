@@ -64,9 +64,9 @@ public class AdminFacade extends ClientFacade{
     }
 
     /**
-     * This method returns one company from the database
-     * @param companyId from all companies from the database.
-     * @return
+     * This method returns one company from the database based on its id.
+     * @param companyId is the id of the company we want to get
+     * @return the customer.
      */
     public Company getOneCompany(int companyId){
         return this.companiesDAO.getOneCompany(companyId);

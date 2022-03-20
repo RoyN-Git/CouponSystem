@@ -29,12 +29,6 @@ public class CustomerFacade extends ClientFacade {
         super();
         this.customerId = 0;
         this.allCoupons=this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>());
-        /*
-        Map<Integer,Object> values=new HashMap<>();
-        values.put(1,this.customerId);
-        setAllCoupons(this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,values));
-
-         */
     }
 
 
@@ -94,7 +88,6 @@ public class CustomerFacade extends ClientFacade {
      */
     public void purchaseCoupon(Coupon coupon){
         this.couponsDAO.addCouponPurchase(this.customerId, coupon.getId());
-        //setAllCoupons(this.couponsDAO.getAllCoupons(DBmanager.VIEW_ALL_COUPONS,new HashMap<>()));
     }
 
     /**

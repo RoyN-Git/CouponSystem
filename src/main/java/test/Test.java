@@ -17,7 +17,6 @@ import java.util.List;
 public class Test {
     private CouponExpirationDailyJob couponExpirationDailyJob;
     private Thread thread;
-//    private static boolean isSuccess;
 
     public Test()  {
         dropDataBase();
@@ -134,7 +133,7 @@ public class Test {
             coupons.add(new Coupon(
                     companyFacade.getCompanyId(),
                     Category.ELECTRICITY,
-                    "check expired coupon",
+                    "coupon!!!",
                     "its a coupon",
                     5,
                     30,
@@ -183,12 +182,10 @@ public class Test {
                 System.out.println(coupon);
             }
 
-            System.out.println("Compant coupons by price");
+            System.out.println("Company coupons by price");
             for (Coupon coupon : companyFacade.getCompanyCoupons(700)) {
                 System.out.println(coupon);
             }
-
-//        System.out.println(companyFacade.getCompanyDetails());
             Company company = companyFacade.getCompanyDetails();
             company.setCoupons(companyFacade.getCompanyCoupons());
             System.out.println(company);
@@ -209,16 +206,6 @@ public class Test {
             for (Coupon coupon : coupons) {
                 System.out.println(coupon);
             }
-//        customerGolan.getCoupons().add(coupons.get(0));  // todo : maybe make a new method  ( buy new coupon)
-            // testing a not exists coupon
-            //Coupon coupon = new Coupon(12,4,Category.ELECTRICITY,"nnnn","aaaaa",new Date(System.currentTimeMillis()),new Date(System.currentTimeMillis() + 9 * DBmanager.ONE_DAY),false,3,33.3,"dadadf");
-//        customerFacade.purchaseCoupon(coupons.get(0));
-            // trying purchase coupon that not exist
-            //customerFacade.purchaseCoupon(coupon);
-
-            //purchase all coupons
-
-
             for (Coupon item : coupons) {
                 customerFacade.purchaseCoupon(item);
             }
